@@ -7,17 +7,23 @@ using HealthChecks.UI.Client;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Modules
 builder.Services.AddPedido(builder.Configuration);
 builder.Services.AddCadastro(builder.Configuration);
 builder.Services.AddProduto(builder.Configuration);
 
 builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecksUI(options =>
+{
+    options.SetEvaluationTimeInSeconds(5);
+    options.MaximumHistoryEntriesPerEndpoint(10);
+    options.AddHealthCheckEndpoint("Health Checks", "/health");
+})
+.AddInMemoryStorage();
 
 var app = builder.Build();
 
@@ -29,24 +35,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-var options = new HealthCheckOptions();
-
-options.ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse;
-
-//app.UseHealthChecks(“/HealthCheck”, options);
-
-app.UseHealthChecks("/healthz", new HealthCheckOptions
+app.UseHealthChecks("/health", new HealthCheckOptions
 {
-    Predicate = _ => true,
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-
-}).UseHealthChecksUI(h => h.UIPath = "/health-ui");
-
-//app.UseEndpoints(endpoints => {
-
-//    endpoints.MapHealthChecks("/healthz", options);
-//});
-
-app.MapHealthChecks("/healthz");
+    Predicate = p => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+app.UseHealthChecksUI(options => options.UIPath = "/health-ui");
 
 app.Run();
