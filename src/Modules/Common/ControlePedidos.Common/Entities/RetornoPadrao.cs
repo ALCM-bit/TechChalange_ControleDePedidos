@@ -7,7 +7,7 @@ namespace ControlePedidos.Common.Entities
 {
     public class RetornoPadrao
     {
-        public IList<string> Mensagem { get; set; }
+        public IList<string> Mensagens { get; set; }
         public bool Status { get; set; }
     }
 }

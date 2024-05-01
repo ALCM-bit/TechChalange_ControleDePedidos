@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ControlePedidos.Cadastro.Domain.Abstractions;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Contexts;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Models;
 using MongoDB.Driver;
 
 namespace ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositories
 {
-    public class ClienteRepository
+    public class ClienteRepository: IClienteRepository
     {
-         private readonly IMongoCollection<CadastroModel> _dbCadastro;
+        private readonly IMongoCollection<CadastroModel> _dbCadastro;
         public ClienteRepository(CadastroDbContext dbContext)
         {
             _dbCadastro = dbContext.Cadastro;

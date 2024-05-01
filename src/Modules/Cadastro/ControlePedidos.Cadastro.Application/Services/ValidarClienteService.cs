@@ -19,7 +19,7 @@ namespace ControlePedidos.Cadastro.Application.Services
                 var cpfOk = cliente.CPF.Validate();
                 if(!cpfOk)
                 {
-                    retorno.Mensagem.Add("O CPF informado é inválido.");
+                    retorno.Mensagens.Add("O CPF informado é inválido.");
                 }
             }
 
@@ -28,16 +28,16 @@ namespace ControlePedidos.Cadastro.Application.Services
                 var email = cliente.Email.Validate();
                 if(!email)
                 {
-                    retorno.Mensagem.Add("O e-mail informado é inválido.");
+                    retorno.Mensagens.Add("O e-mail informado é inválido.");
                 }
             }
             
             if(string.IsNullOrWhiteSpace(cliente.Nome))
             {
-                retorno.Mensagem.Add("O nome é obrigatório.");
+                retorno.Mensagens.Add("O nome é obrigatório.");
             }
 
-            retorno.Status = retorno.Mensagem.Count() > 0 ? false : true;
+            retorno.Status = retorno.Mensagens.Count() > 0 ? false : true;
             
             return retorno;
         }
