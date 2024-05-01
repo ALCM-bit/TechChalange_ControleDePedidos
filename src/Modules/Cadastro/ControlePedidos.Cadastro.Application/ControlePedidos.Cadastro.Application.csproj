@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ControlePedidos.Cadastro.Domain\ControlePedidos.Cadastro.Domain.csproj" />
+    <ProjectReference Include="..\ControlePedidos.Cadastro.Infrastructure\ControlePedidos.Cadastro.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

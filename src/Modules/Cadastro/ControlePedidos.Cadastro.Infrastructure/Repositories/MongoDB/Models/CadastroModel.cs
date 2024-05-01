@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Models;
 
-internal class CadastroModel : BaseModel
+public class CadastroModel : BaseModel
 {
-
+        public string Email { get; set; }
+        public string CPF { get; private set; }
+        public string Nome { get; set; }
 }

@@ -11,7 +11,7 @@ public class CadastroDbContext
 
     #region Collections
 
-    internal IMongoCollection<CadastroModel> Pedido => Database.GetCollection<CadastroModel>(Collections.Cadastro);
+    public IMongoCollection<CadastroModel> Cadastro => Database.GetCollection<CadastroModel>(Collections.Cadastro);
 
     #endregion
 
