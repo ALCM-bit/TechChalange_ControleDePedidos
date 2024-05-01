@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ControlePedidos.Cadastro.Domain.ValueObjects;
 
 namespace ControlePedidos.Cadastro.Domain.Entities
 {
@@ -12,15 +13,15 @@ namespace ControlePedidos.Cadastro.Domain.Entities
         {
             
         }
-        public Cliente(string email, string cpf, string nome)
+        public Cliente(Email email, CPF cpf, string nome)
         {
             Email = email;
             CPF = cpf;
             Nome = nome;
         }
         
-        public string Email { get; set; }
-        public string CPF { get; private set; }
+        public Email Email { get; set; }
+        public CPF CPF { get; private set; }
         public string Nome { get; set; }
     }
 }

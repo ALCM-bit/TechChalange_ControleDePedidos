@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ControlePedidos.Common.Entities;
 
 namespace ControlePedidos.Cadastro.Domain.ValueObjects
 {
-    public class CPF
+    public class CPF : ValueObjectBase
     {
         public CPF(string numero)
         {
@@ -15,8 +16,9 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
 
         public string Numero { get; private set; }
 
-        public bool Validar(string cpf)
+        public override bool Validate()
         {
+            string cpf = Numero.Trim().Replace(".", "").Replace("-", "");
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             string tempCpf;
@@ -50,5 +52,6 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             digito = digito + resto.ToString();
             return cpf.EndsWith(digito);
         }
+
     }
 }

@@ -8,7 +8,13 @@ namespace ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Models;
 
 public class CadastroModel : BaseModel
 {
-        public string Email { get; set; }
+        public CadastroModel(string cpf, string email, string nome)
+        {
+                Email = email;
+                CPF = cpf;
+                Nome = nome;
+        }
+        public string Email { get; private set; }
         public string CPF { get; private set; }
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
 }
