@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ControlePedidos.Cadastro.Domain.Abstractions;
 using ControlePedidos.Cadastro.Domain.Entities;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositories;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Models;
@@ -10,28 +11,27 @@ namespace ControlePedidos.Cadastro.Application.Services
 {
     public class GravarClienteService
     {
-        private readonly ClienteRepository _clienteRepository;
+        private readonly ICadastroRepository _cadastroRepository;
         private readonly ValidarClienteService _validarClienteService;
 
         public GravarClienteService(
-            ClienteRepository clienteRepository,
+            ICadastroRepository clienteRepository,
             ValidarClienteService validarClienteService)
         {
-            _clienteRepository = clienteRepository;
+            _cadastroRepository = clienteRepository;
             _validarClienteService = validarClienteService;
         }
 
 
-        public async Task Cadastrar(Cliente cliente)
+        public async Task Cadastrar(Domain.Entities.Cadastro cadastro)
         {
-            var validacaoOk = await _validarClienteService.ValidarCliente(cliente);
+            var validacaoOk = await _validarClienteService.ValidarCliente(cadastro);
 
             if(!validacaoOk.Status)
             {
                 return;
             }
             
-            var model = new CadastroModel(cliente.Email.Endereco,cliente.CPF.Numero,cliente.Nome);
 
         }
     }

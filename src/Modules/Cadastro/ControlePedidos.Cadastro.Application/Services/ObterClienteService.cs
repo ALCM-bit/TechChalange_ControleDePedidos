@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ControlePedidos.Cadastro.Domain.Abstractions;
 using ControlePedidos.Cadastro.Domain.Entities;
 using ControlePedidos.Cadastro.Domain.ValueObjects;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositories;
@@ -14,36 +15,23 @@ namespace ControlePedidos.Cadastro.Application.Services
 {
     public class ObterClienteService
     {
-        private readonly ClienteRepository _clienteRepository;
+        private readonly ICadastroRepository _clienteRepository;
 
-        public ObterClienteService(ClienteRepository clienteRepository)
+        public ObterClienteService(ICadastroRepository clienteRepository)
         {
             _clienteRepository = clienteRepository;
         }
 
-        public async Task<Cliente> ObterCliente(string Id)
+        public async Task<Domain.Entities.Cadastro> ObterCadastro(string Id)
         {
-            var cadastro = await _clienteRepository.ObterCliente(Id);
-            
-            var cliente = new Cliente( new Email(cadastro.Email), new CPF(cadastro.CPF), cadastro.Nome);
-            
-
-            return cliente;
+            var cadastro = await _clienteRepository.ObterCadastro(Id);
+            return cadastro;
         }
 
-        public async Task<IList<Cliente>> ObterTodosClientes()
+        public async Task<IList<Domain.Entities.Cadastro>> ObterTodosCadastros()
         {
-            var cadastros = await _clienteRepository.ObterTodosClientes();
-
-            var clientes = new List<Cliente>();
-            
-            foreach(var cadastro in cadastros)
-            {
-                clientes.Add(new Cliente(new Email(cadastro.Email), new CPF(cadastro.CPF), cadastro.Nome));
-            }
-            
-
-            return clientes;
+            var cadastros = await _clienteRepository.ObterTodosCadastros();
+            return cadastros;
         }
 
 
