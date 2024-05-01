@@ -7,13 +7,13 @@ using ControlePedidos.Cadastro.Domain.ValueObjects;
 
 namespace ControlePedidos.Cadastro.Domain.Entities
 {
-    public class Cliente
+    public class Cadastro
     {
-        public Cliente()
+        public Cadastro()
         {
             
         }
-        public Cliente(Email email, CPF cpf, string nome)
+        public Cadastro(Email email, CPF cpf, string nome)
         {
             Email = email;
             CPF = cpf;
