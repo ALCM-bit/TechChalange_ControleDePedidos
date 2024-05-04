@@ -16,7 +16,7 @@ builder.Services.AddPedido(builder.Configuration);
 builder.Services.AddCadastro(builder.Configuration);
 builder.Services.AddProduto(builder.Configuration);
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks().AddMongoDb("mongodb://admin:123@localhost:27017/?authSource=admin&retryWrites=false&tls=false");
 builder.Services.AddHealthChecksUI(options =>
 {
     options.SetEvaluationTimeInSeconds(5);

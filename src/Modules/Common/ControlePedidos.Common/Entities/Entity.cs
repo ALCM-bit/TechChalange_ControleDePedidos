@@ -2,7 +2,7 @@
 
 public abstract class Entity
 {
-    public string Id { get; set; }
+    public string Id { get; } = string.Empty;
 
     protected Entity(string id)
     {
