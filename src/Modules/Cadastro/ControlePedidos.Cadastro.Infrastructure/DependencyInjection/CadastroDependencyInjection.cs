@@ -1,4 +1,4 @@
-﻿using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Contexts;
+using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Contexts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
