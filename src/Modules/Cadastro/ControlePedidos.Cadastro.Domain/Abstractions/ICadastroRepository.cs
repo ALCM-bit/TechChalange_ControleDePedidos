@@ -8,7 +8,8 @@ namespace ControlePedidos.Cadastro.Domain.Abstractions
 {
     public interface ICadastroRepository
     {
-        Task<Entities.Cadastro> ObterCadastro(string id);
-        Task<IList<Entities.Cadastro>> ObterTodosCadastros();
+        Task<Entities.Cadastro> ObterCadastroAsync(string id);
+        Task<IList<Entities.Cadastro>> ObterTodosCadastrosAsync();
+        Task CadastrarAsync(Entities.Cadastro cadastro);
     }
 }
