@@ -7,6 +7,12 @@ public interface IPedidoService
 {
     Task<PedidoResponse> ObterPedidoAsync(string idPedido);
     Task<IEnumerable<PedidoResponse>> ObterTodosPedidosAsync();
+
+    /// <summary>
+    /// Cria um Pedido
+    /// </summary>
+    /// <param name="pedido"></param>
+    /// <returns>Código do Pedido</returns>
     Task<string> CriarPedidoAsync(PedidoRequest pedido);
-    Task AtualizarStatusAsync(string id, StatusPedido status);
+    Task AtualizarPedidoAsync(string id, AtualizarPedidoRequest pedidoRequest);
 }

@@ -6,6 +6,10 @@ using HealthChecks.UI.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+       .AddEnvironmentVariables();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -16,7 +20,10 @@ builder.Services.AddPedido(builder.Configuration);
 builder.Services.AddCadastro(builder.Configuration);
 builder.Services.AddProduto(builder.Configuration);
 
-builder.Services.AddHealthChecks().AddMongoDb("mongodb://admin:123@localhost:27017/?authSource=admin&retryWrites=false&tls=false");
+// TODO: Obter connection string das configurações
+builder.Services.AddHealthChecks()
+                .AddMongoDb(Environment.GetEnvironmentVariable("ConnectionStrings__ControlePedidosDB"));
+
 builder.Services.AddHealthChecksUI(options =>
 {
     options.SetEvaluationTimeInSeconds(5);

@@ -43,59 +43,25 @@ public class PedidoService : IPedidoService
 
     public async Task<string> CriarPedidoAsync(PedidoRequest pedidoRequest)
     {
-        var codigoPedido = Guid.NewGuid().ToString().Substring(0, 5);
+        var codigoPedido = Guid.NewGuid().ToString().Substring(0, 5).ToUpper();
 
-        var pedido = new Entity.Pedido(string.Empty, codigoPedido, DateTime.UtcNow, pedidoRequest.IdCliente);
+        var pedido = new Entity.Pedido(string.Empty, codigoPedido, pedidoRequest.IdCliente, null, DateTime.UtcNow);
 
-        string id = await _pedidoRepository.CriarPedidoAsync(pedido);
+        await _pedidoRepository.CriarPedidoAsync(pedido);
 
-        return id;
+        return codigoPedido;
     }
 
-    public async Task ConfirmarPedidoAsync(string id)
+    public async Task AtualizarPedidoAsync(string id, AtualizarPedidoRequest pedidoRequest)
     {
         Entity.Pedido pedido = await _pedidoRepository.ObterPedidoAsync(id);
 
         if (pedido is null)
         {
-            throw new ApplicationErrorException("Pedido não encontrado");
+            throw new ApplicationNotificationException("Pedido não encontrado");
         }
 
-        pedido.ConfirmarPedido();
-
-        await _pedidoRepository.AtualizarPedidoAsync(pedido);
-    }
-
-    public async Task AtualizarStatusAsync(string id, StatusPedido status)
-    {
-        Entity.Pedido pedido = await _pedidoRepository.ObterPedidoAsync(id);
-
-        if (pedido is null)
-        {
-            throw new ApplicationErrorException("Pedido não encontrado");
-        }
-
-        switch (status)
-        {
-            case StatusPedido.Recebido:
-                pedido.ConfirmarPedido();
-                break;
-
-            case StatusPedido.Preparando:
-                pedido.IniciarPreparo();
-                break;
-
-            case StatusPedido.Pronto:
-                pedido.FinalizarPreparo();
-                break;
-
-            case StatusPedido.Finalizado:
-                pedido.FinalizarPedido();
-                break;
-
-            default:
-                throw new ApplicationErrorException("Status inválido");
-        }
+        pedido.AtualizarStatus(pedidoRequest.Status);
 
         await _pedidoRepository.AtualizarPedidoAsync(pedido);
     }

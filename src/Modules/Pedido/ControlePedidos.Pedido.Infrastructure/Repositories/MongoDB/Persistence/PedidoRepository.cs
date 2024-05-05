@@ -19,23 +19,39 @@ public class PedidoRepository : IPedidoRepository
         var filter = Builders<PedidoModel>.Filter.Eq(p => p.Id, idPedido);
 
         var result = await _context.Pedido.Find(filter).Limit(1).FirstOrDefaultAsync();
-
-        // TODO: Criar mapeamento/conversão model -> entity        
-        return null;
+    
+        return PedidoModel.MapToDomain(result);
     }
 
-    public Task<IEnumerable<Domain.Entities.Pedido>> ObterTodosPedidosAsync()
+    public async Task<IEnumerable<Domain.Entities.Pedido>> ObterTodosPedidosAsync()
     {
-        throw new NotImplementedException();
+        var filter = Builders<PedidoModel>.Filter.Empty;
+        var sort = Builders<PedidoModel>.Sort.Descending(x => x.Id);
+
+        var result = await _context.Pedido.Find(filter).Sort(sort).ToListAsync();
+
+        return PedidoModel.MapToDomain(result);
     }
 
-    public Task<string> CriarPedidoAsync(Domain.Entities.Pedido pedido)
+    public async Task<string> CriarPedidoAsync(Domain.Entities.Pedido pedido)
     {
-        throw new NotImplementedException();
+        var model = PedidoModel.MapFromDomain(pedido);
+
+        await _context.Pedido.InsertOneAsync(model);
+
+        return model.Id;
     }
 
     public Task AtualizarPedidoAsync(Domain.Entities.Pedido pedido)
     {
-        throw new NotImplementedException();
+        var model = PedidoModel.MapFromDomain(pedido);
+
+        var filter = Builders<PedidoModel>.Filter.Eq(p => p.Id, pedido.Id);
+
+        var update = Builders<PedidoModel>.Update
+                                           .Set(p => p.Status, pedido.Status)
+                                           .Set(p => p.DataFinalizacao, pedido.DataFinalizacao);
+
+        return _context.Pedido.UpdateOneAsync(filter, update);
     }
 }

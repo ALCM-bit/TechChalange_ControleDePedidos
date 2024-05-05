@@ -12,11 +12,12 @@ public class Pedido : Entity, IAggregationRoot
 
     // TODO: Adicionar Lista de Produtos
 
-    public Pedido(string id, string codigoPedido, DateTime dataCriacao, string? idCliente): base(id)
+    public Pedido(string id, string codigoPedido, string? idCliente, StatusPedido? status, DateTime dataCriacao): base(id)
     {
         Codigo = codigoPedido;
-        DataCriacao = dataCriacao;
         IdCliente = idCliente;
+        Status = status;
+        DataCriacao = dataCriacao;        
 
         Validate();
     }
@@ -25,58 +26,97 @@ public class Pedido : Entity, IAggregationRoot
     {
         if (DataFinalizacao.HasValue && (DataFinalizacao.Value < DataCriacao))
         {
-            throw new DomainException("Data de finalização não pode ser menor que a data de criação");
+            throw new DomainNotificationException("Data de finalização não pode ser menor que a data de criação");
         }
+    }
+
+    public void AtualizarStatus(StatusPedido status)
+    {
+        switch (status)
+        {
+            case StatusPedido.Recebido:
+                ConfirmarPedido();
+                break;
+
+            case StatusPedido.Preparando:
+                IniciarPreparo();
+                break;
+
+            case StatusPedido.Pronto:
+                FinalizarPreparo();
+                break;
+
+            case StatusPedido.Finalizado:
+                FinalizarPedido();
+                break;
+
+            default:
+                throw new DomainNotificationException("Status inválido");
+        }
+
+        Validate();
     }
 
     public void ConfirmarPedido()
     {
+        if (Status == StatusPedido.Recebido) return;
+
         if (Status != null)
         {
-            throw new DomainException("Status inválido");
+            throw new DomainNotificationException("Status inválido");
         }
 
         Status = StatusPedido.Recebido;
+
         Validate();
     }
 
     public void IniciarPreparo()
     {
+        if (Status == StatusPedido.Preparando) return;
+
         if (Status != StatusPedido.Recebido)
         {
-            throw new DomainException("Status inválido");
+            throw new DomainNotificationException("Status inválido");
         }
 
         Status = StatusPedido.Preparando;
+
         Validate();
     }
 
     public void FinalizarPreparo()
     {
+        if (Status == StatusPedido.Pronto) return;
+
         if (Status != StatusPedido.Preparando)
         {
-            throw new DomainException("Status inválido");
+            throw new DomainNotificationException("Status inválido");
         }
 
         Status = StatusPedido.Pronto;
+
         Validate();
     }
 
     public void FinalizarPedido()
     {
+        if (Status == StatusPedido.Finalizado) return;
+
         if (Status != StatusPedido.Pronto)
         {
-            throw new DomainException("Status inválido");
+            throw new DomainNotificationException("Status inválido");
         }
 
         Status = StatusPedido.Finalizado;
         DataFinalizacao = DateTime.UtcNow;
+
         Validate();
     }
 
     public double ObterTotal()
     {
-        // TODO: Implementar
+        // TODO: Implementar quando modulo de produtos finalizado
         return 100;
     }
 }
