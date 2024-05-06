@@ -36,7 +36,7 @@ public class CadastroDbContext
 
     private static string GetConnectionString()
     {
-        var connectionString = ConfigurationManager.ConnectionStrings["ControlePedidosDB"].ConnectionString;
-        return Environment.ExpandEnvironmentVariables(connectionString);
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__ControlePedidosDB");
+        return Environment.ExpandEnvironmentVariables(connectionString!);
     }
 }

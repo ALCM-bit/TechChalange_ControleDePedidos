@@ -1,7 +1,7 @@
 ﻿using ControlePedidos.Cadastro.Application.Abstractions;
 using ControlePedidos.Cadastro.Application.DTO;
 using ControlePedidos.Cadastro.Domain.Abstractions;
-using Mapster;
+using ControlePedidos.Cadastro.Domain.ValueObjects;
 
 namespace ControlePedidos.Cadastro.Application.Services
 {
@@ -16,7 +16,11 @@ namespace ControlePedidos.Cadastro.Application.Services
 
         public async Task<bool> CadastrarAsync(CadastroRequest cadastro)
         {
-            var cadastroDomain = cadastro.Adapt<Domain.Entities.Cadastro>();
+            var cadastroDomain = new Domain.Entities.Cadastro(null, 
+                                                              new Email(cadastro.Email),
+                                                              new CPF(cadastro.CPF),
+                                                              cadastro.Nome);
+
             await _cadastroRepository.CadastrarAsync(cadastroDomain);
 
             return true;
@@ -26,18 +30,19 @@ namespace ControlePedidos.Cadastro.Application.Services
         {
             var cadastro = await _cadastroRepository.ObterCadastroAsync(Id);
 
-            var cadastroResponse = cadastro.Adapt<CadastroResponse>();
+            if(cadastro is null)
+            {
+                throw new NotFiniteNumberException("Cadastro não encontrado.");
+            }
+
+            var cadastroResponse = new CadastroResponse 
+            { 
+                CPF = cadastro.CPF.Numero,
+                Nome = cadastro.Nome,
+                Email = cadastro.Email.Endereco,
+            };
 
             return cadastroResponse;
-        }
-
-        public async Task<IList<CadastroResponse>> ObterTodosCadastrosAsync()
-        {
-            var cadastros = await _cadastroRepository.ObterTodosCadastrosAsync();
-
-            var cadastroResponses = cadastros.Adapt<List<CadastroResponse>>();
-
-            return cadastroResponses;
         }
     }
 }

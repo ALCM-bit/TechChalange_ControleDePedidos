@@ -24,7 +24,7 @@ namespace ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositori
         {
             try
             {
-                var cadastroModel = cadastro.Adapt<CadastroModel>();
+                var cadastroModel = CadastroModel.MapFromDomain(cadastro);
                 await _dbCadastro.Cadastro.InsertOneAsync(cadastroModel);
             }
             catch (Exception ex)
@@ -40,7 +40,7 @@ namespace ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositori
             {
                 var cadastroEncontrado = await _dbCadastro.Cadastro.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-                var cadastro = cadastroEncontrado.Adapt<Domain.Entities.Cadastro>();
+                var cadastro = CadastroModel.MapToDomain(cadastroEncontrado);
 
                 return cadastro;
             }
@@ -57,7 +57,7 @@ namespace ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositori
             {
                 var cadastrosEncontrados = await _dbCadastro.Cadastro.Find(_ => true).ToListAsync();
 
-                var cadastros = cadastrosEncontrados.Adapt<List<Domain.Entities.Cadastro>>(); ;
+                var cadastros = CadastroModel.MapToDomain(cadastrosEncontrados);
 
                 return cadastros;
             }

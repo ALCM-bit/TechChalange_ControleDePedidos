@@ -11,6 +11,5 @@ namespace ControlePedidos.Cadastro.Application.Abstractions
     {
         Task<bool> CadastrarAsync(CadastroRequest cadastro);
         Task<CadastroResponse> ObterCadastroAsync(string Id);
-        Task<IList<CadastroResponse>> ObterTodosCadastrosAsync();
     }
 }

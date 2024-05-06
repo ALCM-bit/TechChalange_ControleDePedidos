@@ -6,15 +6,53 @@ using System.Threading.Tasks;
 
 namespace ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Models;
 
-public class CadastroModel : BaseModel
+internal class CadastroModel : BaseModel
 {
-        public CadastroModel(string cpf, string email, string nome)
+    public CadastroModel(string id) : base(id)
+    {
+    }
+    public string Email { get; set; }
+    public string CPF { get; set; }
+    public string Nome { get; set; }
+
+
+    internal static CadastroModel MapFromDomain(Domain.Entities.Cadastro cadastro)
+    {
+        if (cadastro is null) return null;
+
+        return new CadastroModel(cadastro.Id)
         {
-                Email = email;
-                CPF = cpf;
-                Nome = nome;
+            CPF = cadastro.CPF.Numero,
+            Email = cadastro.Email.Endereco,
+            Nome = cadastro.Nome
+        };
+    }
+
+    internal static Domain.Entities.Cadastro MapToDomain(CadastroModel cadastroModel)
+    {
+        if (cadastroModel is null) return null;
+
+        return new Domain.Entities.Cadastro(cadastroModel.Id,
+                                            new Domain.ValueObjects.Email(cadastroModel.Email),
+                                            new Domain.ValueObjects.CPF(cadastroModel.CPF),
+                                            cadastroModel.Nome);
+    }
+
+    internal static IList<Domain.Entities.Cadastro> MapToDomain(IEnumerable<CadastroModel> cadastroModel)
+    {
+        var mapList = new List<Domain.Entities.Cadastro>();
+
+        if (cadastroModel is null || !cadastroModel.Any()) return mapList;
+
+        foreach (var model in cadastroModel)
+        {
+            try
+            {
+                mapList.Add(MapToDomain(model));
+            }
+            catch { }
         }
-        public string Email { get; private set; }
-        public string CPF { get; private set; }
-        public string Nome { get; private set; }
+
+        return mapList;
+    }
 }
