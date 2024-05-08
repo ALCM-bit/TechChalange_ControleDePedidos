@@ -34,11 +34,11 @@ namespace ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositori
 
         }
 
-        public async Task<Domain.Entities.Cadastro> ObterCadastroAsync(string id)
+        public async Task<Domain.Entities.Cadastro> ObterCadastroAsync(string cpf)
         {
             try
             {
-                var cadastroEncontrado = await _dbCadastro.Cadastro.Find(x => x.Id == id).FirstOrDefaultAsync();
+                var cadastroEncontrado = await _dbCadastro.Cadastro.Find(x => x.CPF == cpf).FirstOrDefaultAsync();
 
                 var cadastro = CadastroModel.MapToDomain(cadastroEncontrado);
 

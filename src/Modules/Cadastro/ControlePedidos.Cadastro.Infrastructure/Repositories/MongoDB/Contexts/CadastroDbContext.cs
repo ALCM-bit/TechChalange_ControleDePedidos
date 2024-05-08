@@ -11,7 +11,7 @@ public class CadastroDbContext
 
     #region Collections
 
-    public IMongoCollection<CadastroModel> Cadastro => Database.GetCollection<CadastroModel>(Collections.Cadastro);
+    internal IMongoCollection<CadastroModel> Cadastro => Database.GetCollection<CadastroModel>(Collections.Cadastro);
 
     #endregion
 
@@ -33,6 +33,7 @@ public class CadastroDbContext
         Client = new MongoClient(mongoSettings);
         Database = Client.GetDatabase("controlePedidosDB");
     }
+    // Descobrir problema ao obter.
 
     private static string GetConnectionString()
     {

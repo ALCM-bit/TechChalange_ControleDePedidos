@@ -26,9 +26,9 @@ namespace ControlePedidos.Cadastro.Application.Services
             return true;
         }
 
-        public async Task<CadastroResponse> ObterCadastroAsync(string Id)
+        public async Task<CadastroResponse> ObterCadastroAsync(string cpf)
         {
-            var cadastro = await _cadastroRepository.ObterCadastroAsync(Id);
+            var cadastro = await _cadastroRepository.ObterCadastroAsync(cpf);
 
             if(cadastro is null)
             {

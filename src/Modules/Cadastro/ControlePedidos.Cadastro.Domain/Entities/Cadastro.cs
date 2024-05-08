@@ -35,14 +35,15 @@ namespace ControlePedidos.Cadastro.Domain.Entities
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(Email.Endereco))
-            {
-                var email = Email.Validate();
-                if (!email)
-                {
-                    throw new DomainException("O e-mail informado é inválido.");
-                }
-            }
+            //Ajustar validação:
+            //if (!string.IsNullOrWhiteSpace(Email.Endereco))
+            //{
+            //    var email = Email.Validate();
+            //    if (!email)
+            //    {
+            //        throw new DomainException("O e-mail informado é inválido.");
+            //    }
+            //}
 
             if (string.IsNullOrWhiteSpace(Nome))
             {
