@@ -25,22 +25,22 @@
         {
             if (string.IsNullOrEmpty(Nome))
             {
-                throw new DomainException("Nome do produto é obrigatório");
+                throw new DomainNotificationException("Nome do produto é obrigatório");
             }
 
             if (Preco <= 0)
             {
-                throw new DomainException("Preço do produto é obrigatório");
+                throw new DomainNotificationException("Preço do produto é obrigatório");
             }
 
             if (TipoProduto == null)
             {
-                throw new DomainException("Tipo do produto é obrigatório");
+                throw new DomainNotificationException("Tipo do produto é obrigatório");
             }
 
             if (string.IsNullOrEmpty(Descricao))
             {
-                throw new DomainException("Descrição do produto é obrigatório");
+                throw new DomainNotificationException("Descrição do produto é obrigatório");
             }
 
             Validate();

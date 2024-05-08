@@ -1,12 +1,14 @@
-﻿namespace CadastroPedidos.Produto.Application.Abstractions
+﻿using ControlePedidos.Produto.Domain.Enums;
+
+namespace CadastroPedidos.Produto.Application.Abstractions
 {
     public interface IProdutoService
     {
         // Definir os métodos da interface
-        Task<ProdutoResponse> ObterProdutoAsync(string idProduto);
-        Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync();
-        Task AdicionarProdutoAsync(ProdutoResponse produto);
-        Task AtualizarProdutoAsync(ProdutoResponse produto);
-        Task RemoverProdutoAsync(string idProduto);
+        Task<ProdutoResponse> ObterProdutoAsync(string id);
+        Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync(TipoProduto tipoProduto);
+        Task AdicionarProdutoAsync(ProdutoRequest produto);
+        Task AtualizarProdutoAsync(string id, ProdutoRequest produto);
+        Task RemoverProdutoAsync(string id);
     }
 }

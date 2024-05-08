@@ -1,4 +1,5 @@
 ﻿using ControlePedidos.Produto.Domain.Abstractions;
+using ControlePedidos.Produto.Domain.Enums;
 using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Contexts;
 
 namespace ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Persistence
@@ -29,7 +30,7 @@ namespace ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Persistenc
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Domain.Entities.Produto>> ObterTodosTiposProdutoAsync()
+        public Task<IEnumerable<Domain.Entities.Produto>> ObterTodosTiposProdutoAsync(TipoProduto tipoProduto)
         {
             throw new NotImplementedException();
         }
