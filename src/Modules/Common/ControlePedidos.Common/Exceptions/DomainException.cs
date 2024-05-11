@@ -1,6 +1,6 @@
 ﻿namespace ControlePedidos.Common.Exceptions;
 
-public class DomainException : Exception
+public class DomainException : NotificationException
 {
     public DomainException(string message) : base(message)
     {

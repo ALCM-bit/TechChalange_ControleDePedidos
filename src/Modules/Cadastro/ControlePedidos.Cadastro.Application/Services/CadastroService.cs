@@ -28,11 +28,16 @@ namespace ControlePedidos.Cadastro.Application.Services
 
         public async Task<CadastroResponse> ObterCadastroAsync(string cpf)
         {
+            if(cpf is not null)
+            {
+                cpf = cpf.Trim().Replace(".", "").Replace("-", "");
+            }
+
             var cadastro = await _cadastroRepository.ObterCadastroAsync(cpf);
 
             if(cadastro is null)
             {
-                throw new NotFiniteNumberException("Cadastro não encontrado.");
+                return null!;
             }
 
             var cadastroResponse = new CadastroResponse 

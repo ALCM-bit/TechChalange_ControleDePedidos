@@ -25,6 +25,7 @@ namespace ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositori
             try
             {
                 var cadastroModel = CadastroModel.MapFromDomain(cadastro);
+                cadastroModel.CPF = cadastroModel.CPF.Trim().Replace(".", "").Replace("-", "");
                 await _dbCadastro.Cadastro.InsertOneAsync(cadastroModel);
             }
             catch (Exception ex)
