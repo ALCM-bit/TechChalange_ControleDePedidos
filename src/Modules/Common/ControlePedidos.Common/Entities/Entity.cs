@@ -2,9 +2,9 @@
 
 public abstract class Entity
 {
-    public string Id { get; } = string.Empty;
+    public string? Id { get; }
 
-    protected Entity(string id)
+    protected Entity(string? id)
     {
         Id = id;
     }

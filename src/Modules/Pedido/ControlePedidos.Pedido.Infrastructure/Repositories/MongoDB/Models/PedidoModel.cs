@@ -16,9 +16,9 @@ internal class PedidoModel : BaseModel
 
     internal static PedidoModel MapFromDomain(Domain.Entities.Pedido pedido)
     {
-        if (pedido is null) return null;
+        if (pedido is null) return null!;
 
-        return new PedidoModel(pedido.Id)
+        return new PedidoModel(pedido.Id!)
         {
             Codigo = pedido.Codigo,
             IdCliente = pedido.IdCliente,
@@ -30,13 +30,14 @@ internal class PedidoModel : BaseModel
 
     internal static Domain.Entities.Pedido MapToDomain(PedidoModel pedidoModel)
     {
-        if (pedidoModel is null) return null;
+        if (pedidoModel is null) return null!;
 
         return new Domain.Entities.Pedido(pedidoModel.Id,
                                           pedidoModel.Codigo,
                                           pedidoModel.IdCliente,
                                           pedidoModel.Status,
-                                          pedidoModel.DataCriacao);
+                                          pedidoModel.DataCriacao,
+                                          pedidoModel.DataFinalizacao);
     }
 
     internal static IEnumerable<Domain.Entities.Pedido> MapToDomain(IEnumerable<PedidoModel> pedidoModel)

@@ -12,12 +12,13 @@ public class Pedido : Entity, IAggregationRoot
 
     // TODO: Adicionar Lista de Produtos
 
-    public Pedido(string id, string codigoPedido, string? idCliente, StatusPedido? status, DateTime dataCriacao): base(id)
+    public Pedido(string? id, string? codigoPedido, string? idCliente, StatusPedido? status, DateTime dataCriacao, DateTime? dataFinalizacao) : base(id)
     {
-        Codigo = codigoPedido;
+        Codigo = !string.IsNullOrWhiteSpace(codigoPedido) ? codigoPedido : Guid.NewGuid().ToString().Substring(0, 5).ToUpper();
         IdCliente = idCliente;
         Status = status;
-        DataCriacao = dataCriacao;        
+        DataCriacao = dataCriacao; 
+        DataFinalizacao = dataFinalizacao.HasValue ? dataFinalizacao.Value : null;
 
         Validate();
     }
@@ -30,31 +31,10 @@ public class Pedido : Entity, IAggregationRoot
         }
     }
 
-    public void AtualizarStatus(StatusPedido status)
+    public double ObterTotal()
     {
-        switch (status)
-        {
-            case StatusPedido.Recebido:
-                ConfirmarPedido();
-                break;
-
-            case StatusPedido.Preparando:
-                IniciarPreparo();
-                break;
-
-            case StatusPedido.Pronto:
-                FinalizarPreparo();
-                break;
-
-            case StatusPedido.Finalizado:
-                FinalizarPedido();
-                break;
-
-            default:
-                throw new DomainNotificationException("Status inválido");
-        }
-
-        Validate();
+        // TODO: Implementar quando modulo de produtos finalizado
+        return 100;
     }
 
     public void ConfirmarPedido()
@@ -114,9 +94,30 @@ public class Pedido : Entity, IAggregationRoot
         Validate();
     }
 
-    public double ObterTotal()
+    public void AtualizarStatus(StatusPedido status)
     {
-        // TODO: Implementar quando modulo de produtos finalizado
-        return 100;
+        switch (status)
+        {
+            case StatusPedido.Recebido:
+                ConfirmarPedido();
+                break;
+
+            case StatusPedido.Preparando:
+                IniciarPreparo();
+                break;
+
+            case StatusPedido.Pronto:
+                FinalizarPreparo();
+                break;
+
+            case StatusPedido.Finalizado:
+                FinalizarPedido();
+                break;
+
+            default:
+                throw new DomainNotificationException("Status inválido");
+        }
+
+        Validate();
     }
 }

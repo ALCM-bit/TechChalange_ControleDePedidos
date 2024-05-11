@@ -15,9 +15,8 @@ public class PedidosController : BaseController
         _pedidoService = pedidoService;
     }
 
-    // TODO: Unit Tests
-    // TODO: Adicionar Autenticação
     // TODO: Criar objeto de retorno padrão
+    // TODO: Adicionar Autenticação
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PedidoResponse>>> ObterTodosPedidos()

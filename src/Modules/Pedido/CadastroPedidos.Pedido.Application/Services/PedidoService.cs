@@ -2,7 +2,6 @@
 using CadastroPedidos.Pedido.Application.DTO;
 using ControlePedidos.Common.Exceptions;
 using ControlePedidos.Pedido.Domain.Abstractions;
-using ControlePedidos.Pedido.Domain.Enums;
 using Mapster;
 
 using Entity = ControlePedidos.Pedido.Domain.Entities;
@@ -21,7 +20,7 @@ public class PedidoService : IPedidoService
     public async Task<PedidoResponse> ObterPedidoAsync(string idPedido)
     {
         Entity.Pedido pedido = await _pedidoRepository.ObterPedidoAsync(idPedido);
-
+         
         if (pedido is null)
         {
             return null!;
@@ -43,13 +42,11 @@ public class PedidoService : IPedidoService
 
     public async Task<string> CriarPedidoAsync(PedidoRequest pedidoRequest)
     {
-        var codigoPedido = Guid.NewGuid().ToString().Substring(0, 5).ToUpper();
-
-        var pedido = new Entity.Pedido(string.Empty, codigoPedido, pedidoRequest.IdCliente, null, DateTime.UtcNow);
+        var pedido = new Entity.Pedido(string.Empty, string.Empty, pedidoRequest.IdCliente, null, DateTime.UtcNow, null);
 
         await _pedidoRepository.CriarPedidoAsync(pedido);
 
-        return codigoPedido;
+        return pedido.Codigo;
     }
 
     public async Task AtualizarPedidoAsync(string id, AtualizarPedidoRequest pedidoRequest)
