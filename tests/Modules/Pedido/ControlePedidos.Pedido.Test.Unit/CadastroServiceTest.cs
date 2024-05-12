@@ -16,12 +16,10 @@ namespace ControlePedidos.Pedido.Test.Unit
         private readonly ICadastroService _cadastroService;
         private readonly Mock<ICadastroRepository> _cadastroRepository;
 
-        public CadastroServiceTest(
-            ICadastroService cadastroService,
-            Mock<ICadastroRepository> cadastroRepository)
+        public CadastroServiceTest()
         {
+            _cadastroRepository = new Mock<ICadastroRepository>();
             _cadastroService = new CadastroService(_cadastroRepository.Object);
-            _cadastroRepository = new();
         }
 
         private static Cadastro.Domain.Entities.Cadastro CriarCadastro()
@@ -29,7 +27,7 @@ namespace ControlePedidos.Pedido.Test.Unit
             string? id = Guid.NewGuid().ToString();
             string? nome = "Felipe";
             string? email = "felipe@gmail.com";
-            string? cpf = "461.004.368-84";
+            string? cpf = "46100436884";
 
             return new Cadastro.Domain.Entities.Cadastro(
                 id, 
@@ -43,7 +41,7 @@ namespace ControlePedidos.Pedido.Test.Unit
         {
             var cadastro = CriarCadastro();
 
-            _cadastroRepository.Setup(x => x.ObterCadastroAsync(cadastro.CPF.Numero!)).ReturnsAsync(cadastro);
+            _cadastroRepository.Setup(x => x.ObterCadastroAsync(cadastro.CPF.Numero)).ReturnsAsync(cadastro);
 
             var response = await _cadastroService.ObterCadastroAsync(cadastro.CPF.Numero);
 
@@ -53,7 +51,7 @@ namespace ControlePedidos.Pedido.Test.Unit
         [Fact]
         public async Task ObterCadastroAsync_Shoul_RetornarNulo_When_CadastroNaoEncontrado()
         {
-            var cpf = "118.639.318-13";
+            var cpf = "11863931813";
 
             _cadastroRepository.Setup(x => x.ObterCadastroAsync(It.IsAny<string>())).ReturnsAsync(() => null!);
 
@@ -64,16 +62,17 @@ namespace ControlePedidos.Pedido.Test.Unit
             Assert.Null(response);
         }
 
+        [Fact]
         public async Task CriarCadastroAsync_Should_RetornarNome_When_CadastroCriado()
         {
             var request = new CadastroRequest()
             {
-                CPF = "118.639.318.13",
+                CPF = "11863931813",
                 Email = "felipe@gamil.com",
                 Nome = "Felipe",
             };
 
-            _cadastroRepository.Setup(x => x.CadastrarAsync(It.IsAny<Cadastro.Domain.Entities.Cadastro>())).Returns(() => "Felipe");
+            _cadastroRepository.Setup(x => x.CadastrarAsync(It.IsAny<Cadastro.Domain.Entities.Cadastro>()));
 
             var response = await _cadastroService.CadastrarAsync(request);
 
