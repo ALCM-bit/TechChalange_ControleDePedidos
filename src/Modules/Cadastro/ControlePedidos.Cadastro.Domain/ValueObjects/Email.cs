@@ -20,8 +20,11 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
         public override bool Validate()
         {
             string email = Endereco;
-            string emailPattern = @"^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@a-zA-Z0-9?(?:.a-zA-Z0-9?)$";
-            return Regex.IsMatch(email, emailPattern, RegexOptions.IgnoreCase);
+            if(email.IndexOf("@") <= 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
