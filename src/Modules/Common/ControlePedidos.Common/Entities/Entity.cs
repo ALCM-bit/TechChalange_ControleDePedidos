@@ -1,13 +1,14 @@
-﻿namespace ControlePedidos.Common.Entities;
+﻿using Microsoft.VisualBasic;
 
-public abstract class Entity
+namespace ControlePedidos.Common.Entities;
+
+public abstract class Entity(string? id, DateTime dataCriacao)
 {
-    public string? Id { get; }
+    public string? Id { get; } = id;
 
-    protected Entity(string? id)
-    {
-        Id = id;
-    }
+    public DateTime DataCriacao { get; } = dataCriacao;
+
+    public DateTime? DataAtualizacao { get; set; }
 
     protected abstract void Validate();
 }

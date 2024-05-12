@@ -13,5 +13,9 @@ public class BaseModel
     public BaseModel(string id)
     {
         Id = string.IsNullOrWhiteSpace(id) ? ObjectId.GenerateNewId().ToString() : id;
+        DataCriacao = DateTime.Now;
     }
+
+    public DateTime DataCriacao { get; set; }
+    public DateTime? DataAtualizacao { get; set; }
 }

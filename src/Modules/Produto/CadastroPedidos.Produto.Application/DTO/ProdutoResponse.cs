@@ -8,4 +8,7 @@ public class ProdutoResponse
     public decimal Preco { get; set; }
     public TipoProduto TipoProduto { get; set; }
     public string Descricao { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public DateTime DataAtualizacao { get; set; }
+    public bool Ativo { get; set; }
 }

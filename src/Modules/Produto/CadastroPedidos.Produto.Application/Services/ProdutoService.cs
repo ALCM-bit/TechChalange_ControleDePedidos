@@ -1,4 +1,6 @@
 ﻿using CadastroPedidos.Produto.Application.Abstractions;
+using CadastroPedidos.Produto.Application.DTO;
+using ControlePedidos.Common.Entities;
 using ControlePedidos.Common.Exceptions;
 using ControlePedidos.Produto.Domain.Abstractions;
 using ControlePedidos.Produto.Domain.Enums;
@@ -15,48 +17,62 @@ namespace CadastroPedidos.Produto.Application.Services
         public ProdutoService(IProdutoRepository produtoRepository)
         {
             _produtoRepository = produtoRepository;
-        }                                                                                                                                                                       
-
-        public async Task AdicionarProdutoAsync(ProdutoRequest produto)
-        {
-            var novoProduto = new Entity.Produto(string.Empty, produto.Nome, produto.Preco, produto.TipoProduto, produto.Descricao);
-
-            await _produtoRepository.AdicionarProdutoAsync(novoProduto);
         }
 
-        public async Task AtualizarProdutoAsync(string id, ProdutoRequest produto)
+        public async Task AdicionarProdutoAsync(IEnumerable<ProdutoRequest> listaProdutos)
         {
-            Entity.Produto produtoAntigo = await _produtoRepository.ObterProdutoAsync(id);
+            var novosProdutos = new List<Entity.Produto>();
+            foreach (var produto in listaProdutos)
+            {
+                novosProdutos.Add(new Entity.Produto(string.Empty, produto.Nome, produto.Preco, produto.TipoProduto, produto.Descricao, DateTime.UtcNow, true));
+            }
+
+            await _produtoRepository.AdicionarProdutoAsync(novosProdutos);
+        }
+
+        public async Task AtualizarProdutoAsync(string id, AtualizaProdutoRequest produto)
+        {
+            var produtoAntigo = await _produtoRepository.ObterProdutoAsync(id);
 
             if (produtoAntigo is null)
+                throw new ApplicationNotificationException("Produto não encontrado");
+            else
             {
-                throw new ApplicationNotificationException("Pedido não encontrado");
+                var produtoAtualizado = new Entity.Produto(produtoAntigo.Id!, produto.Nome, produto.Preco, produto.TipoProduto, produto.Descricao, produtoAntigo.DataCriacao, produto.Ativo);
+
+                await _produtoRepository.AtualizarProdutoAsync(produtoAtualizado);
             }
         }
 
         public async Task<ProdutoResponse> ObterProdutoAsync(string id)
         {
-            Entity.Produto produto = await _produtoRepository.ObterProdutoAsync(id);
+            var produto = await _produtoRepository.ObterProdutoAsync(id);
 
             if (produto is null)
-            {
                 return null!;
-            }
 
             var produtoResponse = produto.Adapt<ProdutoResponse>();
 
             return produtoResponse;
         }
 
-        public Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync(TipoProduto tipoProduto)
+        public async Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync(TipoProduto tipoProduto, bool ativo, bool retornarTodos)
         {
-            throw new NotImplementedException();
+            var pedidos = await _produtoRepository.ObterTodosTiposProdutoAsync(tipoProduto, ativo, retornarTodos);
+
+            var pedidoResponse = pedidos.Adapt<List<ProdutoResponse>>();
+
+            return pedidoResponse;
         }
 
-        public Task RemoverProdutoAsync(string id)
+        public async Task RemoverProdutoAsync(string id)
         {
-            // Implementar a lógica de remoção
-            throw new NotImplementedException();
+            var produto = await _produtoRepository.ObterProdutoAsync(id);
+
+            if (produto is null)
+                throw new ApplicationNotificationException("Produto não encontrado");
+
+            await _produtoRepository.RemoverProdutoAsync(produto);
         }
     }
 }

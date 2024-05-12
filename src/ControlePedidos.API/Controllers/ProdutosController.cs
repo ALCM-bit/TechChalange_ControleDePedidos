@@ -1,110 +1,110 @@
 ﻿using CadastroPedidos.Produto.Application.Abstractions;
+using CadastroPedidos.Produto.Application.DTO;
 using ControlePedidos.Common.Exceptions;
 using ControlePedidos.Produto.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControlePedidos.API.Controllers
+namespace ControlePedidos.API.Controllers;
+
+[Route("api/produtos")]
+public class ProdutosController : BaseController
 {
-    [Route("api/produtos")]
-    public class ProdutosController : BaseController
+    private readonly IProdutoService _produtoService;
+    public ProdutosController(IProdutoService produtoService)
     {
-        private readonly IProdutoService _produtoService;
-        public ProdutosController(IProdutoService produtoService)
+        _produtoService = produtoService;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AdicionarProdutoAsync([FromBody] IEnumerable<ProdutoRequest> produto)
+    {
+        try
         {
-            _produtoService = produtoService;
+            await _produtoService.AdicionarProdutoAsync(produto);
+
+            return Ok();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> AdicionarProdutoAsync([FromBody] ProdutoRequest produto)
+        catch (NotificationException ex)
         {
-            try
-            {
-                await _produtoService.AdicionarProdutoAsync(produto);
-
-                return Ok();
-            }
-            catch (NotificationException ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[{nameof(ProdutosController)}[{AdicionarProdutoAsync}] - Unexpected Error - [{ex.Message}]");
-                return BadRequest(new { error = "Ocorreu um erro inesperado" });
-            }
+            return BadRequest(new { error = ex.Message });
         }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> AtualizarProdutoAsync(string id, [FromBody] ProdutoRequest produto)
+        catch (Exception ex)
         {
-            try
-            {
-                await _produtoService.AtualizarProdutoAsync(id, produto);
-
-                return Ok();
-            }
-            catch (NotificationException ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[{nameof(ProdutosController)}[{AtualizarProdutoAsync}] - Unexpected Error - [{ex.Message}]");
-                return BadRequest(new { error = "Ocorreu um erro inesperado" });
-            }
+            Console.WriteLine($"[{nameof(ProdutosController)}[{AdicionarProdutoAsync}] - Unexpected Error - [{ex.Message}]");
+            return BadRequest(new { error = "Ocorreu um erro inesperado" });
         }
+    }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> ObterProdutoAsync(string id)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> AtualizarProdutoAsync(string id, [FromBody] AtualizaProdutoRequest produto)
+    {
+        try
         {
-            try
-            {
-                ProdutoResponse produto = await _produtoService.ObterProdutoAsync(id);
+            await _produtoService.AtualizarProdutoAsync(id, produto);
 
-                if (produto is null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(produto);
-            }
-            catch (NotificationException ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[{nameof(ProdutosController)}[{ObterProdutoAsync}] - Unexpected Error - [{ex.Message}]");
-                return BadRequest(new { error = "Ocorreu um erro inesperado" });
-            }
+            return Ok();
         }
-
-        [HttpGet]
-        public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] TipoProduto tipoProduto)
+        catch (NotificationException ex)
         {
-            IEnumerable<ProdutoResponse> produtos = await _produtoService.ObterTodosTiposProdutoAsync(tipoProduto);
-
-            return Ok(produtos);
+            return BadRequest(new { error = ex.Message });
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoverProdutoAsync(string id)
+        catch (Exception ex)
         {
-            try
-            {
-                await _produtoService.RemoverProdutoAsync(id);
+            Console.WriteLine($"[{nameof(ProdutosController)}[{AtualizarProdutoAsync}] - Unexpected Error - [{ex.Message}]");
+            return BadRequest(new { error = "Ocorreu um erro inesperado" });
+        }
+    }
 
-                return Ok();
-            }
-            catch (NotificationException ex)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> ObterProdutoAsync(string id)
+    {
+        try
+        {
+            ProdutoResponse produto = await _produtoService.ObterProdutoAsync(id);
+
+            if (produto is null)
             {
-                return BadRequest(new { error = ex.Message });
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[{nameof(ProdutosController)}[{RemoverProdutoAsync}] - Unexpected Error - [{ex.Message}]");
-                return BadRequest(new { error = "Ocorreu um erro inesperado" });
-            }
+
+            return Ok(produto);
+        }
+        catch (NotificationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[{nameof(ProdutosController)}[{ObterProdutoAsync}] - Unexpected Error - [{ex.Message}]");
+            return BadRequest(new { error = "Ocorreu um erro inesperado" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] TipoProduto tipoProduto, [FromQuery] bool ativo, bool retornarTodos = false)
+    {
+        IEnumerable<ProdutoResponse> produtos = await _produtoService.ObterTodosTiposProdutoAsync(tipoProduto, ativo, retornarTodos);
+
+        return Ok(produtos);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoverProdutoAsync(string id)
+    {
+        try
+        {
+            await _produtoService.RemoverProdutoAsync(id);
+
+            return Ok();
+        }
+        catch (NotificationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[{nameof(ProdutosController)}[{RemoverProdutoAsync}] - Unexpected Error - [{ex.Message}]");
+            return BadRequest(new { error = "Ocorreu um erro inesperado" });
         }
     }
 }

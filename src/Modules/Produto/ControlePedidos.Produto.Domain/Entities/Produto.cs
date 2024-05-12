@@ -6,13 +6,15 @@
         public decimal Preco { get; private set; }
         public TipoProduto TipoProduto { get; private set; }
         public string Descricao { get; private set; }
+        public bool Ativo { get; set; }
 
-        public Produto(string id, string nome, decimal preco, TipoProduto tipoProduto, string descricao) : base(id)
+        public Produto(string id, string nome, decimal preco, TipoProduto tipoProduto, string descricao, DateTime dataCriacao, bool ativo) : base(id, dataCriacao)
         {
             Nome = nome;
             Preco = preco;
             TipoProduto = tipoProduto;
             Descricao = descricao;
+            Ativo = ativo; 
 
             Validate();
         }

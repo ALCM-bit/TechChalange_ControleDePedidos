@@ -7,25 +7,22 @@ public class Pedido : Entity, IAggregationRoot
     public string Codigo { get; private set; }
     public string? IdCliente { get; private set; }
     public StatusPedido? Status { get; private set; } = null;
-    public DateTime DataCriacao { get; private set; }
-    public DateTime? DataFinalizacao { get; private set; }
 
     // TODO: Adicionar Lista de Produtos
 
-    public Pedido(string? id, string? codigoPedido, string? idCliente, StatusPedido? status, DateTime dataCriacao, DateTime? dataFinalizacao) : base(id)
+    public Pedido(string? id, string? codigoPedido, string? idCliente, StatusPedido? status, DateTime dataCriacao, DateTime? dataAtualizacao) : base(id, dataCriacao)
     {
         Codigo = !string.IsNullOrWhiteSpace(codigoPedido) ? codigoPedido : Guid.NewGuid().ToString().Substring(0, 5).ToUpper();
         IdCliente = idCliente;
         Status = status;
-        DataCriacao = dataCriacao; 
-        DataFinalizacao = dataFinalizacao.HasValue ? dataFinalizacao.Value : null;
+        DataAtualizacao = dataAtualizacao.HasValue ? dataAtualizacao.Value : null;
 
         Validate();
     }
 
     protected override void Validate()
     {
-        if (DataFinalizacao.HasValue && (DataFinalizacao.Value < DataCriacao))
+        if (DataAtualizacao.HasValue && (DataAtualizacao.Value < DataCriacao))
         {
             throw new DomainNotificationException("Data de finalização não pode ser menor que a data de criação");
         }
@@ -89,7 +86,7 @@ public class Pedido : Entity, IAggregationRoot
         }
 
         Status = StatusPedido.Finalizado;
-        DataFinalizacao = DateTime.UtcNow;
+        DataAtualizacao = DateTime.UtcNow;
 
         Validate();
     }
