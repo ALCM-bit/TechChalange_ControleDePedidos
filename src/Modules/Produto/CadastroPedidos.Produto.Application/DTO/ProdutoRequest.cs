@@ -2,9 +2,8 @@
 
 public class ProdutoRequest
 {
-    //  Colocar os campos do produto
-    public string Nome { get; set; }
-    public decimal Preco { get; set; }
+    public required string Nome { get; set; }
+    public required List<KeyValuePair<string, decimal>> TamanhoPreco { get; set; }
     public TipoProduto TipoProduto { get; set; }
-    public string Descricao { get; set; }
+    public required string Descricao { get; set; }
 }

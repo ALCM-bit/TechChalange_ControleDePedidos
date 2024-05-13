@@ -3,15 +3,15 @@
     public class Produto : Entity, IAggregationRoot
     {
         public string Nome { get; private set; }
-        public decimal Preco { get; private set; }
+        public IEnumerable<KeyValuePair<string, decimal>> TamanhoPreco { get; private set; }
         public TipoProduto TipoProduto { get; private set; }
         public string Descricao { get; private set; }
         public bool Ativo { get; set; }
 
-        public Produto(string id, string nome, decimal preco, TipoProduto tipoProduto, string descricao, DateTime dataCriacao, bool ativo) : base(id, dataCriacao)
+        public Produto(string id, string nome, IEnumerable<KeyValuePair<string, decimal>> tamanhoPreco, TipoProduto tipoProduto, string descricao, DateTime dataCriacao, bool ativo) : base(id, dataCriacao)
         {
             Nome = nome;
-            Preco = preco;
+            TamanhoPreco = tamanhoPreco;
             TipoProduto = tipoProduto;
             Descricao = descricao;
             Ativo = ativo; 
@@ -30,9 +30,9 @@
                 throw new DomainNotificationException("Nome do produto é obrigatório");
             }
 
-            if (Preco <= 0)
+            if (TamanhoPreco.Count() <= 0)
             {
-                throw new DomainNotificationException("Preço do produto é obrigatório");
+                throw new DomainNotificationException("Preço e tamanho do produto é obrigatório");
             }
 
             if (TipoProduto == null)

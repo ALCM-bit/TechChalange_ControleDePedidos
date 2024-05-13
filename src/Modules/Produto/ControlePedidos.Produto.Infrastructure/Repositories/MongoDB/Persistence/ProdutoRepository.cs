@@ -31,7 +31,7 @@ namespace ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Persistenc
                                            .Set(p => p.Nome, produto.Nome)
                                            .Set(p => p.Descricao, produto.Descricao)
                                            .Set(p => p.TipoProduto, produto.TipoProduto)
-                                           .Set(p => p.Preco, produto.Preco)
+                                           .Set(p => p.TamanhoPreco, produto.TamanhoPreco)
                                            .Set(p => p.DataAtualizacao, DateTime.UtcNow);
 
             return _context.Produto.UpdateOneAsync(filter, update);

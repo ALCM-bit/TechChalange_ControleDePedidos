@@ -24,7 +24,7 @@ namespace CadastroPedidos.Produto.Application.Services
             var novosProdutos = new List<Entity.Produto>();
             foreach (var produto in listaProdutos)
             {
-                novosProdutos.Add(new Entity.Produto(string.Empty, produto.Nome, produto.Preco, produto.TipoProduto, produto.Descricao, DateTime.UtcNow, true));
+                novosProdutos.Add(new Entity.Produto(string.Empty, produto.Nome, produto.TamanhoPreco, produto.TipoProduto, produto.Descricao, DateTime.UtcNow, true));
             }
 
             await _produtoRepository.AdicionarProdutoAsync(novosProdutos);
@@ -38,7 +38,7 @@ namespace CadastroPedidos.Produto.Application.Services
                 throw new ApplicationNotificationException("Produto não encontrado");
             else
             {
-                var produtoAtualizado = new Entity.Produto(produtoAntigo.Id!, produto.Nome, produto.Preco, produto.TipoProduto, produto.Descricao, produtoAntigo.DataCriacao, produto.Ativo);
+                var produtoAtualizado = new Entity.Produto(produtoAntigo.Id!, produto.Nome, produto.TamanhoPreco, produto.TipoProduto, produto.Descricao, produtoAntigo.DataCriacao, produto.Ativo);
 
                 await _produtoRepository.AtualizarProdutoAsync(produtoAtualizado);
             }

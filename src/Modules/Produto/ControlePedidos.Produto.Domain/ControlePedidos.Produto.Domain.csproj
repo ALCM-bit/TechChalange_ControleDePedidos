@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\Common\ControlePedidos.Common\ControlePedidos.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ValueObjects\" />
+  </ItemGroup>
+
 </Project>

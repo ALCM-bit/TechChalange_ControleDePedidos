@@ -1,5 +1,4 @@
-﻿using ControlePedidos.Produto.Domain.Entities;
-using ControlePedidos.Produto.Domain.Enums;
+﻿using ControlePedidos.Produto.Domain.Enums;
 
 namespace ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Models;
 
@@ -14,7 +13,7 @@ internal class ProdutoModel(string id) : BaseModel(id)
             Id = produto.Id!,
             Nome = produto.Nome,
             TipoProduto = produto.TipoProduto,
-            Preco = produto.Preco,
+            TamanhoPreco = produto.TamanhoPreco,
             Descricao = produto.Descricao,
             DataCriacao = produto.DataCriacao,
             DataAtualizacao = produto.DataAtualizacao,
@@ -41,7 +40,7 @@ internal class ProdutoModel(string id) : BaseModel(id)
 
         var produtoMapeado = new Domain.Entities.Produto(produto.Id!,
                                          produto.Nome,
-                                         produto.Preco,
+                                         produto.TamanhoPreco,
                                          produto.TipoProduto,
                                          produto.Descricao,
                                          produto.DataCriacao,
@@ -66,7 +65,7 @@ internal class ProdutoModel(string id) : BaseModel(id)
         return mapList;
     }
     public string Nome { get; private set; }
-    public decimal Preco { get; private set; }
+    public IEnumerable<KeyValuePair<string, decimal>> TamanhoPreco { get; private set; }
     public TipoProduto TipoProduto { get; private set; }
     public string Descricao { get; private set; }
     public bool Ativo { get; private set; }
