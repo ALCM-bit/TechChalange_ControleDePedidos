@@ -24,7 +24,7 @@ internal class PedidoModel : BaseModel
             IdCliente = pedido.IdCliente,
             Status = pedido.Status,
             DataCriacao = pedido.DataCriacao,
-            DataFinalizacao = pedido.DataFinalizacao
+            DataFinalizacao = pedido.DataAtualizacao
         };
     }
 

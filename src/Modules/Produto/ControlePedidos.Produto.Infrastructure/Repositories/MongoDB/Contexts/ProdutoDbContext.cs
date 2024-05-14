@@ -1,6 +1,5 @@
 ﻿using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Models;
 using MongoDB.Driver;
-using System.Configuration;
 
 namespace ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Contexts;
 public class ProdutoDbContext
@@ -10,7 +9,7 @@ public class ProdutoDbContext
 
     #region Collections
 
-    internal IMongoCollection<ProdutoModel> Pedido => Database.GetCollection<ProdutoModel>(Collections.Produto);
+    internal IMongoCollection<ProdutoModel> Produto => Database.GetCollection<ProdutoModel>(Collections.Produto);
 
     #endregion
 
@@ -30,12 +29,12 @@ public class ProdutoDbContext
         var mongoSettings = MongoClientSettings.FromUrl(url);
 
         Client = new MongoClient(mongoSettings);
-        Database = Client.GetDatabase("controlePedidosDB");
+        Database = Client.GetDatabase("controleProdutoDB");
     }
 
     private static string GetConnectionString()
     {
-        var connectionString = ConfigurationManager.ConnectionStrings["ControlePedidosDB"].ConnectionString;
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__ControlePedidosDB");
         return Environment.ExpandEnvironmentVariables(connectionString);
     }
 }

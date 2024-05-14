@@ -163,7 +163,7 @@ public class PedidoTest
 
         // Assert
         Assert.Equal(StatusPedido.Finalizado, pedido.Status);
-        Assert.NotNull(pedido.DataFinalizacao);
+        Assert.NotNull(pedido.DataAtualizacao);
     }
 
     [Fact]

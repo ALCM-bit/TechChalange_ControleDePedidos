@@ -1,4 +1,9 @@
-﻿using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Contexts;
+﻿using CadastroPedidos.Produto.Application.Abstractions;
+using CadastroPedidos.Produto.Application.Services;
+using ControlePedidos.Produto.Domain.Abstractions;
+using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB;
+using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Contexts;
+using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,11 +19,13 @@ public static class ProdutoDependencyInjection
 
     private static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
-
+        services.AddScoped<IProdutoService, ProdutoService>();
+        services.AddScoped<IProdutoRepository, ProdutoRepository>();
     }
 
     private static void RegisterContexts(this IServiceCollection services)
     {
+        MongoDbRegistror.RegisterDocumentResolver();
         services.AddScoped<ProdutoDbContext>();
     }
 }
