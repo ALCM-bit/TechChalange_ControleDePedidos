@@ -47,24 +47,16 @@ public class CadastrosController : BaseController
     {
         try
         {
-            var cadastradoJaExiste = await _cadastroService.ObterCadastroAsync(cadastro.CPF);
+            var cadastro = await _cadastroService.ObterCadastroAsync(cadastro.CPF);
 
-            if (cadastradoJaExiste is not null)
+            if (cadastro is not null)
             {
-                return BadRequest("Cadastro já existe.");
+                return Conflict(new { error = "Cadastro já existente." });
             }
 
             await _cadastroService.CadastrarAsync(cadastro);
 
-            var cadastrado = await _cadastroService.ObterCadastroAsync(cadastro.CPF);
-
-            if (cadastrado is null)
-            {
-                return BadRequest("Ocorreu um erro inesperado ao salvar o cadastro. Tente novamente mais tarde.");
-            }
-
-
-            return Ok($"{cadastro.Nome} - Cadastrado com sucesso!");
+            return Created();
         }
         catch(NotificationException ex)
         {
