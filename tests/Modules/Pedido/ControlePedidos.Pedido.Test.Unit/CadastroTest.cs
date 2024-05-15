@@ -1,10 +1,4 @@
-﻿using ControlePedidos.Common.Entities;
-using ControlePedidos.Common.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ControlePedidos.Common.Exceptions;
 
 namespace ControlePedidos.Pedido.Test.Unit
 {
@@ -74,6 +68,23 @@ namespace ControlePedidos.Pedido.Test.Unit
 
             // Assert
             var notificationException = Assert.Throws<DomainException>(act);
+        }
+
+        [Fact]
+        public void Validate_Shouldnt_ThrowDomainNotificationException_When_CadastroEstiverCorreto()
+        {
+            var cadastro = CriarCadastro();
+
+            // Act
+            Action act = () => new Cadastro.Domain.Entities.Cadastro(
+                null,
+                cadastro.Email,
+                cadastro.CPF,
+                cadastro.Nome
+                );
+
+            // Assert
+            Assert.NotNull(act);
         }
 
     }

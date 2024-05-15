@@ -22,50 +22,27 @@ namespace ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositori
 
         public async Task CadastrarAsync(Domain.Entities.Cadastro cadastro)
         {
-            try
-            {
-                var cadastroModel = CadastroModel.MapFromDomain(cadastro);
-                cadastroModel.CPF = cadastroModel.CPF.Trim().Replace(".", "").Replace("-", "");
-                await _dbCadastro.Cadastro.InsertOneAsync(cadastroModel);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+    
+            var cadastroModel = CadastroModel.MapFromDomain(cadastro);
+            cadastroModel.CPF = cadastroModel.CPF.Trim().Replace(".", "").Replace("-", "");
+            await _dbCadastro.Cadastro.InsertOneAsync(cadastroModel);
 
         }
 
         public async Task<Domain.Entities.Cadastro> ObterCadastroAsync(string cpf)
         {
-            try
-            {
-                var cadastroEncontrado = await _dbCadastro.Cadastro.Find(x => x.CPF == cpf).FirstOrDefaultAsync();
-
-                var cadastro = CadastroModel.MapToDomain(cadastroEncontrado);
-
-                return cadastro;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
+     
+            var cadastroEncontrado = await _dbCadastro.Cadastro.Find(x => x.CPF == cpf).FirstOrDefaultAsync();
+            var cadastro = CadastroModel.MapToDomain(cadastroEncontrado);
+            return cadastro;
         }
 
         public async Task<IList<Domain.Entities.Cadastro>> ObterTodosCadastrosAsync()
         {
-            try
-            {
-                var cadastrosEncontrados = await _dbCadastro.Cadastro.Find(_ => true).ToListAsync();
-
-                var cadastros = CadastroModel.MapToDomain(cadastrosEncontrados);
-
-                return cadastros;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+           
+            var cadastrosEncontrados = await _dbCadastro.Cadastro.Find(_ => true).ToListAsync();
+            var cadastros = CadastroModel.MapToDomain(cadastrosEncontrados);
+            return cadastros;
 
         }
     }

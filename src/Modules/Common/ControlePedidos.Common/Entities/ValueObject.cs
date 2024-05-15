@@ -1,8 +1,8 @@
 ﻿namespace ControlePedidos.Common.Entities;
 
-public abstract class ValueObjectBase
+public abstract class ValueObject
 {
-    protected ValueObjectBase()
+    protected ValueObject()
     { }
 
     public abstract bool Validate();

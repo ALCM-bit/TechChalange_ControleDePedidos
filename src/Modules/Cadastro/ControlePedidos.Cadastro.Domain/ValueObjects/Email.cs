@@ -1,18 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using ControlePedidos.Common.Entities;
+using ControlePedidos.Common.Exceptions;
 
 namespace ControlePedidos.Cadastro.Domain.ValueObjects
 {
-    public class Email : ValueObjectBase
+    public class Email : ValueObject
     {
         public Email(string email)
         {
             Endereco = email;
+
+            if (!Validate())
+            {
+                throw new DomainException("O e-mail informado é inválido.");
+            }
+
+
         }
 
         public string Endereco { get; private set; }
@@ -20,7 +22,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
         public override bool Validate()
         {
             string email = Endereco;
-            if(email.IndexOf("@") <= 0)
+            if (email.IndexOf("@") <= 0)
             {
                 return false;
             }

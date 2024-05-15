@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ControlePedidos.Common.Entities;
+﻿using ControlePedidos.Common.Entities;
+using ControlePedidos.Common.Exceptions;
 
 namespace ControlePedidos.Cadastro.Domain.ValueObjects
 {
-    public class CPF : ValueObjectBase
+    public class CPF : ValueObject
     {
         public CPF(string numero)
         {
             Numero = numero;
+
+            if (!Validate())
+            {
+                throw new DomainException("O CPF informado é inválido.");
+            }
         }
 
         public string Numero { get; private set; }
