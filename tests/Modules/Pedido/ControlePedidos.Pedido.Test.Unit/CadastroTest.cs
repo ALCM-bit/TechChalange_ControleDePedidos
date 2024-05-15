@@ -60,7 +60,7 @@ namespace ControlePedidos.Pedido.Test.Unit
         }
 
         [Fact]
-        public void Validate_Should_ThrowDomainNotificationException_When_NomeForVaziu()
+        public void Validate_Should_ThrowDomainNotificationException_When_NomeForVazio()
         {
             var cadastro = CriarCadastro();
 
