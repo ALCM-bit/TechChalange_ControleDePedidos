@@ -13,7 +13,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
 
         public string Numero { get; private set; }
 
-        public override bool Validate()
+        public override void Validate()
         {
             bool valido = true;
             string cpf = Numero;
@@ -26,7 +26,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             cpf = cpf.Trim();
             cpf = cpf.Replace(".", "").Replace("-", "");
             if (cpf.Length != 11)
-                throw new DomainException("O CPF informado é inválido.");
+                valido = false;
             tempCpf = cpf.Substring(0, 9);
             soma = 0;
 
@@ -54,8 +54,6 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             {
                 throw new DomainException("O CPF informado é inválido.");
             }
-
-            return valido;
         }
 
     }
