@@ -9,12 +9,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
         {
             Endereco = email;
 
-            if (!Validate())
-            {
-                throw new DomainException("O e-mail informado é inválido.");
-            }
-
-
+            Validate();
         }
 
         public string Endereco { get; private set; }
@@ -24,7 +19,9 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             string email = Endereco;
             if (email.IndexOf("@") <= 0)
             {
-                return false;
+                
+               throw new DomainException("O e-mail informado é inválido.");
+                
             }
             return true;
         }

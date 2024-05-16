@@ -7,19 +7,16 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
     {
         public CPF(string numero)
         {
-            Numero = numero;
-
-            if (!Validate())
-            {
-                throw new DomainException("O CPF informado é inválido.");
-            }
+            Numero = numero.Trim().Replace(".", "").Replace("-", "");
+            Validate();
         }
 
         public string Numero { get; private set; }
 
         public override bool Validate()
         {
-            string cpf = Numero.Trim().Replace(".", "").Replace("-", "");
+            bool valido = true;
+            string cpf = Numero;
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             string tempCpf;
@@ -29,7 +26,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             cpf = cpf.Trim();
             cpf = cpf.Replace(".", "").Replace("-", "");
             if (cpf.Length != 11)
-                return false;
+                throw new DomainException("O CPF informado é inválido.");
             tempCpf = cpf.Substring(0, 9);
             soma = 0;
 
@@ -51,7 +48,14 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             else
                 resto = 11 - resto;
             digito = digito + resto.ToString();
-            return cpf.EndsWith(digito);
+            valido = cpf.EndsWith(digito);
+
+            if (!valido)
+            {
+                throw new DomainException("O CPF informado é inválido.");
+            }
+
+            return valido;
         }
 
     }

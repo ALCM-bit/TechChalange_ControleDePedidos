@@ -7,10 +7,10 @@ namespace ControlePedidos.Pedido.Test.Unit
 
         private static Cadastro.Domain.Entities.Cadastro CriarCadastro()
         {
-            string? id = Guid.NewGuid().ToString();
-            string? nome = "Felipe";
-            string? email = "felipe@gmail.com";
-            string? cpf = "461.004.368-84";
+            string id = Guid.NewGuid().ToString();
+            string nome = "Felipe";
+            string email = "felipe@gmail.com";
+            string cpf = "461.004.368-84";
 
             return new Cadastro.Domain.Entities.Cadastro(
                 id,

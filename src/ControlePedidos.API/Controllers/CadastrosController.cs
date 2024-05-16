@@ -18,14 +18,13 @@ public class CadastrosController : BaseController
     [HttpGet]
     public async Task<ActionResult<CadastroResponse>> ObterCadastro(string cpf)
     {
-        //Melhorar a validação de existencia.
         try
         {
             CadastroResponse cadastro = await _cadastroService.ObterCadastroAsync(cpf);
 
             if(cadastro is null)
             {
-                return NotFound();
+                return NotFound(new { error = "Cadastro não encontrado."});
             }
 
             return Ok(cadastro);
@@ -43,18 +42,18 @@ public class CadastrosController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> Cadastrar(CadastroRequest cadastro)
+    public async Task<ActionResult<string>> Cadastrar(CadastroRequest cadastroRequest)
     {
         try
         {
-            var cadastro = await _cadastroService.ObterCadastroAsync(cadastro.CPF);
+            var cadastro = await _cadastroService.ObterCadastroAsync(cadastroRequest.CPF);
 
             if (cadastro is not null)
             {
                 return Conflict(new { error = "Cadastro já existente." });
             }
 
-            await _cadastroService.CadastrarAsync(cadastro);
+            await _cadastroService.CadastrarAsync(cadastroRequest);
 
             return Created();
         }
