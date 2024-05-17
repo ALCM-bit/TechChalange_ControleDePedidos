@@ -14,4 +14,9 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+	<ProjectReference Include="..\CadastroPedidos.Produto.Application\CadastroPedidos.Produto.Application.csproj" />
+    <ProjectReference Include="..\ControlePedidos.Produto.Domain\ControlePedidos.Produto.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

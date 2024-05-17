@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ControlePedidos.Common.Exceptions;
 
-namespace ControlePedidos.Common.Exceptions
+public abstract class NotificationException : Exception
 {
-    public class NotificationException : Exception
-    {
-        protected NotificationException(string message) : base(message) 
-        { }
-    }
+    protected NotificationException(string message) : base(message)
+    { }
+}
 }

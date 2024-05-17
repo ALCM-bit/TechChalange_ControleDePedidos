@@ -20,7 +20,10 @@ builder.Services.AddPedido(builder.Configuration);
 builder.Services.AddCadastro(builder.Configuration);
 builder.Services.AddProduto(builder.Configuration);
 
-builder.Services.AddHealthChecks();
+// TODO: Obter connection string das configurações
+builder.Services.AddHealthChecks()
+                .AddMongoDb(Environment.GetEnvironmentVariable("ConnectionStrings__ControlePedidosDB")!);
+
 builder.Services.AddHealthChecksUI(options =>
 {
     options.SetEvaluationTimeInSeconds(5);
