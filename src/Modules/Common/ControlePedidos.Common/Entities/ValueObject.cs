@@ -5,5 +5,5 @@ public abstract class ValueObject
     protected ValueObject()
     { }
 
-    public abstract void Validate();
+    protected abstract void Validate();
 }

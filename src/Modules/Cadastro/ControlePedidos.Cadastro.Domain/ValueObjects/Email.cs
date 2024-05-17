@@ -14,7 +14,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
 
         public string Endereco { get; private set; }
 
-        public override void Validate()
+        protected override void Validate()
         {
             string email = Endereco;
             if (email.IndexOf("@") <= 0)
