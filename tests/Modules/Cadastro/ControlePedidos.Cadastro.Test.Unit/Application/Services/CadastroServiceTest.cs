@@ -3,11 +3,6 @@ using ControlePedidos.Cadastro.Application.DTO;
 using ControlePedidos.Cadastro.Application.Services;
 using ControlePedidos.Cadastro.Domain.Abstractions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ControlePedidos.Pedido.Test.Unit
 {
@@ -24,10 +19,10 @@ namespace ControlePedidos.Pedido.Test.Unit
 
         private static Cadastro.Domain.Entities.Cadastro CriarCadastro()
         {
-            string? id = Guid.NewGuid().ToString();
-            string? nome = "Felipe";
-            string? email = "felipe@gmail.com";
-            string? cpf = "46100436884";
+            string id = Guid.NewGuid().ToString();
+            string nome = "Felipe";
+            string email = "felipe@gmail.com";
+            string cpf = "46100436884";
 
             return new Cadastro.Domain.Entities.Cadastro(
                 id, 

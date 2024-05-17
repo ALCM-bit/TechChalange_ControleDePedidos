@@ -1,5 +1,5 @@
-﻿using ControlePedidos.Common.Exceptions;
-
+﻿using ControlePedidos.Cadastro.Domain.Entities;
+using ControlePedidos.Common.Exceptions;
 namespace ControlePedidos.Pedido.Test.Unit
 {
     public class CadastroTest

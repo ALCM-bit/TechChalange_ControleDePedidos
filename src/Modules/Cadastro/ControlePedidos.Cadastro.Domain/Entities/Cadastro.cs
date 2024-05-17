@@ -6,11 +6,12 @@ namespace ControlePedidos.Cadastro.Domain.Entities
 {
     public class Cadastro : Entity, IAggregationRoot
     {
-        public Cadastro(string id, Email email, CPF cpf, string nome) : base(id)
+        public Cadastro(string id, Email email, CPF cpf, string nome) : base(id, DateTime.UtcNow)
         {
             Email = email;
             CPF = cpf;
             Nome = nome;
+
 
             Validate();
         }
