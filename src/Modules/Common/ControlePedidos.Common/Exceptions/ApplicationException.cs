@@ -1,5 +1,5 @@
 ﻿namespace ControlePedidos.Common.Exceptions;
-public class ApplicationErrorException : Exception
+public class ApplicationErrorException : NotificationException
 {
     public ApplicationErrorException(string message) : base(message)
     {
