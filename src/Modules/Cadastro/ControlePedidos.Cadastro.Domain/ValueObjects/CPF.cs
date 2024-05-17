@@ -26,7 +26,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             cpf = cpf.Trim();
             cpf = cpf.Replace(".", "").Replace("-", "");
             if (cpf.Length != 11)
-                throw new DomainException("O CPF informado é inválido.");
+                throw new DomainNotificationException("O CPF informado é inválido.");
             tempCpf = cpf.Substring(0, 9);
             soma = 0;
 
@@ -52,7 +52,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
 
             if (!valido)
             {
-                throw new DomainException("O CPF informado é inválido.");
+                throw new DomainNotificationException("O CPF informado é inválido.");
             }
         }
 

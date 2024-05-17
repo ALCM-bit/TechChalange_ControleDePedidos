@@ -20,7 +20,7 @@ namespace ControlePedidos.Cadastro.Domain.ValueObjects
             if (email.IndexOf("@") <= 0)
             {
                 
-               throw new DomainException("O e-mail informado é inválido.");
+               throw new DomainNotificationException("O e-mail informado é inválido.");
                 
             }
         }

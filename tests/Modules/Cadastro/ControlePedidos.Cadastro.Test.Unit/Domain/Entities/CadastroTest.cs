@@ -33,7 +33,7 @@ namespace ControlePedidos.Pedido.Test.Unit
                 );
 
             // Assert
-            var notificationException = Assert.Throws<DomainException>(act);
+            var notificationException = Assert.Throws<DomainNotificationException>(act);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace ControlePedidos.Pedido.Test.Unit
                 );
 
             // Assert
-            var notificationException = Assert.Throws<DomainException>(act);
+            var notificationException = Assert.Throws<DomainNotificationException>(act);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace ControlePedidos.Pedido.Test.Unit
                 );
 
             // Assert
-            var notificationException = Assert.Throws<DomainException>(act);
+            var notificationException = Assert.Throws<DomainNotificationException>(act);
         }
 
         [Fact]

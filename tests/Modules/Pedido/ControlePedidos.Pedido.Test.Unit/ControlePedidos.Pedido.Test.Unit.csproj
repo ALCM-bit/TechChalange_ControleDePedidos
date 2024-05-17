@@ -18,12 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Modules\Cadastro\ControlePedidos.Cadastro.Application\ControlePedidos.Cadastro.Application.csproj" />
-    <ProjectReference Include="..\..\..\..\src\Modules\Cadastro\ControlePedidos.Cadastro.Domain\ControlePedidos.Cadastro.Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\src\Modules\Cadastro\ControlePedidos.Cadastro.Infrastructure\ControlePedidos.Cadastro.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
