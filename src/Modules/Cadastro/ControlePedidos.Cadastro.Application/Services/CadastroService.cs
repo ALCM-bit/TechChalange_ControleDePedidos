@@ -16,7 +16,8 @@ namespace ControlePedidos.Cadastro.Application.Services
 
         public async Task<bool> CadastrarAsync(CadastroRequest cadastro)
         {
-            var cadastroDomain = new Domain.Entities.Cadastro(null, 
+            var cadastroDomain = new Domain.Entities.Cadastro(null,
+                                                              DateTime.UtcNow,
                                                               new Email(cadastro.Email),
                                                               new CPF(cadastro.CPF),
                                                               cadastro.Nome);

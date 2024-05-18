@@ -26,6 +26,7 @@ namespace ControlePedidos.Pedido.Test.Unit
 
             return new Cadastro.Domain.Entities.Cadastro(
                 id, 
+                DateTime.UtcNow,
                 new Cadastro.Domain.ValueObjects.Email(email), 
                 new Cadastro.Domain.ValueObjects.CPF(cpf), 
                 nome);

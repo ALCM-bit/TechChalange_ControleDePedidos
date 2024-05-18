@@ -9,11 +9,13 @@ namespace ControlePedidos.Pedido.Test.Unit
         {
             string id = Guid.NewGuid().ToString();
             string nome = "Felipe";
+            DateTime dataDeCriacao = DateTime.Now;
             string email = "felipe@gmail.com";
             string cpf = "461.004.368-84";
 
             return new Cadastro.Domain.Entities.Cadastro(
                 id,
+                dataDeCriacao,
                 new Cadastro.Domain.ValueObjects.Email(email),
                 new Cadastro.Domain.ValueObjects.CPF(cpf),
                 nome);
@@ -26,7 +28,8 @@ namespace ControlePedidos.Pedido.Test.Unit
 
             // Act
             Action act = () => new Cadastro.Domain.Entities.Cadastro(
-                null, 
+                null,
+                DateTime.UtcNow,
                 new Cadastro.Domain.ValueObjects.Email("felipe"),
                 cadastro.CPF,
                 cadastro.Nome
@@ -44,6 +47,7 @@ namespace ControlePedidos.Pedido.Test.Unit
             // Act
             Action act = () => new Cadastro.Domain.Entities.Cadastro(
                 null,
+                DateTime.UtcNow,
                 cadastro.Email,
                 new Cadastro.Domain.ValueObjects.CPF("1254"),
                 cadastro.Nome
@@ -61,6 +65,7 @@ namespace ControlePedidos.Pedido.Test.Unit
             // Act
             Action act = () => new Cadastro.Domain.Entities.Cadastro(
                 null,
+                DateTime.UtcNow,
                 cadastro.Email,
                 cadastro.CPF,
                 ""
@@ -78,6 +83,7 @@ namespace ControlePedidos.Pedido.Test.Unit
             // Act
             Action act = () => new Cadastro.Domain.Entities.Cadastro(
                 null,
+                DateTime.UtcNow,
                 cadastro.Email,
                 cadastro.CPF,
                 cadastro.Nome

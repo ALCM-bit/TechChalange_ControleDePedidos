@@ -8,6 +8,7 @@ internal class CadastroModel : BaseModel
     public string Email { get; set; }
     public string CPF { get; set; }
     public string Nome { get; set; }
+    public DateTime DataDeCriacao { get; set; }
 
 
     internal static CadastroModel MapFromDomain(Domain.Entities.Cadastro cadastro)
@@ -17,6 +18,7 @@ internal class CadastroModel : BaseModel
         return new CadastroModel(cadastro.Id)
         {
             CPF = cadastro.CPF.Numero,
+            DataDeCriacao = cadastro.DataCriacao,
             Email = cadastro.Email.Endereco,
             Nome = cadastro.Nome
         };
@@ -27,6 +29,7 @@ internal class CadastroModel : BaseModel
         if (cadastroModel is null) return null;
 
         return new Domain.Entities.Cadastro(cadastroModel.Id,
+                                            cadastroModel.DataDeCriacao,
                                             new Domain.ValueObjects.Email(cadastroModel.Email),
                                             new Domain.ValueObjects.CPF(cadastroModel.CPF),
                                             cadastroModel.Nome);
