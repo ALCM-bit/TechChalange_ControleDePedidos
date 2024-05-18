@@ -3,7 +3,6 @@ using CadastroPedidos.Pedido.Application.DTO;
 using ControlePedidos.Common.Exceptions;
 using ControlePedidos.Pedido.Domain.Abstractions;
 using Mapster;
-
 using Entity = ControlePedidos.Pedido.Domain.Entities;
 
 namespace CadastroPedidos.Pedido.Application.Services;

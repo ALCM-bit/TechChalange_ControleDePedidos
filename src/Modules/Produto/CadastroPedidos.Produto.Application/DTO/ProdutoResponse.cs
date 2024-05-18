@@ -2,7 +2,6 @@
 
 public class ProdutoResponse
 {
-    //  Colocar os campos do produto
     public string Id { get; set; }
     public string Nome { get; set; }
     public List<KeyValuePair<string, decimal>> TamanhoPreco { get; set; }

@@ -2,15 +2,24 @@
 
 namespace ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Models;
 
-internal class ProdutoModel(string id) : BaseModel(id)
+internal class ProdutoModel : BaseModel
 {
+    public ProdutoModel(string id) : base(id)
+    {
+    }
+
+    public string Nome { get; set; }
+    public IEnumerable<KeyValuePair<string, decimal>> TamanhoPreco { get; set; }
+    public TipoProduto TipoProduto { get; set; }
+    public string Descricao { get; set; }
+    public bool Ativo { get; set; }
+
     internal static ProdutoModel MapFromDomain(Domain.Entities.Produto produto)
     {
-        if (produto is null) return null!;
+        if (produto is null) return null;
 
-        return new ProdutoModel(produto.Id!)
+        return new ProdutoModel(produto.Id)
         {
-            Id = produto.Id!,
             Nome = produto.Nome,
             TipoProduto = produto.TipoProduto,
             TamanhoPreco = produto.TamanhoPreco,
@@ -20,54 +29,35 @@ internal class ProdutoModel(string id) : BaseModel(id)
             Ativo = produto.Ativo
         };
     }
-    internal static IEnumerable<ProdutoModel> MapFromDomain(IEnumerable<Domain.Entities.Produto> produto)
+
+    internal static IEnumerable<ProdutoModel> MapFromDomain(IEnumerable<Domain.Entities.Produto> produtos)
     {
-        var mapList = new List<ProdutoModel>();
+        if (produtos is null || !produtos.Any()) return Enumerable.Empty<ProdutoModel>();
 
-        if (produto is null || !produto.Any()) return mapList;
-
-        foreach (var model in produto)
-        {
-            mapList.Add(MapFromDomain(model));
-        }
-
-        return mapList;
+        return produtos.Select(MapFromDomain).ToList();
     }
 
     internal static Domain.Entities.Produto MapToDomain(ProdutoModel produto)
     {
-        if (produto is null) return null!;
+        if (produto is null) return null;
 
-        var produtoMapeado = new Domain.Entities.Produto(produto.Id!,
-                                         produto.Nome,
-                                         produto.TamanhoPreco,
-                                         produto.TipoProduto,
-                                         produto.Descricao,
-                                         produto.DataCriacao,
-                                         produto.Ativo);
+        var produtoMapeado = new Domain.Entities.Produto(produto.Id,
+                                     produto.Nome,
+                                     produto.TamanhoPreco,
+                                     produto.TipoProduto,
+                                     produto.Descricao,
+                                     produto.DataCriacao,
+                                     produto.Ativo);
 
         produtoMapeado.DataAtualizacao = produto.DataAtualizacao;
 
         return produtoMapeado;
     }
 
-    internal static IEnumerable<Domain.Entities.Produto> MapToDomain(IEnumerable<ProdutoModel> produto)
+    internal static IEnumerable<Domain.Entities.Produto> MapToDomain(IEnumerable<ProdutoModel> produtos)
     {
-        var mapList = new List<Domain.Entities.Produto>();
+        if (produtos is null || !produtos.Any()) return Enumerable.Empty<Domain.Entities.Produto>();
 
-        if (produto is null || !produto.Any()) return mapList;
-
-        foreach (var model in produto)
-        {
-            mapList.Add(MapToDomain(model));
-        }
-
-        return mapList;
+        return produtos.Select(MapToDomain).ToList();
     }
-    public string Nome { get; private set; }
-    public IEnumerable<KeyValuePair<string, decimal>> TamanhoPreco { get; private set; }
-    public TipoProduto TipoProduto { get; private set; }
-    public string Descricao { get; private set; }
-    public bool Ativo { get; private set; }
-
 }

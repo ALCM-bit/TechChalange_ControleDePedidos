@@ -15,26 +15,15 @@ public class ProdutoDbContext
 
     public ProdutoDbContext()
     {
-        MongoUrl url;
-
-        try
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__ControlePedidosDB");
+        if (string.IsNullOrEmpty(connectionString))
         {
-            url = new(GetConnectionString());
-        }
-        catch
-        {
-            throw new Exception("Conexão Inválida");
+            throw new Exception("Invalid Connection String");
         }
 
-        var mongoSettings = MongoClientSettings.FromUrl(url);
+        var mongoSettings = MongoClientSettings.FromConnectionString(connectionString);
 
         Client = new MongoClient(mongoSettings);
         Database = Client.GetDatabase("controleProdutoDB");
-    }
-
-    private static string GetConnectionString()
-    {
-        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__ControlePedidosDB");
-        return Environment.ExpandEnvironmentVariables(connectionString);
     }
 }
