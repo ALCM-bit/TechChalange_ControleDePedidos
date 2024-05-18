@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
     <PackageReference Include="MongoDB.Bson" Version="2.25.0" />
@@ -14,4 +15,8 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ControlePedidos.Cadastro.Application\ControlePedidos.Cadastro.Application.csproj" />
+    <ProjectReference Include="..\ControlePedidos.Cadastro.Domain\ControlePedidos.Cadastro.Domain.csproj" />
+  </ItemGroup>
 </Project>

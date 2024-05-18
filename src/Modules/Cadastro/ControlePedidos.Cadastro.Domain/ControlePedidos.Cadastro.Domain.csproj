@@ -13,4 +13,8 @@
     <Folder Include="ValueObjects\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\ControlePedidos.Common\ControlePedidos.Common.csproj" />
+  </ItemGroup>
+
 </Project>

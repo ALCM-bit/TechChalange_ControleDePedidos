@@ -1,4 +1,9 @@
-﻿using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Contexts;
+using ControlePedidos.Cadastro.Application.Abstractions;
+using ControlePedidos.Cadastro.Application.Services;
+using ControlePedidos.Cadastro.Domain.Abstractions;
+using ControlePedidos.Cadastro.Infrastructure.Repositories;
+using ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositories;
+using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Contexts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,11 +19,13 @@ public static class CadastroDependencyInjection
 
     private static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
-
+        services.AddScoped<ICadastroRepository, CadastroRepository>();
+        services.AddScoped<ICadastroService, CadastroService>();
     }
 
     private static void RegisterContexts(this IServiceCollection services)
     {
+        MongoDBRigistror.RegisterDocumentResolver();
         services.AddScoped<CadastroDbContext>();
     }
 }
