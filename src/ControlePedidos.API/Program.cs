@@ -28,7 +28,7 @@ builder.Services.AddHealthChecksUI(options =>
 {
     options.SetEvaluationTimeInSeconds(5);
     options.MaximumHistoryEntriesPerEndpoint(10);
-    options.AddHealthCheckEndpoint("Health Checks", "/health");
+    options.AddHealthCheckEndpoint("Health Checks", "http://localhost:5187/health");
 })
 .AddInMemoryStorage();
 
