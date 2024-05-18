@@ -53,6 +53,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Pedido.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Cadastro.Test.Unit", "tests\Modules\Cadastro\ControlePedidos.Cadastro.Test.Unit\ControlePedidos.Cadastro.Test.Unit.csproj", "{BD924255-7AD7-48BA-ABDD-7441B0A2D63A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{32B806CD-BB5D-415E-83DB-4CF64DCA0272}"
+	ProjectSection(SolutionItems) = preProject
+		.env.example = .env.example
+		docker-compose.yaml = docker-compose.yaml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
