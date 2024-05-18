@@ -11,7 +11,7 @@ namespace ControlePedidos.Pedido.Test.Unit
             string nome = "Felipe";
             DateTime dataDeCriacao = DateTime.Now;
             string email = "felipe@gmail.com";
-            string cpf = "461.004.368-84";
+            string cpf = "179.938.500-02";
 
             return new Cadastro.Domain.Entities.Cadastro(
                 id,

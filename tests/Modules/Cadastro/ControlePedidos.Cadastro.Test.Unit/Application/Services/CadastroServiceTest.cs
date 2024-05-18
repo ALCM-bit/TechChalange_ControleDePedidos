@@ -22,7 +22,7 @@ namespace ControlePedidos.Pedido.Test.Unit
             string id = Guid.NewGuid().ToString();
             string nome = "Felipe";
             string email = "felipe@gmail.com";
-            string cpf = "46100436884";
+            string cpf = "17993850002";
 
             return new Cadastro.Domain.Entities.Cadastro(
                 id, 
@@ -47,7 +47,7 @@ namespace ControlePedidos.Pedido.Test.Unit
         [Fact]
         public async Task ObterCadastroAsync_Shoul_RetornarNulo_When_CadastroNaoEncontrado()
         {
-            var cpf = "11863931813";
+            var cpf = "17993850002";
 
             _cadastroRepository.Setup(x => x.ObterCadastroAsync(It.IsAny<string>())).ReturnsAsync(() => null!);
 
@@ -63,7 +63,7 @@ namespace ControlePedidos.Pedido.Test.Unit
         {
             var request = new CadastroRequest()
             {
-                CPF = "11863931813",
+                CPF = "17993850002",
                 Email = "felipe@gamil.com",
                 Nome = "Felipe",
             };
