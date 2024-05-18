@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.API", "src\ControlePedidos.API\ControlePedidos.API.csproj", "{624D2991-92F1-4A9F-B00D-690703B1577E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.API", "src\ControlePedidos.API\ControlePedidos.API.csproj", "{624D2991-92F1-4A9F-B00D-690703B1577E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{508587D9-4207-4045-B647-D62C29CC4998}"
 EndProject
@@ -15,17 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cadastro", "Cadastro", "{56
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pedido", "Pedido", "{33278402-C90F-4970-B0D7-07E9FC49135C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Cadastro.Application", "src\Modules\Cadastro\ControlePedidos.Cadastro.Application\ControlePedidos.Cadastro.Application.csproj", "{0BD8A2FE-A856-47D4-A0D8-22301F0EAB0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Cadastro.Application", "src\Modules\Cadastro\ControlePedidos.Cadastro.Application\ControlePedidos.Cadastro.Application.csproj", "{0BD8A2FE-A856-47D4-A0D8-22301F0EAB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroPedidos.Pedido.Application", "src\Modules\Pedido\CadastroPedidos.Pedido.Application\CadastroPedidos.Pedido.Application.csproj", "{4D81A20B-C6CD-41E6-A01F-4DF61FF51F05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroPedidos.Pedido.Application", "src\Modules\Pedido\CadastroPedidos.Pedido.Application\CadastroPedidos.Pedido.Application.csproj", "{4D81A20B-C6CD-41E6-A01F-4DF61FF51F05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Cadastro.Infrastructure", "src\Modules\Cadastro\ControlePedidos.Cadastro.Infrastructure\ControlePedidos.Cadastro.Infrastructure.csproj", "{5B7629A5-0501-4C9C-901D-BE07431D400F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Cadastro.Infrastructure", "src\Modules\Cadastro\ControlePedidos.Cadastro.Infrastructure\ControlePedidos.Cadastro.Infrastructure.csproj", "{5B7629A5-0501-4C9C-901D-BE07431D400F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Cadastro.Domain", "src\Modules\Cadastro\ControlePedidos.Cadastro.Domain\ControlePedidos.Cadastro.Domain.csproj", "{893BD0F9-62B4-4AC9-9BDB-D50E282E8C59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Cadastro.Domain", "src\Modules\Cadastro\ControlePedidos.Cadastro.Domain\ControlePedidos.Cadastro.Domain.csproj", "{893BD0F9-62B4-4AC9-9BDB-D50E282E8C59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Pedido.Domain", "src\Modules\Pedido\ControlePedidos.Pedido.Domain\ControlePedidos.Pedido.Domain.csproj", "{45C6DCAB-8ABD-4AD9-8DD5-F6A42C42344D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Pedido.Domain", "src\Modules\Pedido\ControlePedidos.Pedido.Domain\ControlePedidos.Pedido.Domain.csproj", "{45C6DCAB-8ABD-4AD9-8DD5-F6A42C42344D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Pedido.Infrastructure", "src\Modules\Pedido\ControlePedidos.Pedido.Infrastructure\ControlePedidos.Pedido.Infrastructure.csproj", "{F9817EE2-5950-49DD-9BA2-B8D4841DE559}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Pedido.Infrastructure", "src\Modules\Pedido\ControlePedidos.Pedido.Infrastructure\ControlePedidos.Pedido.Infrastructure.csproj", "{F9817EE2-5950-49DD-9BA2-B8D4841DE559}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{DDA631F9-417D-4871-9376-FF44B447206F}"
 EndProject
@@ -33,25 +33,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pedido", "Pedido", "{CAFCFF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cadastro", "Cadastro", "{B4A2458B-399E-4C59-8485-36AB0BA4A3DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Pedido.Test.Unit", "tests\Modules\Pedido\ControlePedidos.Pedido.Test.Unit\ControlePedidos.Pedido.Test.Unit.csproj", "{6FBB98FD-4614-40BF-804B-66D393D9574E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Pedido.Test.Unit", "tests\Modules\Pedido\ControlePedidos.Pedido.Test.Unit\ControlePedidos.Pedido.Test.Unit.csproj", "{6FBB98FD-4614-40BF-804B-66D393D9574E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Cadastro.Test.Unit", "tests\Modules\Cadastro\ControlePedidos.Cadastro.Test.Unit\ControlePedidos.Cadastro.Test.Unit.csproj", "{B110ADD5-1606-4B4E-9045-32CBDDCEC3CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Cadastro.Test.Unit", "tests\Modules\Cadastro\ControlePedidos.Cadastro.Test.Unit\ControlePedidos.Cadastro.Test.Unit.csproj", "{B110ADD5-1606-4B4E-9045-32CBDDCEC3CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Produto", "Produto", "{E6D4EAD0-B0FA-41E4-8F8A-BB2B6966BBFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroPedidos.Produto.Application", "src\Modules\Produto\CadastroPedidos.Produto.Application\CadastroPedidos.Produto.Application.csproj", "{56C06046-6769-4A27-8B71-93A23DD74CDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroPedidos.Produto.Application", "src\Modules\Produto\CadastroPedidos.Produto.Application\CadastroPedidos.Produto.Application.csproj", "{56C06046-6769-4A27-8B71-93A23DD74CDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Produto.Domain", "src\Modules\Produto\ControlePedidos.Produto.Domain\ControlePedidos.Produto.Domain.csproj", "{A7E6FCCA-247D-44AC-8C72-2D9ABA857A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Produto.Domain", "src\Modules\Produto\ControlePedidos.Produto.Domain\ControlePedidos.Produto.Domain.csproj", "{A7E6FCCA-247D-44AC-8C72-2D9ABA857A92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Produto.Infrastructure", "src\Modules\Produto\ControlePedidos.Produto.Infrastructure\ControlePedidos.Produto.Infrastructure.csproj", "{1859E431-3EB5-4C8D-B647-666596244137}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Produto.Infrastructure", "src\Modules\Produto\ControlePedidos.Produto.Infrastructure\ControlePedidos.Produto.Infrastructure.csproj", "{1859E431-3EB5-4C8D-B647-666596244137}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Common", "0 - Common", "{1DEFCF1C-5B21-40F9-B6BB-146DF0E8CB55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Common", "src\Modules\Common\ControlePedidos.Common\ControlePedidos.Common.csproj", "{A960037E-430B-45CB-8C2E-2EFA0DEAF0C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Common", "src\Modules\Common\ControlePedidos.Common\ControlePedidos.Common.csproj", "{A960037E-430B-45CB-8C2E-2EFA0DEAF0C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Produto", "Produto", "{8D2B19B2-FC9B-4736-A25C-DC8ACC4EF052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedidos.Produto.Test.Unit", "tests\Modules\Produto\ControlePedidos.Produto.Test.Unit\ControlePedidos.Produto.Test.Unit.csproj", "{2929DDDC-7E93-4719-BDF0-39120EF50256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Produto.Test.Unit", "tests\Modules\Produto\ControlePedidos.Produto.Test.Unit\ControlePedidos.Produto.Test.Unit.csproj", "{2929DDDC-7E93-4719-BDF0-39120EF50256}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

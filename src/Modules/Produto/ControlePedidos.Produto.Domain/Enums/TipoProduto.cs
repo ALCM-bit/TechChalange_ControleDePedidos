@@ -1,10 +1,9 @@
-namespace ControlePedidos.Produto.Domain.Enums
+namespace ControlePedidos.Produto.Domain.Enums;
+
+public enum TipoProduto
 {
-    public enum TipoProduto
-    {
-        Lanche,
-        Acompanhamento,
-        Bebida,
-        Sobremesa
-    }
+    Lanche,
+    Acompanhamento,
+    Bebida,
+    Sobremesa
 }
