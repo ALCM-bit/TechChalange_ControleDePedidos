@@ -1,0 +1,35 @@
+name: tech-challenge
+services:
+
+  mongodb:
+    image: mongo:7.0.9
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: admin
+        MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - ./data/db:/data/db
+    networks:
+      - general
+
+  api:
+    build:
+        context: ./
+        dockerfile: Dockerfile
+    container_name: api
+    environment:
+        ASPNETCORE_ENVIRONMENT: Development
+    env_file:
+      - .env
+    ports:
+      - "5187:5187"
+    networks:
+      - general
+    depends_on:
+      - mongodb
+
+networks:
+  general: {}
