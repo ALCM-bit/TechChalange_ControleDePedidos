@@ -29,14 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Pedido.Infr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{DDA631F9-417D-4871-9376-FF44B447206F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pedido", "Pedido", "{CAFCFF0C-67C6-405D-B677-8F18D3776BD7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cadastro", "Cadastro", "{B4A2458B-399E-4C59-8485-36AB0BA4A3DB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Pedido.Test.Unit", "tests\Modules\Pedido\ControlePedidos.Pedido.Test.Unit\ControlePedidos.Pedido.Test.Unit.csproj", "{6FBB98FD-4614-40BF-804B-66D393D9574E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Cadastro.Test.Unit", "tests\Modules\Cadastro\ControlePedidos.Cadastro.Test.Unit\ControlePedidos.Cadastro.Test.Unit.csproj", "{B110ADD5-1606-4B4E-9045-32CBDDCEC3CB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Produto", "Produto", "{E6D4EAD0-B0FA-41E4-8F8A-BB2B6966BBFF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroPedidos.Produto.Application", "src\Modules\Produto\CadastroPedidos.Produto.Application\CadastroPedidos.Produto.Application.csproj", "{56C06046-6769-4A27-8B71-93A23DD74CDE}"
@@ -52,6 +44,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Produto", "Produto", "{8D2B19B2-FC9B-4736-A25C-DC8ACC4EF052}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Produto.Test.Unit", "tests\Modules\Produto\ControlePedidos.Produto.Test.Unit\ControlePedidos.Produto.Test.Unit.csproj", "{2929DDDC-7E93-4719-BDF0-39120EF50256}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cadastro", "Cadastro", "{5980B882-B47B-4A86-B631-1D5FE82BFC2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pedido", "Pedido", "{A45E50C9-5CC2-4BDA-A281-13CBBFE9D5CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Pedido.Test.Unit", "tests\Modules\Pedido\ControlePedidos.Pedido.Test.Unit\ControlePedidos.Pedido.Test.Unit.csproj", "{B7A2E4E8-F041-427A-A945-85350AAD63E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlePedidos.Cadastro.Test.Unit", "tests\Modules\Cadastro\ControlePedidos.Cadastro.Test.Unit\ControlePedidos.Cadastro.Test.Unit.csproj", "{BD924255-7AD7-48BA-ABDD-7441B0A2D63A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{32B806CD-BB5D-415E-83DB-4CF64DCA0272}"
+	ProjectSection(SolutionItems) = preProject
+		.env.example = .env.example
+		docker-compose.yaml = docker-compose.yaml
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +114,14 @@ Global
 		{2929DDDC-7E93-4719-BDF0-39120EF50256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2929DDDC-7E93-4719-BDF0-39120EF50256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2929DDDC-7E93-4719-BDF0-39120EF50256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A2E4E8-F041-427A-A945-85350AAD63E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A2E4E8-F041-427A-A945-85350AAD63E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A2E4E8-F041-427A-A945-85350AAD63E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A2E4E8-F041-427A-A945-85350AAD63E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD924255-7AD7-48BA-ABDD-7441B0A2D63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD924255-7AD7-48BA-ABDD-7441B0A2D63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD924255-7AD7-48BA-ABDD-7441B0A2D63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD924255-7AD7-48BA-ABDD-7441B0A2D63A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +146,10 @@ Global
 		{A960037E-430B-45CB-8C2E-2EFA0DEAF0C9} = {1DEFCF1C-5B21-40F9-B6BB-146DF0E8CB55}
 		{8D2B19B2-FC9B-4736-A25C-DC8ACC4EF052} = {DDA631F9-417D-4871-9376-FF44B447206F}
 		{2929DDDC-7E93-4719-BDF0-39120EF50256} = {8D2B19B2-FC9B-4736-A25C-DC8ACC4EF052}
+		{5980B882-B47B-4A86-B631-1D5FE82BFC2F} = {DDA631F9-417D-4871-9376-FF44B447206F}
+		{A45E50C9-5CC2-4BDA-A281-13CBBFE9D5CD} = {DDA631F9-417D-4871-9376-FF44B447206F}
+		{B7A2E4E8-F041-427A-A945-85350AAD63E7} = {A45E50C9-5CC2-4BDA-A281-13CBBFE9D5CD}
+		{BD924255-7AD7-48BA-ABDD-7441B0A2D63A} = {5980B882-B47B-4A86-B631-1D5FE82BFC2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83CBB7B1-7D37-4E12-BF2B-60DB8028ED60}
