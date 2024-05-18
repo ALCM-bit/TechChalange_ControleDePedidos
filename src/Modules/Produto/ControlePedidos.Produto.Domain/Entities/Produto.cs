@@ -14,25 +14,21 @@
             TamanhoPreco = tamanhoPreco;
             TipoProduto = tipoProduto;
             Descricao = descricao;
-            Ativo = ativo; 
+            Ativo = ativo;
 
             Validate();
         }
 
-        protected override void Validate() { }
-
-        // Definir os métodos de validação
-
-        public void Criar()
+        protected override void Validate()
         {
             if (string.IsNullOrEmpty(Nome))
             {
                 throw new DomainNotificationException("Nome do produto é obrigatório");
             }
 
-            if (TamanhoPreco.Count() <= 0)
+            if (TamanhoPreco == null || !TamanhoPreco.Any())
             {
-                throw new DomainNotificationException("Preço e tamanho do produto é obrigatório");
+                throw new DomainNotificationException("Preço e tamanho do produto são obrigatórios");
             }
 
             if (TipoProduto == null)
@@ -42,9 +38,12 @@
 
             if (string.IsNullOrEmpty(Descricao))
             {
-                throw new DomainNotificationException("Descrição do produto é obrigatório");
+                throw new DomainNotificationException("Descrição do produto é obrigatória");
             }
+        }
 
+        public void Criar()
+        {
             Validate();
         }
     }
