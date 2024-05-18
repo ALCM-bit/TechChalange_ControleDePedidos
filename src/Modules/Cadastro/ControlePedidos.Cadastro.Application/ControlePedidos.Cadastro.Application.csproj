@@ -10,4 +10,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ControlePedidos.Cadastro.Domain\ControlePedidos.Cadastro.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
