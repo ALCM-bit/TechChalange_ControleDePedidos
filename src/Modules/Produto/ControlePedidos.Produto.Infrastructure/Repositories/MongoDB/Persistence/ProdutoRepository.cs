@@ -44,9 +44,15 @@ public class ProdutoRepository : IProdutoRepository
         return ProdutoModel.MapToDomain(result);
     }
 
-    public async Task<IEnumerable<Domain.Entities.Produto>> ObterTodosTiposProdutoAsync(TipoProduto tipoProduto, bool ativo, bool retornarTodos)
+    public async Task<IEnumerable<Domain.Entities.Produto>> ObterTodosTiposProdutoAsync(TipoProduto? tipoProduto, bool ativo, bool retornarTodos)
     {
-        var filter = Builders<ProdutoModel>.Filter.Eq(p => p.TipoProduto, tipoProduto);
+        var filter = Builders<ProdutoModel>.Filter.Empty;
+
+        if (tipoProduto.HasValue)
+        {
+            filter &= Builders<ProdutoModel>.Filter.Eq(p => p.TipoProduto, tipoProduto);
+        }
+
         if (!retornarTodos)
         {
             filter &= Builders<ProdutoModel>.Filter.Eq(p => p.Ativo, ativo);

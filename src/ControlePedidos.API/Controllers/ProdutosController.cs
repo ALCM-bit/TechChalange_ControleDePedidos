@@ -1,7 +1,7 @@
-﻿using CadastroPedidos.Produto.Application.Abstractions;
+﻿using CadastroPedidos.Produto.Api;
+using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.DTO;
 using ControlePedidos.Common.Exceptions;
-using ControlePedidos.Produto.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControlePedidos.API.Controllers;
@@ -9,10 +9,13 @@ namespace ControlePedidos.API.Controllers;
 [Route("api/produtos")]
 public class ProdutosController : BaseController
 {
+    private readonly IProdutosApi _produtosApi;
     private readonly IProdutoService _produtoService;
-    public ProdutosController(IProdutoService produtoService)
+
+    public ProdutosController(IProdutoService produtoService, IProdutosApi produtosApi)
     {
         _produtoService = produtoService;
+        _produtosApi = produtosApi;
     }
 
     [HttpPost]
@@ -81,9 +84,9 @@ public class ProdutosController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] TipoProduto tipoProduto, [FromQuery] bool ativo, bool retornarTodos = false)
+    public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] string tipoProduto, [FromQuery] bool ativo, [FromQuery] bool retornarTodos = false)
     {
-        IEnumerable<ProdutoResponse> produtos = await _produtoService.ObterTodosTiposProdutoAsync(tipoProduto, ativo, retornarTodos);
+        IEnumerable <ProdutoResponse> produtos = await _produtosApi.ObterTodosTiposProdutoAsync(tipoProduto!, ativo, retornarTodos);
 
         return Ok(produtos);
     }
