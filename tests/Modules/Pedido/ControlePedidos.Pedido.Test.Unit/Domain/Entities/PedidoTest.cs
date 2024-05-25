@@ -1,9 +1,10 @@
 ﻿using ControlePedidos.Common.Exceptions;
+using ControlePedidos.Pedido.Domain.Entities;
 using ControlePedidos.Pedido.Domain.Enums;
 
 namespace ControlePedidos.Pedido.Test.Unit.Domain.Entities;
 
-public class PedidoTest
+public class PedidoTest : BaseUnitTest
 {
     // TODO: Atualizar testes quando modulo de Produtos pronto
 
@@ -17,8 +18,24 @@ public class PedidoTest
         StatusPedido? status = null;
         DateTime dataCriacao = DateTime.UtcNow;
         DateTime? dataFinalizacao = null;
+        var itens = new List<ItemPedido>() { CriarItemPedidoPadrao() };
 
-        return new(id, codigo, idCliente, status, dataCriacao, dataFinalizacao);
+        return new(id, codigo, idCliente, status, dataCriacao, dataFinalizacao, itens);
+    }
+
+    private static ItemPedido CriarItemPedidoPadrao()
+    {
+        string? id = GerarIdValido();
+        DateTime dataCriacao = DateTime.UtcNow;
+        string produtoId = GerarIdValido();
+        string nome = GerarIdValido().Substring(0, 5);
+        string tipoProduto = "Lanche";
+        TamanhoProduto tamanhoProduto = TamanhoProduto.M;
+        decimal preco = (decimal)new Random().NextDouble() * (100 - 1) + 1;
+        int quantidade = (int)new Random().NextInt64(1,3);
+        string observacao = GerarIdValido().Substring(0, 5);
+
+        return new(id, dataCriacao, produtoId, nome, tipoProduto, tamanhoProduto, Math.Round(preco, 2), quantidade, observacao);
     }
 
     #endregion
@@ -33,7 +50,7 @@ public class PedidoTest
         DateTime dataCriacao = dataFinalizacao.AddMinutes(1);
 
         // Act
-        Action act = () => new Entity.Pedido(null, null, null, StatusPedido.Finalizado, dataCriacao, dataFinalizacao);
+        Action act = () => new Entity.Pedido(null, null, null, StatusPedido.Finalizado, dataCriacao, dataFinalizacao, [CriarItemPedidoPadrao()]);
 
         // Assert
         var notificationException = Assert.Throws<DomainNotificationException>(act);
@@ -46,12 +63,11 @@ public class PedidoTest
     {
         // Arrange
         var pedido = CriarPedidoPadrao();
+        decimal total = pedido.Itens.Sum(i => i.Subtotal);
 
         // Act
-        double total = pedido.ObterTotal();
-
         // Assert
-        Assert.Equal(100, total);
+        Assert.Equal(total, pedido.Total);
     }
 
     #region ConfirmarPedido
@@ -74,7 +90,7 @@ public class PedidoTest
     {
         // Arrange
         StatusPedido status = StatusPedido.Preparando;
-        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         Action act = () => pedido.ConfirmarPedido();
@@ -92,7 +108,7 @@ public class PedidoTest
     {
         // Arrange
         StatusPedido status = StatusPedido.Recebido;
-        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         pedido.IniciarPreparo();
@@ -106,7 +122,7 @@ public class PedidoTest
     {
         // Arrange
         StatusPedido status = StatusPedido.Pronto;
-        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         Action act = () => pedido.IniciarPreparo();
@@ -124,7 +140,7 @@ public class PedidoTest
     {
         // Arrange
         StatusPedido status = StatusPedido.Preparando;
-        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         pedido.FinalizarPreparo();
@@ -138,7 +154,7 @@ public class PedidoTest
     {
         // Arrange
         StatusPedido status = StatusPedido.Recebido;
-        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         Action act = () => pedido.FinalizarPreparo();
@@ -156,7 +172,7 @@ public class PedidoTest
     {
         // Arrange
         StatusPedido status = StatusPedido.Pronto;
-        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         pedido.FinalizarPedido();
@@ -171,7 +187,7 @@ public class PedidoTest
     {
         // Arrange
         StatusPedido status = StatusPedido.Recebido;
-        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, status, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         Action act = () => pedido.FinalizarPedido();
@@ -192,7 +208,7 @@ public class PedidoTest
     public void AtualizarStatus_Should_AlterarStatus_When_StatusNovoValido(StatusPedido? statusAtual, StatusPedido statusNovo)
     {
         // Arrange
-        var pedido = new Entity.Pedido(null, null, null, statusAtual, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, statusAtual, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         pedido.AtualizarStatus(statusNovo);
@@ -209,7 +225,7 @@ public class PedidoTest
     public void AtualizarStatus_Should_ThrowDomainNotificationException_When_StatusNovoInvalido(StatusPedido? statusAtual, StatusPedido statusNovo)
     {
         // Arrange
-        var pedido = new Entity.Pedido(null, null, null, statusAtual, DateTime.UtcNow, null);
+        var pedido = new Entity.Pedido(null, null, null, statusAtual, DateTime.UtcNow, null, [CriarItemPedidoPadrao()]);
 
         // Act
         Action act = () => pedido.AtualizarStatus(statusNovo);

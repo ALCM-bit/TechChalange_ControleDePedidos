@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace ControlePedidos.Common.Entities;
+﻿namespace ControlePedidos.Common.Entities;
 
 public abstract class Entity(string? id, DateTime dataCriacao)
 {

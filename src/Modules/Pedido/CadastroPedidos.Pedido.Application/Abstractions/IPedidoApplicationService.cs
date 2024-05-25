@@ -3,7 +3,7 @@ using ControlePedidos.Pedido.Domain.Enums;
 
 namespace CadastroPedidos.Pedido.Application.Abstractions;
 
-public interface IPedidoService
+public interface IPedidoApplicationService
 {
     Task<PedidoResponse> ObterPedidoAsync(string idPedido);
     Task<IEnumerable<PedidoResponse>> ObterTodosPedidosAsync();

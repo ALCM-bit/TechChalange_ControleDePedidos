@@ -3,11 +3,14 @@ using MongoDB.Bson;
 
 namespace ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB.Models;
 
-public class BaseModel
+[BsonIgnoreExtraElements]
+internal class BaseModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public DateTime? DataAtualizacao { get; set; }
 
     public BaseModel(string id)
     {

@@ -1,18 +1,19 @@
 ﻿using ControlePedidos.Pedido.Domain.Enums;
-using Mapster;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB.Models;
 
+[BsonIgnoreExtraElements]
 internal class PedidoModel : BaseModel
 {
-    public PedidoModel(string id) : base(id)
-    { }
-
     public string Codigo { get; set; } = string.Empty;
     public string? IdCliente { get; set; }
     public StatusPedido? Status { get; set; }
-    public DateTime DataCriacao { get; set; }
     public DateTime? DataFinalizacao { get; set; }
+    public IEnumerable<ItemPedidoModel> Itens { get; set; } = [];
+
+    public PedidoModel(string id) : base(id)
+    { }
 
     internal static PedidoModel MapFromDomain(Domain.Entities.Pedido pedido)
     {
@@ -24,7 +25,8 @@ internal class PedidoModel : BaseModel
             IdCliente = pedido.IdCliente,
             Status = pedido.Status,
             DataCriacao = pedido.DataCriacao,
-            DataFinalizacao = pedido.DataAtualizacao
+            DataFinalizacao = pedido.DataAtualizacao,
+            Itens = ItemPedidoModel.MapFromDomain(pedido.Itens)
         };
     }
 
@@ -37,7 +39,8 @@ internal class PedidoModel : BaseModel
                                           pedidoModel.IdCliente,
                                           pedidoModel.Status,
                                           pedidoModel.DataCriacao,
-                                          pedidoModel.DataFinalizacao);
+                                          pedidoModel.DataFinalizacao,
+                                          ItemPedidoModel.MapToDomain(pedidoModel.Itens));
     }
 
     internal static IEnumerable<Domain.Entities.Pedido> MapToDomain(IEnumerable<PedidoModel> pedidoModel)

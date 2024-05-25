@@ -8,9 +8,9 @@ namespace ControlePedidos.API.Controllers;
 [Route("api/pedidos")]
 public class PedidosController : BaseController
 {
-    private readonly IPedidoService _pedidoService;
+    private readonly IPedidoApplicationService _pedidoService;
 
-    public PedidosController(IPedidoService pedidoService)
+    public PedidosController(IPedidoApplicationService pedidoService)
     {
         _pedidoService = pedidoService;
     }
