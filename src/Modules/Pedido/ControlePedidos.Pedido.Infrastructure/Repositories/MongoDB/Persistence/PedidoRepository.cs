@@ -26,7 +26,7 @@ public class PedidoRepository : IPedidoRepository
     public async Task<IEnumerable<Domain.Entities.Pedido>> ObterTodosPedidosAsync()
     {
         var filter = Builders<PedidoModel>.Filter.Empty;
-        var sort = Builders<PedidoModel>.Sort.Descending(x => x.Id);
+        var sort = Builders<PedidoModel>.Sort.Ascending(x => x.Id);
 
         var result = await _context.Pedido.Find(filter).Sort(sort).ToListAsync();
 
@@ -49,8 +49,9 @@ public class PedidoRepository : IPedidoRepository
         var filter = Builders<PedidoModel>.Filter.Eq(p => p.Id, pedido.Id);
 
         var update = Builders<PedidoModel>.Update
-                                           .Set(p => p.Status, pedido.Status)
-                                           .Set(p => p.DataFinalizacao, pedido.DataAtualizacao);
+                                           .Set(p => p.Status, model.Status)
+                                           .Set(p => p.Itens, model.Itens)
+                                           .Set(p => p.DataFinalizacao, model.DataAtualizacao);
 
         return _context.Pedido.UpdateOneAsync(filter, update);
     }

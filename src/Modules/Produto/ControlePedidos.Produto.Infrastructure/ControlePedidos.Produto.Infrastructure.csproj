@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<ProjectReference Include="..\CadastroPedidos.Produto.Api\CadastroPedidos.Produto.Api.csproj" />
 	<ProjectReference Include="..\CadastroPedidos.Produto.Application\CadastroPedidos.Produto.Application.csproj" />
     <ProjectReference Include="..\ControlePedidos.Produto.Domain\ControlePedidos.Produto.Domain.csproj" />
   </ItemGroup>

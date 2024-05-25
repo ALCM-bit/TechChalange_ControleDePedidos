@@ -52,7 +52,7 @@ public class ProdutoService : IProdutoService
         return produtoResponse;
     }
 
-    public async Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync(TipoProduto tipoProduto, bool ativo, bool retornarTodos)
+    public async Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync(TipoProduto? tipoProduto, bool ativo, bool retornarTodos)
     {
         var produtos = await _produtoRepository.ObterTodosTiposProdutoAsync(tipoProduto, ativo, retornarTodos);
 

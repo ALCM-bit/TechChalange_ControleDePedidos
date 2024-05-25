@@ -1,6 +1,7 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.Services;
 using ControlePedidos.Pedido.Domain.Abstractions;
+using ControlePedidos.Pedido.Infrastructure.Repositories.Http;
 using ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB;
 using ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB.Contexts;
 using ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB.Persistence;
@@ -20,7 +21,8 @@ public static class PedidoDependencyInjection
     private static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IPedidoRepository, PedidoRepository>();
-        services.AddScoped<IPedidoService, PedidoService>();
+        services.AddScoped<IProdutoExternalRepository, ProdutoExternalRepository>();
+        services.AddScoped<IPedidoApplicationService, PedidoApplicationService>();
     }
     
     private static void RegisterContexts(this IServiceCollection services)

@@ -43,13 +43,14 @@ namespace CadastroPedidos.Produto.Application.Tests.Services
 
             var novosProdutos = listaProdutos.Select(produto => new Entity.Produto(string.Empty, produto.Nome, produto.TamanhoPreco, produto.TipoProduto, produto.Descricao, DateTime.UtcNow, true)).ToList();
 
-            _produtoRepositoryMock.Setup(x => x.AdicionarProdutoAsync(novosProdutos)).Returns(Task.CompletedTask); ;
+            _produtoRepositoryMock.Setup(x => x.AdicionarProdutoAsync(novosProdutos)).Returns(Task.CompletedTask);
 
             // Act
              await _produtoService.AdicionarProdutoAsync(listaProdutos);
 
-            // Assert
-            _produtoRepositoryMock.Verify(x => x.AdicionarProdutoAsync(novosProdutos), Times.Once);
+            _produtoRepositoryMock.Verify(x => x.AdicionarProdutoAsync(It.Is<List<Entity.Produto>>(p =>
+                p.Count == 1 && p.FirstOrDefault(x => x.Nome == listaProdutos[0].Nome) != null
+            )), Times.Once);
 
         }
 
