@@ -46,7 +46,7 @@ public class PedidoApplicationServiceTest : BaseUnitTest
         string produtoId = GerarIdValido();
         string nome = GerarIdValido().Substring(0,5);
         string tipoProduto = "Lanche";
-        TamanhoProduto tamanhoProduto = TamanhoProduto.M;
+        string tamanhoProduto = "M";
         decimal preco = (decimal) new Random().NextDouble() * (100 - 1) + 1;
         int quantidade = (int) new Random().NextInt64(1, 3);
         string observacao = GerarIdValido().Substring(0,5);
@@ -61,7 +61,7 @@ public class PedidoApplicationServiceTest : BaseUnitTest
         string nome = GerarIdValido().Substring(0, 5);
         string tipoProduto = "Lanche";
         decimal preco = (decimal)new Random().NextDouble() * (100 - 1) + 1;
-        Dictionary<TamanhoProduto, decimal> tamanhoPreco = new() { { TamanhoProduto.M, Math.Round(preco, 2) } };
+        Dictionary<string, decimal> tamanhoPreco = new() { { "M", Math.Round(preco, 2) } };
         string descricao = GerarIdValido().Substring(0, 5);
         bool ativo = true;
 
@@ -135,11 +135,10 @@ public class PedidoApplicationServiceTest : BaseUnitTest
 
         var novoItemPedido = new ItemPedidoRequest()
         {
-            Id = null,
             Observacao = null,
             ProdutoId = produto.Id!,
             Quantidade = 1,
-            Tamanho = TamanhoProduto.P
+            Tamanho = "P"
         };
 
         var request = new PedidoRequest()
@@ -157,7 +156,7 @@ public class PedidoApplicationServiceTest : BaseUnitTest
         // Assert
         _produtoExternalRepository.Verify(x => x.ObterTodosProdutosAsync(true), Times.Once);
         _pedidoRepositoryMock.Verify(x => x.CriarPedidoAsync(It.IsAny<Entity.Pedido>()), Times.Once);
-        Assert.Equal(5, response.Length);
+        Assert.Equal("id_teste", response);
     }
 
     #endregion
@@ -210,11 +209,10 @@ public class PedidoApplicationServiceTest : BaseUnitTest
 
         var novoItemPedido = new ItemPedidoRequest()
         {
-            Id = null,
             Observacao = null,
             ProdutoId = produto.Id!,
             Quantidade = 1,
-            Tamanho = TamanhoProduto.P
+            Tamanho = "P"
         };
 
         var request = new AtualizarPedidoRequest()
@@ -232,7 +230,6 @@ public class PedidoApplicationServiceTest : BaseUnitTest
         _pedidoRepositoryMock.Verify(x => x.ObterPedidoAsync(pedido.Id!), Times.Once);
         _pedidoRepositoryMock.Verify(x => x.AtualizarPedidoAsync(pedido), Times.Once);
         Assert.Single(pedido.Itens);
-        Assert.Equal(novoItemPedido.Id, pedido.Itens.FirstOrDefault()?.Id);
     }
 
     #endregion

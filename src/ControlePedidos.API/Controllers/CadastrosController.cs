@@ -22,9 +22,9 @@ public class CadastrosController : BaseController
         {
             CadastroResponse cadastro = await _cadastroService.ObterCadastroAsync(cpf);
 
-            if(cadastro is null)
+            if (cadastro is null)
             {
-                return NotFound(new { error = "Cadastro não encontrado."});
+                return NotFound();
             }
 
             return Ok(cadastro);

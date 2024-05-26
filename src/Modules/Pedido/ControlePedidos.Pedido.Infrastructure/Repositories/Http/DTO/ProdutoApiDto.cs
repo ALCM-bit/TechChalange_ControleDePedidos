@@ -7,7 +7,7 @@ public class ProdutoApiDto
     public string Id { get; set; }
     public DateTime DataCriacao { get; set; }
     public string Nome { get; set; }
-    public Dictionary<TamanhoProduto, decimal> TamanhoPreco { get; set; }
+    public Dictionary<string, decimal> TamanhoPreco { get; set; }
     public string TipoProduto { get; set; }
     public string Descricao { get; set; }
     public bool Ativo { get; set; }

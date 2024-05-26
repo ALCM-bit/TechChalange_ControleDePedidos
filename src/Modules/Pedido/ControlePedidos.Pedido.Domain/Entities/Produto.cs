@@ -3,12 +3,12 @@
 public class Produto : Entity
 {
     public string Nome { get; private set; }
-    public IDictionary<TamanhoProduto, decimal> TamanhoPreco { get; init; }
+    public IDictionary<string, decimal> TamanhoPreco { get; init; }
     public string TipoProduto { get; private set; }
     public string Descricao { get; private set; }
     public bool Ativo { get; set; }
 
-    public Produto(string id, string nome, IDictionary<TamanhoProduto, decimal> tamanhoPreco, string tipoProduto, string descricao, DateTime dataCriacao, bool ativo) : base(id, dataCriacao)
+    public Produto(string id, string nome, IDictionary<string, decimal> tamanhoPreco, string tipoProduto, string descricao, DateTime dataCriacao, bool ativo) : base(id, dataCriacao)
     {
         Nome = nome;
         TamanhoPreco = tamanhoPreco;

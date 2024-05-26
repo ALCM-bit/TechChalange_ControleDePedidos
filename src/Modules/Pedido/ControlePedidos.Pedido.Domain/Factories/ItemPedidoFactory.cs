@@ -3,14 +3,14 @@
 public static class ItemPedidoFactory
 {
     // TODO: Testes
-    public static ItemPedido Criar(Produto produto, string? id, TamanhoProduto tamanho, int quantidade, string? observacao)
+    public static ItemPedido Criar(Produto produto, string? id, string tamanho, int quantidade, string? observacao)
     {
         if (produto is null || !produto.Ativo)
         {
             throw new DomainNotificationException("Produto inativo ou não encontrado");
         }
 
-        KeyValuePair<TamanhoProduto, decimal>? tamanhoPreco = produto.TamanhoPreco?.FirstOrDefault(x => x.Key == tamanho);
+        KeyValuePair<string, decimal>? tamanhoPreco = produto.TamanhoPreco?.FirstOrDefault(x => x.Key?.ToLower() == tamanho?.ToLower());
 
         if (tamanhoPreco is null)
         {

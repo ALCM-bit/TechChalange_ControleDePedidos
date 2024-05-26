@@ -29,10 +29,12 @@ namespace ControlePedidos.Cadastro.Application.Services
 
         public async Task<CadastroResponse> ObterCadastroAsync(string cpf)
         {
-            if(cpf is not null)
+            if (string.IsNullOrWhiteSpace(cpf))
             {
-                cpf = cpf.Trim().Replace(".", "").Replace("-", "");
+                return null!;
             }
+
+            cpf = cpf.Trim().Replace(".", "").Replace("-", "");
 
             var cadastro = await _cadastroRepository.ObterCadastroAsync(cpf);
 
@@ -43,6 +45,7 @@ namespace ControlePedidos.Cadastro.Application.Services
 
             var cadastroResponse = new CadastroResponse 
             { 
+                Id = cadastro.Id!,
                 CPF = cadastro.CPF.Numero,
                 Nome = cadastro.Nome,
                 Email = cadastro.Email.Endereco,

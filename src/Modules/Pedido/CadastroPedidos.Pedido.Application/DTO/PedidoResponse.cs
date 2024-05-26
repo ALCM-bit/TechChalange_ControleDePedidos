@@ -24,9 +24,7 @@ public class ItemPedidoResponse
     public string ProdutoId { get; set; } = string.Empty;
     public string Nome { get; set; } = string.Empty;
     public string TipoProduto { get; set; } = string.Empty;
-
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public TamanhoProduto Tamanho { get; set; }
+    public string Tamanho { get; set; }
     public decimal Preco { get; set; }
     public int Quantidade { get; set; }
     public string? Observacao { get; set; }

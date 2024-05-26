@@ -70,10 +70,10 @@ public class PedidosController : BaseController
     {
         try
         {
-            string codigoPedido = await _pedidoService.CriarPedidoAsync(pedido);
+            string id = await _pedidoService.CriarPedidoAsync(pedido);
 
             // TODO: Criar DTO de response
-            return Ok(new { codigo = codigoPedido });
+            return Ok(new { Id = id });
         }
         catch (NotificationException ex)
         {

@@ -13,7 +13,7 @@ public class ItemPedidoTest : BaseUnitTest
         string produtoId = GerarIdValido();
         string nome = GerarIdValido().Substring(0, 5);
         string tipoProduto = "Lanche";
-        TamanhoProduto tamanhoProduto = TamanhoProduto.M;
+        string tamanhoProduto = "P";
         decimal preco = (decimal)new Random().NextDouble() * (100 - 1) + 1;
         int quantidade = (int)new Random().NextInt64(1, 3);
         string observacao = GerarIdValido().Substring(0, 5);
@@ -32,7 +32,7 @@ public class ItemPedidoTest : BaseUnitTest
         string produtoId = GerarIdValido();
         string nome = GerarIdValido().Substring(0, 5);
         string tipoProduto = "Lanche";
-        TamanhoProduto tamanhoProduto = TamanhoProduto.M;
+        string tamanhoProduto = "M";
         decimal preco = (decimal)new Random().NextDouble() * (100 - 1) + 1;
         int quantidade = (int)new Random().NextInt64(1, 3);
         string observacao = GerarIdValido().Substring(0, 5);
@@ -51,7 +51,7 @@ public class ItemPedidoTest : BaseUnitTest
         int quantidade = 0;
 
         // Act
-        Action act = () => new ItemPedido(null!, DateTime.UtcNow, GerarIdValido(), "NomeTeste", "Sobremesa", TamanhoProduto.M, 10, quantidade, string.Empty);
+        Action act = () => new ItemPedido(null!, DateTime.UtcNow, GerarIdValido(), "NomeTeste", "Sobremesa", "M", 10, quantidade, string.Empty);
 
         // Assert
         var notificationException = Assert.Throws<DomainNotificationException>(act);
