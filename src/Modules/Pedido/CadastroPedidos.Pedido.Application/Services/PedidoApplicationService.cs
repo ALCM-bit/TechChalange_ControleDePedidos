@@ -5,7 +5,9 @@ using ControlePedidos.Pedido.Domain.Abstractions;
 using ControlePedidos.Pedido.Domain.Entities;
 using ControlePedidos.Pedido.Domain.Factories;
 using Mapster;
-
+using MercadoPago.Client.Preference;
+using MercadoPago.Config;
+using MercadoPago.Resource.Preference;
 using Entity = ControlePedidos.Pedido.Domain.Entities;
 
 namespace CadastroPedidos.Pedido.Application.Services;
@@ -24,7 +26,7 @@ public class PedidoApplicationService : IPedidoApplicationService
     public async Task<PedidoResponse> ObterPedidoAsync(string idPedido)
     {
         Entity.Pedido pedido = await _pedidoRepository.ObterPedidoAsync(idPedido);
-         
+
         if (pedido is null)
         {
             return null!;
@@ -112,5 +114,53 @@ public class PedidoApplicationService : IPedidoApplicationService
         }
 
         return itensPedido;
+    }
+
+    public async Task<string> CheckoutPedido(string id)
+    {
+        Entity.Pedido pedido = await _pedidoRepository.ObterPedidoAsync(id);
+
+        if (pedido is null)
+        {
+            throw new ApplicationNotificationException("Pedido não encontrado");
+        }
+
+        MercadoPagoConfig.AccessToken = Environment.GetEnvironmentVariable("MercadoPagoToken"); ;
+
+        if (pedido.Itens is null)
+        {
+            throw new ApplicationNotificationException("Pedido não possui itens para realizar o checkout");
+        }
+
+        List<PreferenceItemRequest> itensPedido = new List<PreferenceItemRequest>();
+
+        foreach (ItemPedido item in pedido.Itens)
+        {
+            itensPedido.Add(new PreferenceItemRequest
+            {
+                Id = item.Id,
+                Title = item.Nome,
+                Quantity = item.Quantidade,
+                UnitPrice = item.Preco
+            });
+        }
+
+        PreferenceRequest request = new PreferenceRequest
+        {
+            //TODO - preencher back urls para atualizacao do status de pagamento do pedido
+            ExternalReference = pedido.Id,
+            Items = itensPedido
+        };
+
+        PreferenceClient client = new PreferenceClient();
+
+        try
+        {
+            Preference preference = client.Create(request);
+            return preference.SandboxInitPoint;
+        }catch
+        {
+            throw;
+        }
     }
 }
