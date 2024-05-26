@@ -15,4 +15,5 @@ public interface IPedidoApplicationService
     /// <returns>Código do Pedido</returns>
     Task<string> CriarPedidoAsync(PedidoRequest pedido);
     Task AtualizarPedidoAsync(string id, AtualizarPedidoRequest pedidoRequest);
+    Task<string> CheckoutPedido(string id);
 }

@@ -1,7 +1,9 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.DTO;
 using ControlePedidos.Common.Exceptions;
+using ControlePedidos.Pedido.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ControlePedidos.API.Controllers;
 
@@ -92,6 +94,32 @@ public class PedidosController : BaseController
             await _pedidoService.AtualizarPedidoAsync(id, pedido);
 
             return NoContent();
+        }
+        catch (NotificationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[{nameof(PedidosController)}[{AtualizarPedido}] - Unexpected Error - [{ex.Message}]");
+            return BadRequest(new { error = "Ocorreu um erro inesperado" });
+        }
+    }
+
+    [HttpPatch("{id}/checkout")]
+    public async Task<ActionResult<PagamentoResponse>> CheckoutPedido([FromRoute] string id)
+    {
+        try
+        {
+            var response = await _pedidoService.CheckoutPedido(id);
+
+            if (response.IsNullOrEmpty())
+            {
+                return BadRequest(new { error = "Ocorreu um erro inesperado ao contatar provedor de pagamento" });
+            }
+            return new PagamentoResponse(){
+                Url = response
+            };
         }
         catch (NotificationException ex)
         {
