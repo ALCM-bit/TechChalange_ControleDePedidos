@@ -30,7 +30,7 @@ public class PedidoTest : BaseUnitTest
         string produtoId = GerarIdValido();
         string nome = GerarIdValido().Substring(0, 5);
         string tipoProduto = "Lanche";
-        TamanhoProduto tamanhoProduto = TamanhoProduto.M;
+        string tamanhoProduto = "M";
         decimal preco = (decimal)new Random().NextDouble() * (100 - 1) + 1;
         int quantidade = (int)new Random().NextInt64(1,3);
         string observacao = GerarIdValido().Substring(0, 5);

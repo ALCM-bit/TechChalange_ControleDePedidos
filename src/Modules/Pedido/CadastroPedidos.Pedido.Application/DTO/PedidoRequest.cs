@@ -1,7 +1,4 @@
-﻿using ControlePedidos.Pedido.Domain.Enums;
-using System.Text.Json.Serialization;
-
-namespace CadastroPedidos.Pedido.Application.DTO;
+﻿namespace CadastroPedidos.Pedido.Application.DTO;
 
 public class PedidoRequest
 {
@@ -11,11 +8,8 @@ public class PedidoRequest
 
 public class ItemPedidoRequest
 {
-    public string? Id { get; set; }
     public string ProdutoId { get; set; } = string.Empty;
-
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public TamanhoProduto Tamanho { get; set; }
+    public string Tamanho { get; set; }
     public int Quantidade { get; set; }
     public string? Observacao { get; set; }
 }

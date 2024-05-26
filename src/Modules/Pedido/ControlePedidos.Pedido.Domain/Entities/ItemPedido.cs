@@ -5,7 +5,7 @@ public class ItemPedido : Entity
     public string ProdutoId { get; }
     public string Nome { get; }
     public string TipoProduto { get; }
-    public TamanhoProduto Tamanho { get; private set; }
+    public string Tamanho { get; private set; }
     public decimal Preco { get; private set; }
     public int Quantidade { get; private set; }
     public string? Observacao { get; private set; }
@@ -16,7 +16,7 @@ public class ItemPedido : Entity
                    string produtoId,
                    string nome,
                    string tipoProduto,
-                   TamanhoProduto tamanho,
+                   string tamanho,
                    decimal preco,
                    int quantidade,
                    string? observacao) : base(id, dataCriacao)

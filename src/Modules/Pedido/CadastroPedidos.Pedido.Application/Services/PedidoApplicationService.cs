@@ -48,13 +48,15 @@ public class PedidoApplicationService : IPedidoApplicationService
 
     public async Task<string> CriarPedidoAsync(PedidoRequest pedidoRequest)
     {
+        // TODO: Validar existencia do cliente
+
         var itensPedido = await CriarItensPedido(pedidoRequest.Itens);
 
         var pedido = new Entity.Pedido(string.Empty, string.Empty, pedidoRequest.IdCliente, null, DateTime.UtcNow, null, itensPedido);
 
-        await _pedidoRepository.CriarPedidoAsync(pedido);
+        string idPedido = await _pedidoRepository.CriarPedidoAsync(pedido);
 
-        return pedido.Codigo;
+        return idPedido;
     }
 
     public async Task AtualizarPedidoAsync(string id, AtualizarPedidoRequest pedidoRequest)

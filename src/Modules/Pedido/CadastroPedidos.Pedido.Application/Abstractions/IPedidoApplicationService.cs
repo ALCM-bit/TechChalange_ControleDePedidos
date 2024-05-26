@@ -12,7 +12,7 @@ public interface IPedidoApplicationService
     /// Cria um Pedido
     /// </summary>
     /// <param name="pedido"></param>
-    /// <returns>Código do Pedido</returns>
+    /// <returns>Id do Pedido</returns>
     Task<string> CriarPedidoAsync(PedidoRequest pedido);
     Task AtualizarPedidoAsync(string id, AtualizarPedidoRequest pedidoRequest);
     Task<string> CheckoutPedido(string id);
