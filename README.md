@@ -41,6 +41,10 @@ docker compose up
 ```
 4 - Acesse o localhost, de preferencia com a rota para o Swagger: http://localhost:5187/swagger
 
+## Recomendação
+1. Acesse o link abaixo para mais informações sobre a API.
+- [](https://7soat-g28.apidocumentation.com/guide/getting-started)
+
 # Participantes
 - [Eric Silva](https://github.com/ericdss)
 - [Felipe Augusto Lopes de Carvalho Magalhães](https://github.com/ALCM-bit)
