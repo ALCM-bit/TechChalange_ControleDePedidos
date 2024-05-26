@@ -1,6 +1,7 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.DTO;
 using ControlePedidos.Common.Exceptions;
+using ControlePedidos.Pedido.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -106,7 +107,7 @@ public class PedidosController : BaseController
     }
 
     [HttpPatch("{id}/checkout")]
-    public async Task<ActionResult> CheckoutPedido([FromRoute] string id)
+    public async Task<ActionResult<PagamentoResponse>> CheckoutPedido([FromRoute] string id)
     {
         try
         {
@@ -116,7 +117,9 @@ public class PedidosController : BaseController
             {
                 return BadRequest(new { error = "Ocorreu um erro inesperado ao contatar provedor de pagamento" });
             }
-            return Redirect(response);
+            return new PagamentoResponse(){
+                Url = response
+            };
         }
         catch (NotificationException ex)
         {
