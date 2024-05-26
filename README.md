@@ -33,13 +33,13 @@ Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Por
 
 ## Iniciando o projeto
 
-1 - Faça o fork ou clone do projeto;
-2 - Crie seu arquivo .env com as variáveis seguindo o mesmo esquema do .env.example.
-3 - Pelo terminal entre na pasta, no mesmo nível do docker-compose.yml e rode o comando:
+1. Faça o fork ou clone do projeto
+2. Crie seu arquivo .env com as variáveis seguindo o mesmo esquema do .env.example
+3. Pelo terminal entre na pasta, no mesmo nível do docker-compose.yml e rode o comando
 ```sh
 docker compose up
 ```
-4 - Acesse o localhos, de preferencia com a rota para o Swagger: http://localhost:5187/swagger
+4 - Acesse o localhost, de preferencia com a rota para o Swagger: http://localhost:5187/swagger
 
 # Participantes
 - [Eric Silva](https://github.com/ericdss)
