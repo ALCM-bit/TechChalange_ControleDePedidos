@@ -12,7 +12,7 @@ public static class ItemPedidoFactory
 
         KeyValuePair<string, decimal>? tamanhoPreco = produto.TamanhoPreco?.FirstOrDefault(x => x.Key?.ToLower() == tamanho?.ToLower());
 
-        if (tamanhoPreco is null)
+        if (tamanhoPreco is null || tamanhoPreco.Value.Key is null)
         {
             throw new DomainNotificationException($"Tamanho [{tamanho}] não encontrado");
         }
