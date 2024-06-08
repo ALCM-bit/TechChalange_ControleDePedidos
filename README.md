@@ -43,8 +43,8 @@ docker compose up
 
 ## Recomendação
 1. Acesse o link abaixo para mais informações sobre a API.
-- [](https://7soat-g28.apidocumentation.com/guide/getting-started)
-
+- [Getting Started](https://7soat-g28.apidocumentation.com/guide/getting-started)
+- [References](https://7soat-g28.apidocumentation.com/reference)
 # Participantes
 - [Eric Silva](https://github.com/ericdss)
 - [Felipe Augusto Lopes de Carvalho Magalhães](https://github.com/ALCM-bit)
