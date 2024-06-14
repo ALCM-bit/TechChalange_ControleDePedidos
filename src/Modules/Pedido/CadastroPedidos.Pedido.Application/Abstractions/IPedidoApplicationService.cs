@@ -5,7 +5,6 @@ namespace CadastroPedidos.Pedido.Application.Abstractions;
 
 public interface IPedidoApplicationService
 {
-    Task<PedidoResponse> ObterPedidoAsync(string idPedido);
     Task<IEnumerable<PedidoResponse>> ObterTodosPedidosAsync();
 
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.DTO;
+using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
 using ControlePedidos.Common.Exceptions;
-using ControlePedidos.Pedido.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -10,11 +10,14 @@ namespace ControlePedidos.API.Controllers;
 [Route("api/pedidos")]
 public class PedidosController : BaseController
 {
+    private readonly IUseCase<ObterPedidoRequest, ObterPedidoResponse> _obterPedidoUseCase;
     private readonly IPedidoApplicationService _pedidoService;
 
-    public PedidosController(IPedidoApplicationService pedidoService)
+    public PedidosController(IPedidoApplicationService pedidoService,
+                             IUseCase<ObterPedidoRequest, ObterPedidoResponse> obterPedidoUseCase)
     {
         _pedidoService = pedidoService;
+        _obterPedidoUseCase = obterPedidoUseCase;
     }
 
     // TODO: Criar objeto de retorno padrão
@@ -41,11 +44,13 @@ public class PedidosController : BaseController
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<PedidoResponse>> ObterPedido(string id)
+    public async Task<ActionResult<ObterPedidoResponse>> ObterPedido(string id)
     {
         try
         {
-            PedidoResponse pedido = await _pedidoService.ObterPedidoAsync(id);
+            var request = new ObterPedidoRequest() { Id = id };
+
+            ObterPedidoResponse pedido = await _obterPedidoUseCase.ExecuteAsync(request);
 
             if (pedido is null)
             {

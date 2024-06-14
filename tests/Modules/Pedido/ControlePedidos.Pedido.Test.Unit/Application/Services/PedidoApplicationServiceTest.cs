@@ -70,40 +70,6 @@ public class PedidoApplicationServiceTest : BaseUnitTest
 
     #endregion
 
-    #region ObterPedidoAsync
-
-    [Fact]
-    public async Task ObterPedidoAsync_Should_RetornarPedido_When_PedidoEncontrado()
-    {
-        // Arrange
-        var pedido = CriarPedidoPadrao();
-
-        _pedidoRepositoryMock.Setup(x => x.ObterPedidoAsync(pedido.Id!)).ReturnsAsync(pedido);
-
-        // Act
-        var response = await _pedidoApplicationService.ObterPedidoAsync(pedido.Id!);
-
-        // Assert
-        _pedidoRepositoryMock.Verify(x => x.ObterPedidoAsync(pedido.Id!), Times.Once);
-    }
-
-    [Fact]
-    public async Task ObterPedidoAsync_Should_RetornarNulo_When_PedidoNaoEncontrado()
-    {
-        // Arrange
-        string idPedido = "test";
-        _pedidoRepositoryMock.Setup(x => x.ObterPedidoAsync(It.IsAny<string>())).ReturnsAsync(() => null!);
-
-        // Act
-        var response = await _pedidoApplicationService.ObterPedidoAsync(idPedido);
-
-        // Assert
-        _pedidoRepositoryMock.Verify(x => x.ObterPedidoAsync(idPedido), Times.Once);
-        Assert.Null(response);
-    }
-
-    #endregion
-
     #region ObterTodosPedidosAsync
 
     [Fact]
