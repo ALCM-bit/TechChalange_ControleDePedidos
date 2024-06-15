@@ -1,5 +1,8 @@
-﻿using ControlePedidos.Cadastro.Application.Abstractions;
+﻿using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
+using ControlePedidos.Cadastro.Application.Abstractions;
 using ControlePedidos.Cadastro.Application.DTO;
+using ControlePedidos.Cadastro.Application.UseCases.GravarCadastro;
+using ControlePedidos.Cadastro.Application.UseCases.ObterCadastro;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,19 +12,25 @@ namespace ControlePedidos.API.Controllers;
 public class CadastrosController : BaseController
 {
     private readonly ICadastroService _cadastroService;
+    private readonly IUseCase<ObterCadastroRequest, ObterCadastroResponse> _obterCadastroUseCase;
+    private readonly IUseCase<GravarCadastroRequest, GravarCadastroResponse> _gravarCadastroUseCase;
 
-    public CadastrosController(ICadastroService cadastroService)
+    public CadastrosController(ICadastroService cadastroService, 
+        IUseCase<ObterCadastroRequest, ObterCadastroResponse> obterCadastroUseCase,
+        IUseCase<GravarCadastroRequest, GravarCadastroResponse> gravarCadastroUseCase)
     {
         _cadastroService = cadastroService;
+        _obterCadastroUseCase = obterCadastroUseCase;
+        _gravarCadastroUseCase = gravarCadastroUseCase;
     }
 
     [HttpGet]
-    public async Task<ActionResult<CadastroResponse>> ObterCadastro(string cpf)
+    public async Task<ActionResult<ObterCadastroResponse>> ObterCadastro(string cpf)
     {
         try
         {
-            CadastroResponse cadastro = await _cadastroService.ObterCadastroAsync(cpf);
-
+            ObterCadastroResponse cadastro = await _obterCadastroUseCase.ExecuteAsync(new ObterCadastroRequest(cpf));
+            
             if (cadastro is null)
             {
                 return NotFound();
@@ -42,18 +51,18 @@ public class CadastrosController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> Cadastrar(CadastroRequest cadastroRequest)
+    public async Task<ActionResult<string>> Cadastrar(GravarCadastroRequest cadastroRequest)
     {
         try
         {
-            var cadastro = await _cadastroService.ObterCadastroAsync(cadastroRequest.CPF);
+            var cadastro = await _obterCadastroUseCase.ExecuteAsync(new ObterCadastroRequest(cadastroRequest.CPF));
 
             if (cadastro is not null)
             {
                 return Conflict(new { error = "Cadastro já existente." });
             }
 
-            await _cadastroService.CadastrarAsync(cadastroRequest);
+            await _gravarCadastroUseCase.ExecuteAsync(cadastroRequest);
 
             return Created();
         }

@@ -1,5 +1,7 @@
 using ControlePedidos.Cadastro.Application.Abstractions;
 using ControlePedidos.Cadastro.Application.Services;
+using ControlePedidos.Cadastro.Application.UseCases.GravarCadastro;
+using ControlePedidos.Cadastro.Application.UseCases.ObterCadastro;
 using ControlePedidos.Cadastro.Domain.Abstractions;
 using ControlePedidos.Cadastro.Infrastructure.Repositories;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositories;
@@ -21,6 +23,9 @@ public static class CadastroDependencyInjection
     {
         services.AddScoped<ICadastroRepository, CadastroRepository>();
         services.AddScoped<ICadastroService, CadastroService>();
+
+        services.AddScoped<IUseCase<ObterCadastroRequest, ObterCadastroResponse>, ObterCadastroUseCase>();
+        services.AddScoped<IUseCase<GravarCadastroRequest, GravarCadastroResponse>, GravarCadastroUseCase>();
     }
 
     private static void RegisterContexts(this IServiceCollection services)
