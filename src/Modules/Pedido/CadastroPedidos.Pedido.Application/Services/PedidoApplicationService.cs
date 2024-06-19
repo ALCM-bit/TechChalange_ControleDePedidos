@@ -23,15 +23,6 @@ public class PedidoApplicationService : IPedidoApplicationService
         _pedidoExternalRepository = pedidoExternalRepository;
     }
 
-    public async Task<IEnumerable<PedidoResponse>> ObterTodosPedidosAsync()
-    {
-        IEnumerable<Entity.Pedido> pedidos = await _pedidoRepository.ObterTodosPedidosAsync();
-
-        var pedidoResponse = pedidos.Adapt<List<PedidoResponse>>();
-
-        return pedidoResponse;
-    }
-
     public async Task<string> CriarPedidoAsync(PedidoRequest pedidoRequest)
     {
         // TODO: Validar existencia do cliente

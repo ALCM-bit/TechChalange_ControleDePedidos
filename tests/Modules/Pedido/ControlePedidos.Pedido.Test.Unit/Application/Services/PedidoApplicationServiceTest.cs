@@ -70,27 +70,6 @@ public class PedidoApplicationServiceTest : BaseUnitTest
 
     #endregion
 
-    #region ObterTodosPedidosAsync
-
-    [Fact]
-    public async Task ObterTodosPedidosAsync_Should_RetornarListaDePedido_When_ExistirPedidos()
-    {
-        // Arrange
-        var pedido1 = CriarPedidoPadrao();
-        var pedido2 = CriarPedidoPadrao();
-
-        _pedidoRepositoryMock.Setup(x => x.ObterTodosPedidosAsync()).ReturnsAsync([pedido1, pedido2]);
-
-        // Act
-        var response = await _pedidoApplicationService.ObterTodosPedidosAsync();
-
-        // Assert
-        _pedidoRepositoryMock.Verify(x => x.ObterTodosPedidosAsync(), Times.Once);
-        Assert.Equal(2, response.Count());
-    }
-
-    #endregion
-
     #region CriarPedidoAsync
 
     [Fact]
@@ -104,7 +83,7 @@ public class PedidoApplicationServiceTest : BaseUnitTest
             Observacao = null,
             ProdutoId = produto.Id!,
             Quantidade = 1,
-            Tamanho = "P"
+            Tamanho = "M"
         };
 
         var request = new PedidoRequest()
@@ -178,7 +157,7 @@ public class PedidoApplicationServiceTest : BaseUnitTest
             Observacao = null,
             ProdutoId = produto.Id!,
             Quantidade = 1,
-            Tamanho = "P"
+            Tamanho = "M"
         };
 
         var request = new AtualizarPedidoRequest()

@@ -1,6 +1,7 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.DTO;
 using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
+using CadastroPedidos.Pedido.Application.UseCases.ObterTodosPedidos;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -11,26 +12,29 @@ namespace ControlePedidos.API.Controllers;
 public class PedidosController : BaseController
 {
     private readonly IUseCase<ObterPedidoRequest, ObterPedidoResponse> _obterPedidoUseCase;
+    private readonly IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> _obterTodosPedidosUseCase;
     private readonly IPedidoApplicationService _pedidoService;
 
     public PedidosController(IPedidoApplicationService pedidoService,
-                             IUseCase<ObterPedidoRequest, ObterPedidoResponse> obterPedidoUseCase)
+                             IUseCase<ObterPedidoRequest, ObterPedidoResponse> obterPedidoUseCase,
+                             IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> obterTodosPedidosUseCase)
     {
         _pedidoService = pedidoService;
         _obterPedidoUseCase = obterPedidoUseCase;
+        _obterTodosPedidosUseCase = obterTodosPedidosUseCase;
     }
 
     // TODO: Criar objeto de retorno padrão
     // TODO: Adicionar Autenticação
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PedidoResponse>>> ObterTodosPedidos()
+    public async Task<ActionResult<IEnumerable<ObterPedidoResponse>>> ObterTodosPedidos()
     {
         try
         {
-            IEnumerable<PedidoResponse> pedidos = await _pedidoService.ObterTodosPedidosAsync();
+            ObterTodosPedidosResponse response = await _obterTodosPedidosUseCase.ExecuteAsync(null!);
 
-            return Ok(pedidos);
+            return Ok(response.Pedidos);
         }
         catch (NotificationException ex)
         {
