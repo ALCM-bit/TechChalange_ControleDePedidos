@@ -1,5 +1,6 @@
 using ControlePedidos.Cadastro.Application.Abstractions;
 using ControlePedidos.Cadastro.Domain.Abstractions;
+using ControlePedidos.Cadastro.Domain.ValueObjects;
 using Mapster;
 
 namespace ControlePedidos.Cadastro.Application.UseCases.ObterCadastro;
@@ -14,16 +15,19 @@ public class ObterCadastroUseCase : IUseCase<ObterCadastroRequest, ObterCadastro
     }
     public async Task<ObterCadastroResponse> ExecuteAsync(ObterCadastroRequest request)
     {
-        var cadastro = _cadastroRepository.ObterCadastroAsync(request.CPF);
+        var cadastro = await _cadastroRepository.ObterCadastroAsync(request.CPF);
 
         if (cadastro is null)
         {
             return null;
         }
+        var email = cadastro.Email.Endereco;
+        var cpf = cadastro.CPF.Numero;
 
         var response = cadastro.Adapt<ObterCadastroResponse>();
-        
 
+        response.Email = email;
+        response.CPF = cpf;
         return response;
     }
 }
