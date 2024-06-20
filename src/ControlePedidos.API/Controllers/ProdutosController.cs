@@ -1,6 +1,7 @@
 ﻿using CadastroPedidos.Produto.Api;
 using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.DTO;
+using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,15 @@ namespace ControlePedidos.API.Controllers;
 public class ProdutosController : BaseController
 {
     private readonly IProdutosApi _produtosApi;
+    private readonly IUseCase<ObterProdutoRequest, ObterProdutoResponse> _obterProdutoUseCase;
     private readonly IProdutoService _produtoService;
 
-    public ProdutosController(IProdutoService produtoService, IProdutosApi produtosApi)
+    public ProdutosController(IProdutoService produtoService, IProdutosApi produtosApi,
+        IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase)
     {
         _produtoService = produtoService;
         _produtosApi = produtosApi;
+        _obterProdutoUseCase = obterProdutoUseCase;
     }
 
     [HttpPost]
@@ -58,12 +62,12 @@ public class ProdutosController : BaseController
         }
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> ObterProdutoAsync(string id)
+    [HttpGet("obterProduto")]
+    public async Task<IActionResult> ObterProdutoAsync([FromQuery] ObterProdutoRequest request)
     {
         try
         {
-            ProdutoResponse produto = await _produtoService.ObterProdutoAsync(id);
+            ObterProdutoResponse produto = await _obterProdutoUseCase.ExecuteAsync(request);
 
             if (produto is null)
             {
