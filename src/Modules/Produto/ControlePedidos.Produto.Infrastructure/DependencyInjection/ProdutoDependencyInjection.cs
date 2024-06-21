@@ -1,6 +1,7 @@
 ﻿using CadastroPedidos.Produto.Api;
 using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.Services;
+using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
 using ControlePedidos.Produto.Domain.Abstractions;
 using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB;
 using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Contexts;
@@ -23,6 +24,9 @@ public static class ProdutoDependencyInjection
         services.AddScoped<IProdutoService, ProdutoService>();
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
         services.AddScoped<IProdutosApi, ProdutosApi>();
+
+        services.AddScoped<IUseCase<ObterProdutoRequest, ObterProdutoResponse>, ObterProdutoUseCase>();
+
     }
 
     private static void RegisterContexts(this IServiceCollection services)

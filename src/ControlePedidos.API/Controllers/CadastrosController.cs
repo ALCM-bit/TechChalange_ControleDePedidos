@@ -25,11 +25,11 @@ public class CadastrosController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult<ObterCadastroResponse>> ObterCadastro(string cpf)
+    public async Task<ActionResult<ObterCadastroResponse>> ObterCadastro([FromQuery] ObterCadastroRequest request)
     {
         try
         {
-            ObterCadastroResponse cadastro = await _obterCadastroUseCase.ExecuteAsync(new ObterCadastroRequest(cpf));
+            ObterCadastroResponse cadastro = await _obterCadastroUseCase.ExecuteAsync(request);
             
             if (cadastro is null)
             {
