@@ -1,5 +1,8 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.DTO;
+using CadastroPedidos.Pedido.Application.UseCases.AtualizarPedido;
+using CadastroPedidos.Pedido.Application.UseCases.CheckoutPedido;
+using CadastroPedidos.Pedido.Application.UseCases.CriarPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterTodosPedidos;
 using ControlePedidos.Common.Exceptions;
@@ -11,17 +14,24 @@ namespace ControlePedidos.API.Controllers;
 [Route("api/pedidos")]
 public class PedidosController : BaseController
 {
-    private readonly IUseCase<ObterPedidoRequest, ObterPedidoResponse> _obterPedidoUseCase;
-    private readonly IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> _obterTodosPedidosUseCase;
     private readonly IPedidoApplicationService _pedidoService;
+    private readonly IUseCase<ObterPedidoRequest, ObterPedidoResponse> _obterPedidoUseCase;
+    private readonly IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> _obterTodosPedidosUseCase;    
+    private readonly IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> _checkoutPedidoUseCase;
+    private readonly IUseCase<CriarPedidoRequest, CriarPedidoResponse> _criarPedidoUseCase;
+    private readonly IUseCase<AtualizarPedidoRequest> _atualizarPedidoUseCase;
 
-    public PedidosController(IPedidoApplicationService pedidoService,
-                             IUseCase<ObterPedidoRequest, ObterPedidoResponse> obterPedidoUseCase,
-                             IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> obterTodosPedidosUseCase)
+    public PedidosController(IUseCase<ObterPedidoRequest, ObterPedidoResponse> obterPedidoUseCase,
+                             IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> obterTodosPedidosUseCase,
+                             IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> checkoutPedidoUseCase,
+                             IUseCase<CriarPedidoRequest, CriarPedidoResponse> criarPedidoUseCase,
+                             IUseCase<AtualizarPedidoRequest> atualizarPedidoUseCase)
     {
-        _pedidoService = pedidoService;
         _obterPedidoUseCase = obterPedidoUseCase;
         _obterTodosPedidosUseCase = obterTodosPedidosUseCase;
+        _checkoutPedidoUseCase = checkoutPedidoUseCase;
+        _criarPedidoUseCase = criarPedidoUseCase;
+        _atualizarPedidoUseCase = atualizarPedidoUseCase;
     }
 
     // TODO: Criar objeto de retorno padrão
@@ -75,14 +85,13 @@ public class PedidosController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<PedidoResponse>> CriarPedido(PedidoRequest pedido)
+    public async Task<ActionResult<CriarPedidoResponse>> CriarPedido(CriarPedidoRequest pedido)
     {
         try
         {
-            string id = await _pedidoService.CriarPedidoAsync(pedido);
+            CriarPedidoResponse response = await _criarPedidoUseCase.ExecuteAsync(pedido);
 
-            // TODO: Criar DTO de response
-            return Ok(new { Id = id });
+            return Ok(response);
         }
         catch (NotificationException ex)
         {
@@ -96,11 +105,18 @@ public class PedidosController : BaseController
     }
 
     [HttpPatch("{id}")]
-    public async Task<ActionResult<PedidoResponse>> AtualizarPedido([FromRoute] string id, [FromBody] AtualizarPedidoRequest pedido)
+    public async Task<ActionResult> AtualizarPedido([FromRoute] string id, [FromBody] AtualizarPedidoRequest pedido)
     {
         try
         {
-            await _pedidoService.AtualizarPedidoAsync(id, pedido);
+            var request = new AtualizarPedidoRequest()
+            {
+                IdPedido = id,
+                Status = pedido.Status,
+                Itens = pedido.Itens
+            };
+
+            await _atualizarPedidoUseCase.ExecuteAsync(request);
 
             return NoContent();
         }
@@ -116,19 +132,20 @@ public class PedidosController : BaseController
     }
 
     [HttpPatch("{id}/checkout")]
-    public async Task<ActionResult<PagamentoResponse>> CheckoutPedido([FromRoute] string id)
+    public async Task<ActionResult<CheckoutPedidoResponse>> CheckoutPedido([FromRoute] string id)
     {
         try
         {
-            var response = await _pedidoService.CheckoutPedido(id);
+            var request = new CheckoutPedidoRequest() { IdPedido = id };
 
-            if (response.IsNullOrEmpty())
+            CheckoutPedidoResponse response = await _checkoutPedidoUseCase.ExecuteAsync(request);
+
+            if (response.UrlPagamento.IsNullOrEmpty())
             {
                 return BadRequest(new { error = "Ocorreu um erro inesperado ao contatar provedor de pagamento" });
             }
-            return new PagamentoResponse(){
-                Url = response
-            };
+
+            return response;
         }
         catch (NotificationException ex)
         {

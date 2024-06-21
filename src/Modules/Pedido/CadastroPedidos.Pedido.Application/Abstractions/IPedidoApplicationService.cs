@@ -1,16 +1,9 @@
 ﻿using CadastroPedidos.Pedido.Application.DTO;
-using ControlePedidos.Pedido.Domain.Enums;
+using ControlePedidos.Pedido.Domain.Entities;
 
 namespace CadastroPedidos.Pedido.Application.Abstractions;
 
 public interface IPedidoApplicationService
 {
-    /// <summary>
-    /// Cria um Pedido
-    /// </summary>
-    /// <param name="pedido"></param>
-    /// <returns>Id do Pedido</returns>
-    Task<string> CriarPedidoAsync(PedidoRequest pedido);
-    Task AtualizarPedidoAsync(string id, AtualizarPedidoRequest pedidoRequest);
-    Task<string> CheckoutPedido(string id);
+    Task<List<ItemPedido>> GerarItensPedidoAsync(List<ItemPedidoRequestDto> itemRequests);
 }

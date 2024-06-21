@@ -16,5 +16,5 @@ public class ObterPedidoResponse
     public DateTime DataCriacao { get; set; }
     public DateTime? DataFinalizacao { get; set; }
     public decimal Total { get; set; }
-    public List<ItemPedidoResponse> Itens { get; set; } = new();
+    public List<ItemPedidoResponseDto> Itens { get; set; } = new();
 }
