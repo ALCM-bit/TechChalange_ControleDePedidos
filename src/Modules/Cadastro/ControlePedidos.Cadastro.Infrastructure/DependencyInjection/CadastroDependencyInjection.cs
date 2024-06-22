@@ -3,9 +3,11 @@ using ControlePedidos.Cadastro.Application.Services;
 using ControlePedidos.Cadastro.Application.UseCases.GravarCadastro;
 using ControlePedidos.Cadastro.Application.UseCases.ObterCadastro;
 using ControlePedidos.Cadastro.Domain.Abstractions;
+using ControlePedidos.Cadastro.Domain.ValueObjects;
 using ControlePedidos.Cadastro.Infrastructure.Repositories;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.ClienteRepositories;
 using ControlePedidos.Cadastro.Infrastructure.Repositories.MongoDB.Contexts;
+using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,6 +28,10 @@ public static class CadastroDependencyInjection
 
         services.AddScoped<IUseCase<ObterCadastroRequest, ObterCadastroResponse>, ObterCadastroUseCase>();
         services.AddScoped<IUseCase<GravarCadastroRequest, GravarCadastroResponse>, GravarCadastroUseCase>();
+
+        TypeAdapterConfig<Domain.Entities.Cadastro, ObterCadastroResponse>.NewConfig()
+            .Map(dest => dest.CPF, src => src.CPF.Numero)
+            .Map(dest => dest.Email, src => src.Email.Endereco);
     }
 
     private static void RegisterContexts(this IServiceCollection services)

@@ -55,7 +55,7 @@ public class CadastrosController : BaseController
     {
         try
         {
-            var cadastro = await _obterCadastroUseCase.ExecuteAsync(new ObterCadastroRequest(cadastroRequest.CPF));
+            var cadastro = await _obterCadastroUseCase.ExecuteAsync(new ObterCadastroRequest() { CPF = cadastroRequest.CPF });
 
             if (cadastro is not null)
             {
