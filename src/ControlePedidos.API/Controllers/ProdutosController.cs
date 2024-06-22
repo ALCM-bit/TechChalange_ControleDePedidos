@@ -1,6 +1,7 @@
 ﻿using CadastroPedidos.Produto.Api;
 using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.DTO;
+using CadastroPedidos.Produto.Application.UseCases.GravarProduto;
 using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -12,22 +13,26 @@ public class ProdutosController : BaseController
 {
     private readonly IProdutosApi _produtosApi;
     private readonly IUseCase<ObterProdutoRequest, ObterProdutoResponse> _obterProdutoUseCase;
+    private readonly IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> _gravarProdutosUseCase;
     private readonly IProdutoService _produtoService;
 
-    public ProdutosController(IProdutoService produtoService, IProdutosApi produtosApi,
-        IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase)
+    public ProdutosController(
+        IProdutoService produtoService, IProdutosApi produtosApi,
+        IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase,
+        IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> gravarProdutosUseCase)
     {
         _produtoService = produtoService;
         _produtosApi = produtosApi;
         _obterProdutoUseCase = obterProdutoUseCase;
+        _gravarProdutosUseCase = gravarProdutosUseCase;
     }
 
     [HttpPost]
-    public async Task<IActionResult> AdicionarProdutoAsync([FromBody] IEnumerable<ProdutoRequest> produto)
+    public async Task<IActionResult> AdicionarProdutosAsync([FromBody] IEnumerable<GravarProdutosRequest> produto)
     {
         try
         {
-            await _produtoService.AdicionarProdutoAsync(produto);
+            await _gravarProdutosUseCase.ExecuteAsync(produto);
 
             return Ok();
         }
@@ -37,7 +42,7 @@ public class ProdutosController : BaseController
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[{nameof(ProdutosController)}[{AdicionarProdutoAsync}] - Unexpected Error - [{ex.Message}]");
+            Console.WriteLine($"[{nameof(ProdutosController)}[{AdicionarProdutosAsync}] - Unexpected Error - [{ex.Message}]");
             return BadRequest(new { error = "Ocorreu um erro inesperado" });
         }
     }
