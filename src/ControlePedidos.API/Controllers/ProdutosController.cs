@@ -1,6 +1,8 @@
 ﻿using CadastroPedidos.Produto.Api;
 using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.DTO;
+using CadastroPedidos.Produto.Application.UseCases.AtualizarProduto;
+using CadastroPedidos.Produto.Application.UseCases.DeletarProduto;
 using CadastroPedidos.Produto.Application.UseCases.GravarProduto;
 using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
 using CadastroPedidos.Produto.Application.UseCases.ObterTodosProdutos;
@@ -16,19 +18,25 @@ public class ProdutosController : BaseController
     private readonly IUseCase<ObterProdutoRequest, ObterProdutoResponse> _obterProdutoUseCase;
     private readonly IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> _gravarProdutosUseCase;
     private readonly IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> _obterTodosProdutosUseCase;
+    private readonly IUseCase<AtualizarProdutoRequest, AtualizarProdutoResponse> _atualizarProdutoUseCase;
+    private readonly IUseCase<DeletarProdutoRequest, DeletarProdutoResponse> _deletarProdutoUseCase;
     private readonly IProdutoService _produtoService;
 
     public ProdutosController(
         IProdutoService produtoService, IProdutosApi produtosApi,
         IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase,
         IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> gravarProdutosUseCase,
-        IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> obterTodosProdutosUseCase)
+        IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> obterTodosProdutosUseCase,
+        IUseCase<AtualizarProdutoRequest, AtualizarProdutoResponse> atualizarProdutoUseCase,
+        IUseCase<DeletarProdutoRequest, DeletarProdutoResponse> deletarProdutoUseCase)
     {
         _produtoService = produtoService;
         _produtosApi = produtosApi;
         _obterProdutoUseCase = obterProdutoUseCase;
         _gravarProdutosUseCase = gravarProdutosUseCase;
         _obterTodosProdutosUseCase = obterTodosProdutosUseCase;
+        _atualizarProdutoUseCase = atualizarProdutoUseCase;
+        _deletarProdutoUseCase = deletarProdutoUseCase;
     }
 
     [HttpPost]
@@ -51,12 +59,12 @@ public class ProdutosController : BaseController
         }
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> AtualizarProdutoAsync(string id, [FromBody] AtualizaProdutoRequest produto)
+    [HttpPut]
+    public async Task<IActionResult> AtualizarProdutoAsync([FromBody] AtualizarProdutoRequest request)
     {
         try
         {
-            await _produtoService.AtualizarProdutoAsync(id, produto);
+            await _atualizarProdutoUseCase.ExecuteAsync(request);
 
             return Ok();
         }
@@ -104,12 +112,12 @@ public class ProdutosController : BaseController
         return Ok(produtos);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> RemoverProdutoAsync(string id)
+    [HttpDelete]
+    public async Task<IActionResult> RemoverProdutoAsync([FromQuery] DeletarProdutoRequest request)
     {
         try
         {
-            await _produtoService.RemoverProdutoAsync(id);
+            await _deletarProdutoUseCase.ExecuteAsync(request);
 
             return Ok();
         }

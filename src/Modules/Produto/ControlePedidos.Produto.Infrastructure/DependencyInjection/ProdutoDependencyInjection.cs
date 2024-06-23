@@ -1,6 +1,8 @@
 ﻿using CadastroPedidos.Produto.Api;
 using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.Services;
+using CadastroPedidos.Produto.Application.UseCases.AtualizarProduto;
+using CadastroPedidos.Produto.Application.UseCases.DeletarProduto;
 using CadastroPedidos.Produto.Application.UseCases.GravarProduto;
 using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
 using CadastroPedidos.Produto.Application.UseCases.ObterTodosProdutos;
@@ -30,6 +32,8 @@ public static class ProdutoDependencyInjection
         services.AddScoped<IUseCase<ObterProdutoRequest, ObterProdutoResponse>, ObterProdutoUseCase>();
         services.AddScoped<IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse>, GravarProdutosUseCase>();
         services.AddScoped<IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>>, ObterTodosProdutosUseCase>();
+        services.AddScoped<IUseCase<AtualizarProdutoRequest, AtualizarProdutoResponse>, AtualizarProdutoUseCase>();
+        services.AddScoped<IUseCase<DeletarProdutoRequest, DeletarProdutoResponse>, DeletarProdutoUseCase>();
 
 
     }

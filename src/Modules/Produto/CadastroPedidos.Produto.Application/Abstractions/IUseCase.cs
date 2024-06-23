@@ -8,5 +8,5 @@ namespace CadastroPedidos.Produto.Application.Abstractions;
 
 public interface IUseCase<TRequest, TResponse>
 {
-    Task<TResponse> ExecuteAsync(TRequest request);
+    public Task<TResponse> ExecuteAsync(TRequest request);
 }
