@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CadastroPedidos.Produto.Application.UseCases.DeletarProduto;
 
-public class DeletarProdutoUseCase : IUseCase<DeletarProdutoRequest, DeletarProdutoResponse>
+public class DeletarProdutoUseCase : IUseCase<DeletarProdutoRequest>
 {
     private readonly IProdutoRepository _produtoRepository;
 
@@ -17,7 +17,7 @@ public class DeletarProdutoUseCase : IUseCase<DeletarProdutoRequest, DeletarProd
     {
         _produtoRepository = produtoRepository;
     }
-    public async Task<DeletarProdutoResponse> ExecuteAsync(DeletarProdutoRequest request)
+    public async Task ExecuteAsync(DeletarProdutoRequest request)
     {
         var produto = await _produtoRepository.ObterProdutoAsync(request.Id);
 
@@ -27,7 +27,5 @@ public class DeletarProdutoUseCase : IUseCase<DeletarProdutoRequest, DeletarProd
         }
 
         await _produtoRepository.RemoverProdutoAsync(produto);
-
-        return new DeletarProdutoResponse();
     }
 }

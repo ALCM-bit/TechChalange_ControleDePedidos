@@ -6,7 +6,7 @@ using Entity = ControlePedidos.Produto.Domain.Entities;
 
 namespace CadastroPedidos.Produto.Application.UseCases.AtualizarProduto;
 
-public class AtualizarProdutoUseCase : IUseCase<AtualizarProdutoRequest, AtualizarProdutoResponse>
+public class AtualizarProdutoUseCase : IUseCase<AtualizarProdutoRequest>
 {
     private readonly IProdutoRepository _produtoRepository;
 
@@ -14,10 +14,8 @@ public class AtualizarProdutoUseCase : IUseCase<AtualizarProdutoRequest, Atualiz
     {
         _produtoRepository = produtoRepository;
     }
-    public async Task<AtualizarProdutoResponse> ExecuteAsync(AtualizarProdutoRequest request)
+    public async Task ExecuteAsync(AtualizarProdutoRequest request)
     {
-
-
         var produtoAntigo = await _produtoRepository.ObterProdutoAsync(request.Id);
 
         if (produtoAntigo is null)
@@ -28,7 +26,5 @@ public class AtualizarProdutoUseCase : IUseCase<AtualizarProdutoRequest, Atualiz
         var produtoAtualizado = new Entity.Produto(produtoAntigo.Id!, request.Nome, request.TamanhoPreco, request.TipoProduto, request.Descricao, produtoAntigo.DataCriacao, request.Ativo);
 
         await _produtoRepository.AtualizarProdutoAsync(produtoAtualizado);
-
-        return new AtualizarProdutoResponse();
     }
 }

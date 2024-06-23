@@ -30,10 +30,10 @@ public static class ProdutoDependencyInjection
         services.AddScoped<IProdutosApi, ProdutosApi>();
 
         services.AddScoped<IUseCase<ObterProdutoRequest, ObterProdutoResponse>, ObterProdutoUseCase>();
-        services.AddScoped<IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse>, GravarProdutosUseCase>();
+        services.AddScoped<IUseCase<IEnumerable<GravarProdutosRequest>>, GravarProdutosUseCase>();
         services.AddScoped<IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>>, ObterTodosProdutosUseCase>();
-        services.AddScoped<IUseCase<AtualizarProdutoRequest, AtualizarProdutoResponse>, AtualizarProdutoUseCase>();
-        services.AddScoped<IUseCase<DeletarProdutoRequest, DeletarProdutoResponse>, DeletarProdutoUseCase>();
+        services.AddScoped<IUseCase<AtualizarProdutoRequest>, AtualizarProdutoUseCase>();
+        services.AddScoped<IUseCase<DeletarProdutoRequest>, DeletarProdutoUseCase>();
 
 
     }

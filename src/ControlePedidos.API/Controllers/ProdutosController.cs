@@ -16,19 +16,19 @@ public class ProdutosController : BaseController
 {
     private readonly IProdutosApi _produtosApi;
     private readonly IUseCase<ObterProdutoRequest, ObterProdutoResponse> _obterProdutoUseCase;
-    private readonly IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> _gravarProdutosUseCase;
+    private readonly IUseCase<IEnumerable<GravarProdutosRequest>> _gravarProdutosUseCase;
     private readonly IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> _obterTodosProdutosUseCase;
-    private readonly IUseCase<AtualizarProdutoRequest, AtualizarProdutoResponse> _atualizarProdutoUseCase;
-    private readonly IUseCase<DeletarProdutoRequest, DeletarProdutoResponse> _deletarProdutoUseCase;
+    private readonly IUseCase<AtualizarProdutoRequest> _atualizarProdutoUseCase;
+    private readonly IUseCase<DeletarProdutoRequest> _deletarProdutoUseCase;
     private readonly IProdutoService _produtoService;
 
     public ProdutosController(
         IProdutoService produtoService, IProdutosApi produtosApi,
         IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase,
-        IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> gravarProdutosUseCase,
+        IUseCase<IEnumerable<GravarProdutosRequest>> gravarProdutosUseCase,
         IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> obterTodosProdutosUseCase,
-        IUseCase<AtualizarProdutoRequest, AtualizarProdutoResponse> atualizarProdutoUseCase,
-        IUseCase<DeletarProdutoRequest, DeletarProdutoResponse> deletarProdutoUseCase)
+        IUseCase<AtualizarProdutoRequest> atualizarProdutoUseCase,
+        IUseCase<DeletarProdutoRequest> deletarProdutoUseCase)
     {
         _produtoService = produtoService;
         _produtosApi = produtosApi;
