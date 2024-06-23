@@ -6,7 +6,7 @@ using Mapster;
 
 namespace ControlePedidos.Cadastro.Application.UseCases.GravarCadastro;
 
-public class GravarCadastroUseCase : IUseCase<GravarCadastroRequest, GravarCadastroResponse>
+public class GravarCadastroUseCase : IUseCase<GravarCadastroRequest>
 {
     private readonly ICadastroRepository _cadastroRepository;
 
@@ -14,7 +14,8 @@ public class GravarCadastroUseCase : IUseCase<GravarCadastroRequest, GravarCadas
     {
         _cadastroRepository = cadastroRepository;
     }
-    public async Task<GravarCadastroResponse> ExecuteAsync(GravarCadastroRequest request)
+
+    public async Task ExecuteAsync(GravarCadastroRequest request)
     {
         var cadastroDomain = new Domain.Entities.Cadastro(null,
             DateTime.UtcNow,
@@ -23,7 +24,5 @@ public class GravarCadastroUseCase : IUseCase<GravarCadastroRequest, GravarCadas
             request.Nome);
 
         await _cadastroRepository.CadastrarAsync(cadastroDomain);
-
-        return new GravarCadastroResponse(true);
     }
 }

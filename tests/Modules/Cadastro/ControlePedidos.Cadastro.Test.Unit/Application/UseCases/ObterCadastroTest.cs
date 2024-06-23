@@ -1,5 +1,6 @@
 ﻿using ControlePedidos.Cadastro.Application.UseCases.ObterCadastro;
 using ControlePedidos.Cadastro.Domain.Abstractions;
+using ControlePedidos.Cadastro.Domain.Entities;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ public class ObterCadastroTest
         _cadastroRepositoryMock.Setup(x => x.ObterCadastroAsync(cadastro.CPF.Numero!)).ReturnsAsync(cadastro);
 
         // Act
-        var response = await _useCase.ExecuteAsync(new ObterCadastroRequest(cadastro.CPF.Numero));
+        var response = await _useCase.ExecuteAsync(new ObterCadastroRequest() { CPF = cadastro.CPF.Numero });
 
         // Assert
         _cadastroRepositoryMock.Verify(x => x.ObterCadastroAsync(cadastro.CPF.Numero!), Times.Once);
@@ -57,7 +58,7 @@ public class ObterCadastroTest
         _cadastroRepositoryMock.Setup(x => x.ObterCadastroAsync(It.IsAny<string>())).ReturnsAsync(() => null!);
 
         // Act
-        var response = await _useCase.ExecuteAsync(new ObterCadastroRequest(cpf));
+        var response = await _useCase.ExecuteAsync(new ObterCadastroRequest() { CPF = cpf });
 
         // Assert
         _cadastroRepositoryMock.Verify(x => x.ObterCadastroAsync(cpf), Times.Once);

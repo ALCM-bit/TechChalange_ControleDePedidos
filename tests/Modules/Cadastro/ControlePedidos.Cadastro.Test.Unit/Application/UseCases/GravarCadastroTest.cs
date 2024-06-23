@@ -1,12 +1,6 @@
 ﻿using ControlePedidos.Cadastro.Application.UseCases.GravarCadastro;
-using ControlePedidos.Cadastro.Application.UseCases.ObterCadastro;
 using ControlePedidos.Cadastro.Domain.Abstractions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ControlePedidos.Cadastro.Test.Unit.Application.UseCases;
 
@@ -34,10 +28,8 @@ public class GravarCadastroTest
 
         _cadastroRepositoryMock.Setup(x => x.CadastrarAsync(It.IsAny<Cadastro.Domain.Entities.Cadastro>()));
 
-        var response = await _useCase.ExecuteAsync(request);
+        await _useCase.ExecuteAsync(request);
 
         _cadastroRepositoryMock.Verify(x => x.CadastrarAsync(It.IsAny<Cadastro.Domain.Entities.Cadastro>()), Times.Once);
-
-        Assert.NotNull(response);
     }
 }

@@ -11,15 +11,14 @@ namespace ControlePedidos.API.Controllers;
 [Route("api/cadastros")]
 public class CadastrosController : BaseController
 {
-    private readonly ICadastroService _cadastroService;
     private readonly IUseCase<ObterCadastroRequest, ObterCadastroResponse> _obterCadastroUseCase;
-    private readonly IUseCase<GravarCadastroRequest, GravarCadastroResponse> _gravarCadastroUseCase;
+    private readonly IUseCase<GravarCadastroRequest> _gravarCadastroUseCase;
 
-    public CadastrosController(ICadastroService cadastroService, 
-        IUseCase<ObterCadastroRequest, ObterCadastroResponse> obterCadastroUseCase,
-        IUseCase<GravarCadastroRequest, GravarCadastroResponse> gravarCadastroUseCase)
+    public CadastrosController(
+        IUseCase<ObterCadastroRequest, 
+        ObterCadastroResponse> obterCadastroUseCase,
+        IUseCase<GravarCadastroRequest> gravarCadastroUseCase)
     {
-        _cadastroService = cadastroService;
         _obterCadastroUseCase = obterCadastroUseCase;
         _gravarCadastroUseCase = gravarCadastroUseCase;
     }
