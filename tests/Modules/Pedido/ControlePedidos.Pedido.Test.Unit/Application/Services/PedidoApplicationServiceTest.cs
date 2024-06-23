@@ -13,13 +13,12 @@ public class PedidoApplicationServiceTest : BaseUnitTest
 {
     private readonly IPedidoApplicationService _pedidoApplicationService;
     private readonly Mock<IProdutoExternalRepository> _produtoExternalRepository;
-    private readonly Mock<IPedidoRepository> _pedidoRepositoryMock;
 
     public PedidoApplicationServiceTest()
     {
         _pedidoRepositoryMock = new();
         _produtoExternalRepository = new();
-        _pedidoApplicationService = new PedidoApplicationService(_pedidoRepositoryMock.Object, _produtoExternalRepository.Object);
+        _pedidoApplicationService = new PedidoApplicationService(_produtoExternalRepository.Object);
 
         _produtoExternalRepository.Setup(repo => repo.ObterTodosProdutosAsync(true)).ReturnsAsync([]);
     }
@@ -70,166 +69,59 @@ public class PedidoApplicationServiceTest : BaseUnitTest
 
     #endregion
 
-    #region ObterPedidoAsync
+    #region GerarItensPedidoAsync
 
     [Fact]
-    public async Task ObterPedidoAsync_Should_RetornarPedido_When_PedidoEncontrado()
-    {
-        // Arrange
-        var pedido = CriarPedidoPadrao();
-
-        _pedidoRepositoryMock.Setup(x => x.ObterPedidoAsync(pedido.Id!)).ReturnsAsync(pedido);
-
-        // Act
-        var response = await _pedidoApplicationService.ObterPedidoAsync(pedido.Id!);
-
-        // Assert
-        _pedidoRepositoryMock.Verify(x => x.ObterPedidoAsync(pedido.Id!), Times.Once);
-    }
-
-    [Fact]
-    public async Task ObterPedidoAsync_Should_RetornarNulo_When_PedidoNaoEncontrado()
-    {
-        // Arrange
-        string idPedido = "test";
-        _pedidoRepositoryMock.Setup(x => x.ObterPedidoAsync(It.IsAny<string>())).ReturnsAsync(() => null!);
-
-        // Act
-        var response = await _pedidoApplicationService.ObterPedidoAsync(idPedido);
-
-        // Assert
-        _pedidoRepositoryMock.Verify(x => x.ObterPedidoAsync(idPedido), Times.Once);
-        Assert.Null(response);
-    }
-
-    #endregion
-
-    #region ObterTodosPedidosAsync
-
-    [Fact]
-    public async Task ObterTodosPedidosAsync_Should_RetornarListaDePedido_When_ExistirPedidos()
-    {
-        // Arrange
-        var pedido1 = CriarPedidoPadrao();
-        var pedido2 = CriarPedidoPadrao();
-
-        _pedidoRepositoryMock.Setup(x => x.ObterTodosPedidosAsync()).ReturnsAsync([pedido1, pedido2]);
-
-        // Act
-        var response = await _pedidoApplicationService.ObterTodosPedidosAsync();
-
-        // Assert
-        _pedidoRepositoryMock.Verify(x => x.ObterTodosPedidosAsync(), Times.Once);
-        Assert.Equal(2, response.Count());
-    }
-
-    #endregion
-
-    #region CriarPedidoAsync
-
-    [Fact]
-    public async Task CriarPedidoAsync_Should_RetornarCodigoPedido_When_PedidoCriado()
+    public async Task GerarItensPedidoAsync_Should_RetornarItensPedido_When_ItensValidos()
     {
         // Arrange
         var produto = CriarProdutoPadrao();
 
-        var novoItemPedido = new ItemPedidoRequest()
+        var novoItemPedido = new ItemPedidoRequestDto()
         {
             Observacao = null,
             ProdutoId = produto.Id!,
             Quantidade = 1,
-            Tamanho = "P"
-        };
-
-        var request = new PedidoRequest()
-        {
-            IdCliente = null,
-            Itens = [novoItemPedido]
+            Tamanho = "M"
         };
 
         _produtoExternalRepository.Setup(x => x.ObterTodosProdutosAsync(true)).ReturnsAsync([produto]);
-        _pedidoRepositoryMock.Setup(x => x.CriarPedidoAsync(It.IsAny<Entity.Pedido>())).ReturnsAsync(() => "id_teste");
         
         // Act
-        var response = await _pedidoApplicationService.CriarPedidoAsync(request);
+        var response = await _pedidoApplicationService.GerarItensPedidoAsync([novoItemPedido]);
 
         // Assert
         _produtoExternalRepository.Verify(x => x.ObterTodosProdutosAsync(true), Times.Once);
-        _pedidoRepositoryMock.Verify(x => x.CriarPedidoAsync(It.IsAny<Entity.Pedido>()), Times.Once);
-        Assert.Equal("id_teste", response);
-    }
-
-    #endregion
-
-    #region AtualizarPedidoAsync
-
-    [Fact]
-    public async Task AtualizarPedidoAsync_Should_ThrowApplicationNotificationException_When_PedidoNaoEncontrado()
-    {
-        // Arrange
-        string idPedido = "test";
-        _pedidoRepositoryMock.Setup(x => x.ObterPedidoAsync(It.IsAny<string>())).ReturnsAsync(() => null!);
-
-        // Act
-        Task act = _pedidoApplicationService.AtualizarPedidoAsync(idPedido, null!);
-
-        // Assert
-        await Assert.ThrowsAsync<ApplicationNotificationException>(async () => await act);
-        _pedidoRepositoryMock.Verify(x => x.ObterPedidoAsync(idPedido), Times.Once);
-        _pedidoRepositoryMock.Verify(x => x.AtualizarPedidoAsync(It.IsAny<Entity.Pedido>()), Times.Never);
-    }
-
-    [Theory]
-    [InlineData(StatusPedido.Recebido)]
-    public async Task AtualizarPedidoAsync_Should_AtualizarStatus_When_PedidoEncontrado(StatusPedido status)
-    {
-        // Arrange
-        var pedido = CriarPedidoPadrao();
-        var request = new AtualizarPedidoRequest()
-        {
-            Status = status
-        };
-
-        _pedidoRepositoryMock.Setup(x => x.ObterPedidoAsync(It.IsAny<string>())).ReturnsAsync(pedido);
-
-        // Act
-        await _pedidoApplicationService.AtualizarPedidoAsync(pedido.Id!, request);
-
-        // Assert
-        _pedidoRepositoryMock.Verify(x => x.AtualizarPedidoAsync(pedido), Times.Once);
-        Assert.Equal(status, pedido.Status);
+        Assert.Single(response);
+        Assert.Equal(produto.Id, response.FirstOrDefault()?.ProdutoId);
     }
 
     [Fact]
-    public async Task AtualizarPedidoAsync_Should_AtualizarItensPedido_When_PedidoEncontrado()
+    public async Task GerarItensPedidoAsync_Should_ThrowNotificationException_When_ProdutoNaoEncontrado()
     {
         // Arrange
-        var pedido = CriarPedidoPadrao();
         var produto = CriarProdutoPadrao();
 
-        var novoItemPedido = new ItemPedidoRequest()
+        var novoItemPedido = new ItemPedidoRequestDto()
         {
             Observacao = null,
             ProdutoId = produto.Id!,
             Quantidade = 1,
-            Tamanho = "P"
+            Tamanho = "M"
         };
 
-        var request = new AtualizarPedidoRequest()
-        {
-            Itens = new List<ItemPedidoRequest>{ novoItemPedido }
-        };
-
-        _pedidoRepositoryMock.Setup(x => x.ObterPedidoAsync(pedido.Id!)).ReturnsAsync(pedido);
-        _produtoExternalRepository.Setup(x => x.ObterTodosProdutosAsync(true)).ReturnsAsync([produto]);
+        _produtoExternalRepository.Setup(x => x.ObterTodosProdutosAsync(true)).ReturnsAsync([]);
 
         // Act
-        await _pedidoApplicationService.AtualizarPedidoAsync(pedido.Id!, request);
+        Task act = _pedidoApplicationService.GerarItensPedidoAsync([novoItemPedido]);
+
+        var ex = await Assert.ThrowsAsync<ApplicationNotificationException>(async () => await act);
 
         // Assert
-        _pedidoRepositoryMock.Verify(x => x.ObterPedidoAsync(pedido.Id!), Times.Once);
-        _pedidoRepositoryMock.Verify(x => x.AtualizarPedidoAsync(pedido), Times.Once);
-        Assert.Single(pedido.Itens);
+        _produtoExternalRepository.Verify(x => x.ObterTodosProdutosAsync(true), Times.Once);
+
+        Assert.NotNull(ex);
+        Assert.Contains("inativo ou não encontrado", ex.Message, StringComparison.InvariantCultureIgnoreCase);
     }
 
     #endregion

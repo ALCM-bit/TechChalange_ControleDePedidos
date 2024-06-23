@@ -1,5 +1,10 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.Services;
+using CadastroPedidos.Pedido.Application.UseCases.AtualizarPedido;
+using CadastroPedidos.Pedido.Application.UseCases.CheckoutPedido;
+using CadastroPedidos.Pedido.Application.UseCases.CriarPedido;
+using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
+using CadastroPedidos.Pedido.Application.UseCases.ObterTodosPedidos;
 using ControlePedidos.Pedido.Domain.Abstractions;
 using ControlePedidos.Pedido.Infrastructure.Repositories.Http;
 using ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB;
@@ -16,6 +21,7 @@ public static class PedidoDependencyInjection
     {
         RegisterContexts(services);
         RegisterServices(services, configuration);
+        RegisterUseCases(services);
     }
 
     private static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
@@ -24,7 +30,16 @@ public static class PedidoDependencyInjection
         services.AddScoped<IProdutoExternalRepository, ProdutoExternalRepository>();
         services.AddScoped<IPedidoApplicationService, PedidoApplicationService>();
     }
-    
+
+    private static void RegisterUseCases(this IServiceCollection services)
+    {
+        services.AddScoped<IUseCase<ObterPedidoRequest, ObterPedidoResponse>, ObterPedidoUseCase>();
+        services.AddScoped<IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse>, ObterTodosPedidosUseCase>();
+        services.AddScoped<IUseCase<CriarPedidoRequest, CriarPedidoResponse>, CriarPedidoUseCase>();
+        services.AddScoped<IUseCase<AtualizarPedidoRequest>, AtualizarPedidoUseCase>();
+        services.AddScoped<IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse>, CheckoutPedidoUseCase>();
+    }
+
     private static void RegisterContexts(this IServiceCollection services)
     {
         MongoDbRegistror.RegisterDocumentResolver();

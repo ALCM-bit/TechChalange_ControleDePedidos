@@ -1,6 +1,11 @@
 ﻿using CadastroPedidos.Produto.Api;
 using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.DTO;
+using CadastroPedidos.Produto.Application.UseCases.AtualizarProduto;
+using CadastroPedidos.Produto.Application.UseCases.DeletarProduto;
+using CadastroPedidos.Produto.Application.UseCases.GravarProduto;
+using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
+using CadastroPedidos.Produto.Application.UseCases.ObterTodosProdutos;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,20 +15,36 @@ namespace ControlePedidos.API.Controllers;
 public class ProdutosController : BaseController
 {
     private readonly IProdutosApi _produtosApi;
+    private readonly IUseCase<ObterProdutoRequest, ObterProdutoResponse> _obterProdutoUseCase;
+    private readonly IUseCase<IEnumerable<GravarProdutosRequest>> _gravarProdutosUseCase;
+    private readonly IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> _obterTodosProdutosUseCase;
+    private readonly IUseCase<AtualizarProdutoRequest> _atualizarProdutoUseCase;
+    private readonly IUseCase<DeletarProdutoRequest> _deletarProdutoUseCase;
     private readonly IProdutoService _produtoService;
 
-    public ProdutosController(IProdutoService produtoService, IProdutosApi produtosApi)
+    public ProdutosController(
+        IProdutoService produtoService, IProdutosApi produtosApi,
+        IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase,
+        IUseCase<IEnumerable<GravarProdutosRequest>> gravarProdutosUseCase,
+        IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> obterTodosProdutosUseCase,
+        IUseCase<AtualizarProdutoRequest> atualizarProdutoUseCase,
+        IUseCase<DeletarProdutoRequest> deletarProdutoUseCase)
     {
         _produtoService = produtoService;
         _produtosApi = produtosApi;
+        _obterProdutoUseCase = obterProdutoUseCase;
+        _gravarProdutosUseCase = gravarProdutosUseCase;
+        _obterTodosProdutosUseCase = obterTodosProdutosUseCase;
+        _atualizarProdutoUseCase = atualizarProdutoUseCase;
+        _deletarProdutoUseCase = deletarProdutoUseCase;
     }
 
     [HttpPost]
-    public async Task<IActionResult> AdicionarProdutoAsync([FromBody] IEnumerable<ProdutoRequest> produto)
+    public async Task<IActionResult> AdicionarProdutosAsync([FromBody] IEnumerable<GravarProdutosRequest> produto)
     {
         try
         {
-            await _produtoService.AdicionarProdutoAsync(produto);
+            await _gravarProdutosUseCase.ExecuteAsync(produto);
 
             return Ok();
         }
@@ -33,17 +54,17 @@ public class ProdutosController : BaseController
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[{nameof(ProdutosController)}[{AdicionarProdutoAsync}] - Unexpected Error - [{ex.Message}]");
+            Console.WriteLine($"[{nameof(ProdutosController)}[{AdicionarProdutosAsync}] - Unexpected Error - [{ex.Message}]");
             return BadRequest(new { error = "Ocorreu um erro inesperado" });
         }
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> AtualizarProdutoAsync(string id, [FromBody] AtualizaProdutoRequest produto)
+    [HttpPut]
+    public async Task<IActionResult> AtualizarProdutoAsync([FromBody] AtualizarProdutoRequest request)
     {
         try
         {
-            await _produtoService.AtualizarProdutoAsync(id, produto);
+            await _atualizarProdutoUseCase.ExecuteAsync(request);
 
             return Ok();
         }
@@ -58,12 +79,12 @@ public class ProdutosController : BaseController
         }
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> ObterProdutoAsync(string id)
+    [HttpGet("obterProduto")]
+    public async Task<IActionResult> ObterProdutoAsync([FromQuery] ObterProdutoRequest request)
     {
         try
         {
-            ProdutoResponse produto = await _produtoService.ObterProdutoAsync(id);
+            ObterProdutoResponse produto = await _obterProdutoUseCase.ExecuteAsync(request);
 
             if (produto is null)
             {
@@ -84,19 +105,19 @@ public class ProdutosController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] string tipoProduto, [FromQuery] bool ativo, [FromQuery] bool retornarTodos = false)
+    public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] ObterTodosProdutosRequest request)
     {
-        IEnumerable <ProdutoResponse> produtos = await _produtosApi.ObterTodosTiposProdutoAsync(tipoProduto!, ativo, retornarTodos);
+        IEnumerable<ObterTodosProdutosResponse> produtos = await _obterTodosProdutosUseCase.ExecuteAsync(request);
 
         return Ok(produtos);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> RemoverProdutoAsync(string id)
+    [HttpDelete]
+    public async Task<IActionResult> RemoverProdutoAsync([FromQuery] DeletarProdutoRequest request)
     {
         try
         {
-            await _produtoService.RemoverProdutoAsync(id);
+            await _deletarProdutoUseCase.ExecuteAsync(request);
 
             return Ok();
         }
