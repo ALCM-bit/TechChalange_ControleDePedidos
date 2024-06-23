@@ -3,6 +3,7 @@ using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.Services;
 using CadastroPedidos.Produto.Application.UseCases.GravarProduto;
 using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
+using CadastroPedidos.Produto.Application.UseCases.ObterTodosProdutos;
 using ControlePedidos.Produto.Domain.Abstractions;
 using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB;
 using ControlePedidos.Produto.Infrastructure.Repositories.MongoDB.Contexts;
@@ -28,6 +29,7 @@ public static class ProdutoDependencyInjection
 
         services.AddScoped<IUseCase<ObterProdutoRequest, ObterProdutoResponse>, ObterProdutoUseCase>();
         services.AddScoped<IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse>, GravarProdutosUseCase>();
+        services.AddScoped<IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>>, ObterTodosProdutosUseCase>();
 
 
     }

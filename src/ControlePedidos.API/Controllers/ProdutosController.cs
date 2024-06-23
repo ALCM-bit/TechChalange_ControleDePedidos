@@ -3,6 +3,7 @@ using CadastroPedidos.Produto.Application.Abstractions;
 using CadastroPedidos.Produto.Application.DTO;
 using CadastroPedidos.Produto.Application.UseCases.GravarProduto;
 using CadastroPedidos.Produto.Application.UseCases.ObterProduto;
+using CadastroPedidos.Produto.Application.UseCases.ObterTodosProdutos;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +15,20 @@ public class ProdutosController : BaseController
     private readonly IProdutosApi _produtosApi;
     private readonly IUseCase<ObterProdutoRequest, ObterProdutoResponse> _obterProdutoUseCase;
     private readonly IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> _gravarProdutosUseCase;
+    private readonly IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> _obterTodosProdutosUseCase;
     private readonly IProdutoService _produtoService;
 
     public ProdutosController(
         IProdutoService produtoService, IProdutosApi produtosApi,
         IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase,
-        IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> gravarProdutosUseCase)
+        IUseCase<IEnumerable<GravarProdutosRequest>, GravarProdutosResponse> gravarProdutosUseCase,
+        IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> obterTodosProdutosUseCase)
     {
         _produtoService = produtoService;
         _produtosApi = produtosApi;
         _obterProdutoUseCase = obterProdutoUseCase;
         _gravarProdutosUseCase = gravarProdutosUseCase;
+        _obterTodosProdutosUseCase = obterTodosProdutosUseCase;
     }
 
     [HttpPost]
@@ -93,9 +97,9 @@ public class ProdutosController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] string tipoProduto, [FromQuery] bool ativo, [FromQuery] bool retornarTodos = false)
+    public async Task<IActionResult> ObterTodosTiposProdutoAsync([FromQuery] ObterTodosProdutosRequest request)
     {
-        IEnumerable <ProdutoResponse> produtos = await _produtosApi.ObterTodosTiposProdutoAsync(tipoProduto!, ativo, retornarTodos);
+        IEnumerable<ObterTodosProdutosResponse> produtos = await _obterTodosProdutosUseCase.ExecuteAsync(request);
 
         return Ok(produtos);
     }
