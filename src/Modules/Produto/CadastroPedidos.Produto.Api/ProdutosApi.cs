@@ -1,21 +1,23 @@
 ﻿using CadastroPedidos.Produto.Application.Abstractions;
+using CadastroPedidos.Produto.Application.UseCases.ObterTodosProdutos;
 using ControlePedidos.Produto.Domain.Enums;
 
 namespace CadastroPedidos.Produto.Api;
 
 public class ProdutosApi : IProdutosApi
 {
-    private readonly IProdutoService _produtoService;
+    private readonly IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> _obterTodosProdutosUseCase;
 
-    public ProdutosApi(IProdutoService produtoService)
+    public ProdutosApi(
+         IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> obterTodosProdutosUseCase)
     {
-        _produtoService = produtoService;
+        _obterTodosProdutosUseCase = obterTodosProdutosUseCase;
     }
 
-    public async Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync(string tipoProduto, bool ativo, bool retornarTodos = false)
+    public async Task<IEnumerable<ObterTodosProdutosResponse>> ObterTodosTiposProdutoAsync(string tipoProduto, bool ativo, bool retornarTodos = false)
     {
         var tipoProdutoParsed = Enum.TryParse<TipoProduto>(tipoProduto, out var outTipoProduto) ? outTipoProduto : (TipoProduto?) null;
 
-        return await _produtoService.ObterTodosTiposProdutoAsync(tipoProdutoParsed, ativo, retornarTodos);
+        return await _obterTodosProdutosUseCase.ExecuteAsync(new() { TipoProduto = tipoProdutoParsed, Ativo = ativo, RetornarTodos = retornarTodos});
     }
 }

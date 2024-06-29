@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\..\..\src\Modules\Produto\ControlePedidos.Produto.Domain\ControlePedidos.Produto.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Service\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,8 @@
-﻿namespace CadastroPedidos.Produto.Api;
+﻿using CadastroPedidos.Produto.Application.UseCases.ObterTodosProdutos;
+
+namespace CadastroPedidos.Produto.Api;
 
 public interface IProdutosApi
 {
-    Task<IEnumerable<ProdutoResponse>> ObterTodosTiposProdutoAsync(string tipoProduto, bool ativo, bool retornarTodos = false);
+    Task<IEnumerable<ObterTodosProdutosResponse>> ObterTodosTiposProdutoAsync(string tipoProduto, bool ativo, bool retornarTodos = false);
 }

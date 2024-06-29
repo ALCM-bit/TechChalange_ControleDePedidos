@@ -1,6 +1,5 @@
 ﻿using CadastroPedidos.Produto.Api;
 using CadastroPedidos.Produto.Application.Abstractions;
-using CadastroPedidos.Produto.Application.Services;
 using CadastroPedidos.Produto.Application.UseCases.AtualizarProduto;
 using CadastroPedidos.Produto.Application.UseCases.DeletarProduto;
 using CadastroPedidos.Produto.Application.UseCases.GravarProduto;
@@ -25,7 +24,6 @@ public static class ProdutoDependencyInjection
 
     private static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IProdutoService, ProdutoService>();
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
         services.AddScoped<IProdutosApi, ProdutosApi>();
 
