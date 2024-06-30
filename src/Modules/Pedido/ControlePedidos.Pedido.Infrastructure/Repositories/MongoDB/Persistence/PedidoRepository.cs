@@ -1,6 +1,8 @@
 ﻿using ControlePedidos.Pedido.Domain.Abstractions;
+using ControlePedidos.Pedido.Domain.Enums;
 using ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB.Contexts;
 using ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB.Persistence;
@@ -25,8 +27,14 @@ public class PedidoRepository : IPedidoRepository
 
     public async Task<IEnumerable<Domain.Entities.Pedido>> ObterTodosPedidosAsync()
     {
-        var filter = Builders<PedidoModel>.Filter.Empty;
-        var sort = Builders<PedidoModel>.Sort.Ascending(x => x.Id);
+        var filterBuilder = Builders<PedidoModel>.Filter;
+
+        var filter = Builders<PedidoModel>.Filter.And(
+            filterBuilder.Ne(nameof(PedidoModel.Status), BsonNull.Value),
+            filterBuilder.Ne(p => p.Status, StatusPedido.Finalizado)
+        );
+
+        var sort = Builders<PedidoModel>.Sort.Descending(x => x.Status).Ascending(x => x.Id);
 
         var result = await _context.Pedido.Find(filter).Sort(sort).ToListAsync();
 
