@@ -14,7 +14,6 @@ namespace ControlePedidos.API.Controllers;
 [Route("api/pedidos")]
 public class PedidosController : BaseController
 {
-    private readonly IPedidoApplicationService _pedidoService;
     private readonly IUseCase<ObterPedidoRequest, ObterPedidoResponse> _obterPedidoUseCase;
     private readonly IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> _obterTodosPedidosUseCase;    
     private readonly IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> _checkoutPedidoUseCase;

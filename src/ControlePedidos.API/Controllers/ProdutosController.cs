@@ -20,17 +20,15 @@ public class ProdutosController : BaseController
     private readonly IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> _obterTodosProdutosUseCase;
     private readonly IUseCase<AtualizarProdutoRequest> _atualizarProdutoUseCase;
     private readonly IUseCase<DeletarProdutoRequest> _deletarProdutoUseCase;
-    private readonly IProdutoService _produtoService;
 
     public ProdutosController(
-        IProdutoService produtoService, IProdutosApi produtosApi,
+        IProdutosApi produtosApi,
         IUseCase<ObterProdutoRequest, ObterProdutoResponse> obterProdutoUseCase,
         IUseCase<IEnumerable<GravarProdutosRequest>> gravarProdutosUseCase,
         IUseCase<ObterTodosProdutosRequest, IEnumerable<ObterTodosProdutosResponse>> obterTodosProdutosUseCase,
         IUseCase<AtualizarProdutoRequest> atualizarProdutoUseCase,
         IUseCase<DeletarProdutoRequest> deletarProdutoUseCase)
     {
-        _produtoService = produtoService;
         _produtosApi = produtosApi;
         _obterProdutoUseCase = obterProdutoUseCase;
         _gravarProdutosUseCase = gravarProdutosUseCase;
