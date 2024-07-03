@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apptc-configmap
+data:
+  ConnectionStrings__ControlePedidosDB: "mongodb+srv://7soat-g28:<password>@controlepedidos.latx5vz.mongodb.net/?retryWrites=true&w=majority&appName=ControlePedidos"
+  MercadoPagoToken: TEST-5724569334820574-051721-6259255d1097375a629b644fe127d8bb-134877168
