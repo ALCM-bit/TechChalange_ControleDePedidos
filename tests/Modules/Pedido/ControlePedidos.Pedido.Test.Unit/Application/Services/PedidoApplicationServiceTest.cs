@@ -13,6 +13,8 @@ public class PedidoApplicationServiceTest : BaseUnitTest
 {
     private readonly IPedidoApplicationService _pedidoApplicationService;
     private readonly Mock<IProdutoExternalRepository> _produtoExternalRepository;
+    private readonly Mock<IPedidoRepository> _pedidoRepositoryMock;
+
 
     public PedidoApplicationServiceTest()
     {
