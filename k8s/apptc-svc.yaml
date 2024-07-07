@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apptc-svc
+spec:
+  selector:
+    app: apptc-deployment
+  ports:
+    - port: 5187
+      targetPort: 5187
+  type: LoadBalancer

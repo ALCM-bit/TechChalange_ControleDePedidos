@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apptc-deployment
+  labels:
+    app: apptc-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apptc-deployment
+  template:
+    metadata:
+      labels:
+        app: apptc-deployment
+    spec:
+      containers:
+      - name: apptc-deployment
+        image: victorgduarte/tc-controle-pedidos:v1
+        ports:
+        - containerPort: 5187
+        envFrom:
+        - configMapRef:
+            name: apptc-configmap
+        resources:
+          requests:
+            cpu: "100m" # 100m equivalent to 0.1 CPU
+            memory: "256Mi" # 256 megabytes
+          limits:
+            cpu: "500m" # 500m equivalent to 0.5 CPU
+            memory: "512Mi" # 512 megabytes
+        livenessProbe:
+          httpGet:
+            path: '/health'
+            port: 5187
+          initialDelaySeconds: 20
+          periodSeconds: 3
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: '/health'
+            port: 5187
+          initialDelaySeconds: 20
+          periodSeconds: 3
+          failureThreshold: 3
