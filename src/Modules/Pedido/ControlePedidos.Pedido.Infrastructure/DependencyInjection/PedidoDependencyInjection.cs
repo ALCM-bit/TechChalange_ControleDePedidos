@@ -1,7 +1,6 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
 using CadastroPedidos.Pedido.Application.Services;
 using CadastroPedidos.Pedido.Application.UseCases.AtualizarPedido;
-using CadastroPedidos.Pedido.Application.UseCases.CheckoutPedido;
 using CadastroPedidos.Pedido.Application.UseCases.CriarPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterTodosPedidos;
@@ -37,7 +36,6 @@ public static class PedidoDependencyInjection
         services.AddScoped<IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse>, ObterTodosPedidosUseCase>();
         services.AddScoped<IUseCase<CriarPedidoRequest, CriarPedidoResponse>, CriarPedidoUseCase>();
         services.AddScoped<IUseCase<AtualizarPedidoRequest>, AtualizarPedidoUseCase>();
-        services.AddScoped<IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse>, CheckoutPedidoUseCase>();
     }
 
     private static void RegisterContexts(this IServiceCollection services)

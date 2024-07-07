@@ -1,4 +1,4 @@
-﻿namespace CadastroPedidos.Pedido.Application.UseCases.CheckoutPedido;
+﻿namespace CadastroPedidos.Checkout.Application.UseCases.CheckoutPedido;
 
 public class CheckoutPedidoResponse
 {

@@ -1,13 +1,10 @@
 ﻿using CadastroPedidos.Pedido.Application.Abstractions;
-using CadastroPedidos.Pedido.Application.DTO;
 using CadastroPedidos.Pedido.Application.UseCases.AtualizarPedido;
-using CadastroPedidos.Pedido.Application.UseCases.CheckoutPedido;
 using CadastroPedidos.Pedido.Application.UseCases.CriarPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterTodosPedidos;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ControlePedidos.API.Controllers;
 
@@ -16,19 +13,16 @@ public class PedidosController : BaseController
 {
     private readonly IUseCase<ObterPedidoRequest, ObterPedidoResponse> _obterPedidoUseCase;
     private readonly IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> _obterTodosPedidosUseCase;    
-    private readonly IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> _checkoutPedidoUseCase;
     private readonly IUseCase<CriarPedidoRequest, CriarPedidoResponse> _criarPedidoUseCase;
     private readonly IUseCase<AtualizarPedidoRequest> _atualizarPedidoUseCase;
 
     public PedidosController(IUseCase<ObterPedidoRequest, ObterPedidoResponse> obterPedidoUseCase,
                              IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> obterTodosPedidosUseCase,
-                             IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> checkoutPedidoUseCase,
                              IUseCase<CriarPedidoRequest, CriarPedidoResponse> criarPedidoUseCase,
                              IUseCase<AtualizarPedidoRequest> atualizarPedidoUseCase)
     {
         _obterPedidoUseCase = obterPedidoUseCase;
         _obterTodosPedidosUseCase = obterTodosPedidosUseCase;
-        _checkoutPedidoUseCase = checkoutPedidoUseCase;
         _criarPedidoUseCase = criarPedidoUseCase;
         _atualizarPedidoUseCase = atualizarPedidoUseCase;
     }
@@ -118,33 +112,6 @@ public class PedidosController : BaseController
             await _atualizarPedidoUseCase.ExecuteAsync(request);
 
             return NoContent();
-        }
-        catch (NotificationException ex)
-        {
-            return BadRequest(new { error = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"[{nameof(PedidosController)}[{AtualizarPedido}] - Unexpected Error - [{ex.Message}]");
-            return BadRequest(new { error = "Ocorreu um erro inesperado" });
-        }
-    }
-
-    [HttpPatch("{id}/checkout")]
-    public async Task<ActionResult<CheckoutPedidoResponse>> CheckoutPedido([FromRoute] string id)
-    {
-        try
-        {
-            var request = new CheckoutPedidoRequest() { IdPedido = id };
-
-            CheckoutPedidoResponse response = await _checkoutPedidoUseCase.ExecuteAsync(request);
-
-            if (response.UrlPagamento.IsNullOrEmpty())
-            {
-                return BadRequest(new { error = "Ocorreu um erro inesperado ao contatar provedor de pagamento" });
-            }
-
-            return response;
         }
         catch (NotificationException ex)
         {
