@@ -23,7 +23,7 @@ namespace ControlePedidos.Cadastro.Domain.Entities
         {
             if (string.IsNullOrWhiteSpace(Nome))
             {
-                throw new DomainNotificationException("O nome é obrigatório.");
+                throw new DomainNotificationException("O nome ? obrigat?rio.");
             }
         }
     }

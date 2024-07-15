@@ -27,7 +27,8 @@ docker compose up
 # Arquitetura da aplicação
 ![Arquitetura](./assets/DesenhoArquiteturaFase2_v1.png)
 # Iniciando a aplicação pelo Kubernetes
-
+Para iniciar o projeto utilizando o Kubernetes, basta seguir os comandos encontrados abaixo:
+- [Comandos](./k8s/comandos.md)
 # Vídeo de apresentação do projeto fase 2:
 
 # Participantes
