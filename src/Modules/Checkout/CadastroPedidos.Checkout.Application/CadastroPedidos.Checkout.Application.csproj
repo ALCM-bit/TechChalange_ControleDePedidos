@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\ControlePedidos.Common\ControlePedidos.Common.csproj" />
     <ProjectReference Include="..\src\Modules\Common\ControlePedidos.Common\ControlePedidos.Common.csproj" />
   </ItemGroup>
 
