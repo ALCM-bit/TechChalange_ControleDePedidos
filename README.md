@@ -24,6 +24,21 @@ docker compose up
 - [Getting Started](https://7soat-g28.apidocumentation.com/guide/getting-started)
 - [References](https://7soat-g28.apidocumentation.com/reference)
 
+2. Caso desejar, utilize a collection para o postman: 
+- [Link compartilhado](https://www.postman.com/altimetry-astronomer-96690638/workspace/tech-challenge-7soat)
+
+## Ordem para utilizar a API
+1. Cadastre um usuário.
+    - [Modelo](https://www.postman.com/altimetry-astronomer-96690638/workspace/tech-challenge-7soat/request/34581742-a7f6b507-031d-403d-8e0f-4567707c3ffb?action=share&source=copy-link&creator=35038815&ctx=documentation)
+2. Adicione um ou mais produtos desejados.
+    - [Modelo](https://www.postman.com/altimetry-astronomer-96690638/workspace/tech-challenge-7soat/request/34581742-3492eb73-ae67-40ce-ad57-8ddabcf41281?action=share&source=copy-link&creator=35038815&ctx=documentation)
+3. Crie o pedido.
+    - [Modelo](https://www.postman.com/altimetry-astronomer-96690638/workspace/tech-challenge-7soat/request/34581742-d5bca302-9ce8-49b6-beac-5e35805b4f6b?action=share&source=copy-link&creator=35038815&ctx=documentation)
+4. Fazer o checkout do pedido.
+    - [Modelo](https://www.postman.com/altimetry-astronomer-96690638/workspace/tech-challenge-7soat/request/34581742-21c832f5-c6f2-4647-b04c-82f39e2c2007?action=share&source=copy-link&creator=35038815&ctx=documentation)
+
+Você pode ainda manipular os status do pedido conforme o necessário e utilizar outros recursos disponibilizados.
+
 # Arquitetura da aplicação
 ![Arquitetura](./assets/DesenhoArquiteturaFase2_v1.png)
 # Iniciando a aplicação pelo Kubernetes

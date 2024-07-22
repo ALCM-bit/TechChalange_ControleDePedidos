@@ -1,4 +1,7 @@
 # Configurações k8s
+**Disclaimer**: Para utilizar a aplicação localmente via kubernetes, é preciso subir um container docker com a imagem do mongoDB e passar a url do banco no arquivo `k8s/apptc-configmap.yaml`.
+
+> Antes de rodar os comandos abaixo, garanta que está na pasta `k8s`
 
 ### Executar o arquivo de métricas
 ```
