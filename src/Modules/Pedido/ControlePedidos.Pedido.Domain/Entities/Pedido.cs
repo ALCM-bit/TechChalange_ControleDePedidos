@@ -45,7 +45,7 @@ public class Pedido : Entity, IAggregationRoot
     {
         Itens = itens;
 
-        Validate();
+        AtualizarData();
     }
 
     public void ConfirmarPedido()
@@ -59,7 +59,7 @@ public class Pedido : Entity, IAggregationRoot
 
         Status = StatusPedido.Recebido;
 
-        Validate();
+        AtualizarData();
     }
 
     public void IniciarPreparo()
@@ -73,7 +73,7 @@ public class Pedido : Entity, IAggregationRoot
 
         Status = StatusPedido.Preparando;
 
-        Validate();
+        AtualizarData();
     }
 
     public void FinalizarPreparo()
@@ -87,7 +87,7 @@ public class Pedido : Entity, IAggregationRoot
 
         Status = StatusPedido.Pronto;
 
-        Validate();
+        AtualizarData();
     }
 
     public void FinalizarPedido()
@@ -100,9 +100,8 @@ public class Pedido : Entity, IAggregationRoot
         }
 
         Status = StatusPedido.Finalizado;
-        DataAtualizacao = DateTime.UtcNow;
 
-        Validate();
+        AtualizarData();
     }
 
     public void AtualizarStatus(StatusPedido status)
@@ -129,6 +128,12 @@ public class Pedido : Entity, IAggregationRoot
                 throw new DomainNotificationException("Status inválido");
         }
 
+        AtualizarData();
+    }
+
+    public void AtualizarData()
+    {
+        DataAtualizacao = DateTime.UtcNow;
         Validate();
     }
 }

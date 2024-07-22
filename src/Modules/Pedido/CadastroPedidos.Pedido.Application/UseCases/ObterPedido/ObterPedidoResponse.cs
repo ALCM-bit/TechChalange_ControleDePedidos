@@ -14,7 +14,7 @@ public class ObterPedidoResponse
     public StatusPedido? Status { get; set; } = null;
 
     public DateTime DataCriacao { get; set; }
-    public DateTime? DataFinalizacao { get; set; }
+    public DateTime? DataAtualizacao { get; set; }
     public decimal Total { get; set; }
     public List<ItemPedidoResponseDto> Itens { get; set; } = new();
 }

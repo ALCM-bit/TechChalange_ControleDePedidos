@@ -59,7 +59,7 @@ public class PedidoRepository : IPedidoRepository
         var update = Builders<PedidoModel>.Update
                                            .Set(p => p.Status, model.Status)
                                            .Set(p => p.Itens, model.Itens)
-                                           .Set(p => p.DataFinalizacao, model.DataAtualizacao);
+                                           .Set(p => p.DataAtualizacao, model.DataAtualizacao);
 
         return _context.Pedido.UpdateOneAsync(filter, update);
     }

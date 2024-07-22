@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CadastroPedidos.Checkout.Application\CadastroPedidos.Checkout.Application.csproj" />
     <ProjectReference Include="..\Modules\Cadastro\ControlePedidos.Cadastro.Application\ControlePedidos.Cadastro.Application.csproj" />
     <ProjectReference Include="..\Modules\Cadastro\ControlePedidos.Cadastro.Infrastructure\ControlePedidos.Cadastro.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Checkout\CadastroPedidos.Checkout.Application\CadastroPedidos.Checkout.Application.csproj" />
