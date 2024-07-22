@@ -60,9 +60,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroPedidos.Produto.Api", "src\Modules\Produto\CadastroPedidos.Produto.Api\CadastroPedidos.Produto.Api.csproj", "{78162180-E504-4A64-B0FE-6DE9021C56E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroPedidos.Produto.Api", "src\Modules\Produto\CadastroPedidos.Produto.Api\CadastroPedidos.Produto.Api.csproj", "{78162180-E504-4A64-B0FE-6DE9021C56E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroPedidos.Checkout.Application", "src\Modules\Checkout\CadastroPedidos.Checkout.Application\CadastroPedidos.Checkout.Application.csproj", "{856FD099-DD5C-438C-9078-96F5C1BD9C74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroPedidos.Checkout.Application", "src\Modules\Checkout\CadastroPedidos.Checkout.Application\CadastroPedidos.Checkout.Application.csproj", "{856FD099-DD5C-438C-9078-96F5C1BD9C74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Checkout", "Checkout", "{E595F4DD-00CC-4AC0-932A-BB35DD63A234}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,7 +165,8 @@ Global
 		{B7A2E4E8-F041-427A-A945-85350AAD63E7} = {A45E50C9-5CC2-4BDA-A281-13CBBFE9D5CD}
 		{BD924255-7AD7-48BA-ABDD-7441B0A2D63A} = {5980B882-B47B-4A86-B631-1D5FE82BFC2F}
 		{78162180-E504-4A64-B0FE-6DE9021C56E4} = {E6D4EAD0-B0FA-41E4-8F8A-BB2B6966BBFF}
-		{856FD099-DD5C-438C-9078-96F5C1BD9C74} = {33278402-C90F-4970-B0D7-07E9FC49135C}
+		{856FD099-DD5C-438C-9078-96F5C1BD9C74} = {E595F4DD-00CC-4AC0-932A-BB35DD63A234}
+		{E595F4DD-00CC-4AC0-932A-BB35DD63A234} = {F14FE484-B08C-450F-B539-34848A3E86CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83CBB7B1-7D37-4E12-BF2B-60DB8028ED60}

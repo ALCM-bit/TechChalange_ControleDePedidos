@@ -9,7 +9,6 @@ internal class PedidoModel : BaseModel
     public string Codigo { get; set; } = string.Empty;
     public string? IdCliente { get; set; }
     public StatusPedido? Status { get; set; }
-    public DateTime? DataFinalizacao { get; set; }
     public IEnumerable<ItemPedidoModel> Itens { get; set; } = [];
 
     public PedidoModel(string id) : base(id)
@@ -25,7 +24,7 @@ internal class PedidoModel : BaseModel
             IdCliente = pedido.IdCliente,
             Status = pedido.Status,
             DataCriacao = pedido.DataCriacao,
-            DataFinalizacao = pedido.DataAtualizacao,
+            DataAtualizacao = pedido.DataAtualizacao,
             Itens = ItemPedidoModel.MapFromDomain(pedido.Itens)
         };
     }
@@ -39,7 +38,7 @@ internal class PedidoModel : BaseModel
                                           pedidoModel.IdCliente,
                                           pedidoModel.Status,
                                           pedidoModel.DataCriacao,
-                                          pedidoModel.DataFinalizacao,
+                                          pedidoModel.DataAtualizacao,
                                           ItemPedidoModel.MapToDomain(pedidoModel.Itens));
     }
 
