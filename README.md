@@ -5,7 +5,7 @@ Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Por
 
 # 2. Solução
 
-Para este projeto desenvolvemos um monolito dividido inicialmente em 4 módulos: Clientes, Produtos, Pedidos, Checkout.
+Para este projeto foi desenvolvido um monolito dividido inicialmente em 4 módulos: Clientes, Produtos, Pedidos, Checkout.
 
 - Arquitetura: DDD + Clean Architecture
 - Linguagem: C# (.NET)
