@@ -5,24 +5,22 @@ Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Por
 
 # 2. Solução
 
-## 2.1 Tecnologias
-
-Para este projeto estamos utilizando um monolito dividido inicialmente em 4 módulos: Clientes, Produtos, Pedidos, Checkout.
+Para este projeto desenvolvemos um monolito dividido inicialmente em 4 módulos: Clientes, Produtos, Pedidos, Checkout.
 
 - Arquitetura: DDD + Clean Architecture
 - Linguagem: C# (.NET)
 - Banco de dados: MongoDB
 - Cloud: AWS
 
-## 2.2 Vídeo de apresentação do projeto
+## 2.1 Vídeo de apresentação do projeto
 
 [Link para o vídeo](https://)
 
-## 2.3 Event Storming
+## 2.2 Event Storming
 
 [Event Storming](https://miro.com/app/board/uXjVKaMIl9E=/?share_link_id=532142133626)
 
-## 2.4 Arquitetura
+## 2.3 Arquitetura
 
 ![Arquitetura](./assets/DesenhoArquiteturaFase2_v1.png)
 
