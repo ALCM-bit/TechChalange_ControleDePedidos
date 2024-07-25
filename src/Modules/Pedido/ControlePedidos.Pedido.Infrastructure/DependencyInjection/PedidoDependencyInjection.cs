@@ -4,6 +4,7 @@ using CadastroPedidos.Pedido.Application.UseCases.AtualizarPedido;
 using CadastroPedidos.Pedido.Application.UseCases.CriarPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterTodosPedidos;
+using CadastroPedidos.Pedido.Application.UseCases.ProcessarPagamento;
 using ControlePedidos.Pedido.Domain.Abstractions;
 using ControlePedidos.Pedido.Infrastructure.Repositories.Http;
 using ControlePedidos.Pedido.Infrastructure.Repositories.MongoDB;
@@ -36,6 +37,7 @@ public static class PedidoDependencyInjection
         services.AddScoped<IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse>, ObterTodosPedidosUseCase>();
         services.AddScoped<IUseCase<CriarPedidoRequest, CriarPedidoResponse>, CriarPedidoUseCase>();
         services.AddScoped<IUseCase<AtualizarPedidoRequest>, AtualizarPedidoUseCase>();
+        services.AddScoped<IUseCase<ProcessarPagamentoPedidoRequest, ProcessarPagamentoPedidoResponse>, ProcessarPagamentoPedidoUseCase>();
     }
 
     private static void RegisterContexts(this IServiceCollection services)

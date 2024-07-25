@@ -66,6 +66,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroPedidos.Checkout.Ap
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Checkout", "Checkout", "{E595F4DD-00CC-4AC0-932A-BB35DD63A234}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroPedidos.Checkout.Infrastructure", "src\Modules\Checkout\CadastroPedidos.Checkout.Infrastructure\CadastroPedidos.Checkout.Infrastructure.csproj", "{FA5706B6-113B-4FC2-825C-AEEC61050B75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,10 @@ Global
 		{856FD099-DD5C-438C-9078-96F5C1BD9C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{856FD099-DD5C-438C-9078-96F5C1BD9C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{856FD099-DD5C-438C-9078-96F5C1BD9C74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA5706B6-113B-4FC2-825C-AEEC61050B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA5706B6-113B-4FC2-825C-AEEC61050B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA5706B6-113B-4FC2-825C-AEEC61050B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA5706B6-113B-4FC2-825C-AEEC61050B75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{78162180-E504-4A64-B0FE-6DE9021C56E4} = {E6D4EAD0-B0FA-41E4-8F8A-BB2B6966BBFF}
 		{856FD099-DD5C-438C-9078-96F5C1BD9C74} = {E595F4DD-00CC-4AC0-932A-BB35DD63A234}
 		{E595F4DD-00CC-4AC0-932A-BB35DD63A234} = {F14FE484-B08C-450F-B539-34848A3E86CF}
+		{FA5706B6-113B-4FC2-825C-AEEC61050B75} = {E595F4DD-00CC-4AC0-932A-BB35DD63A234}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83CBB7B1-7D37-4E12-BF2B-60DB8028ED60}

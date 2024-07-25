@@ -1,6 +1,7 @@
 using ControlePedidos.Pedido.Infrastructure.DependencyInjection;
 using ControlePedidos.Cadastro.Infrastructure.DependencyInjection;
 using ControlePedidos.Produto.Infrastructure.DependencyInjection;
+using CadastroPedidos.Checkout.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using System.Text.Json.Serialization;
@@ -22,6 +23,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPedido(builder.Configuration);
 builder.Services.AddCadastro(builder.Configuration);
 builder.Services.AddProduto(builder.Configuration);
+builder.Services.AddCheckout(builder.Configuration);
 
 // TODO: Obter connection string das configurações
 builder.Services.AddHealthChecks()

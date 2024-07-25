@@ -8,7 +8,6 @@ namespace CadastroPedidos.Checkout.Application.UseCases.CheckoutPedido;
 
 public class CheckoutPedidoUseCase : IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse>
 {
-
     public CheckoutPedidoUseCase()
     {
     }
@@ -17,7 +16,7 @@ public class CheckoutPedidoUseCase : IUseCase<CheckoutPedidoRequest, CheckoutPed
     {
         try
         {
-            MercadoPagoConfig.AccessToken = Environment.GetEnvironmentVariable("MercadoPagoToken"); ;
+            MercadoPagoConfig.AccessToken = Environment.GetEnvironmentVariable("MercadoPagoToken");
 
             if (request.Itens is null)
             {
@@ -41,7 +40,14 @@ public class CheckoutPedidoUseCase : IUseCase<CheckoutPedidoRequest, CheckoutPed
             {
                 //TODO - preencher back urls para atualizacao do status de pagamento do pedido
                 ExternalReference = request.IdPedido,
-                Items = itensPedido
+                Items = itensPedido,
+                AutoReturn = "approved",
+                BackUrls = new()
+                {
+                    Pending = "https://controle-pedidos/api/pedidos/notificacoes/pagamento",
+                    Success = "https://controle-pedidos/api/pedidos/notificacoes/pagamento",
+                    Failure = "https://controle-pedidos/api/pedidos/notificacoes/pagamento"
+                }
             };
 
             PreferenceClient client = new PreferenceClient();
@@ -53,7 +59,7 @@ public class CheckoutPedidoUseCase : IUseCase<CheckoutPedidoRequest, CheckoutPed
                 UrlPagamento = preference.SandboxInitPoint
             };
         }
-        catch
+        catch (Exception e)
         {
             throw new ApplicationNotificationException($"Não foi possivel realizar o checkout do pedido:{request.IdPedido}");
         }

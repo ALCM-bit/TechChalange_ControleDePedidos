@@ -13,13 +13,12 @@ public class CheckoutController : BaseController
     private readonly ICheckoutApplicationService _checkoutService;
     private readonly IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> _checkoutPedidoUseCase;
 
-    public CheckoutController(
-                             IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> checkoutPedidoUseCase)
+    public CheckoutController(IUseCase<CheckoutPedidoRequest, CheckoutPedidoResponse> checkoutPedidoUseCase)
     {
         _checkoutPedidoUseCase = checkoutPedidoUseCase;
     }
 
-    [HttpPatch]
+    [HttpPost]
     public async Task<ActionResult<CheckoutPedidoResponse>> CheckoutPedido(CheckoutPedidoRequest checkoutPedidoRequest)
     {
         try
@@ -44,4 +43,3 @@ public class CheckoutController : BaseController
         }
     }
 }
-
