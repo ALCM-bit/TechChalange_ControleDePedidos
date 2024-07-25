@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Modules\Cadastro\ControlePedidos.Cadastro.Application\ControlePedidos.Cadastro.Application.csproj" />
     <ProjectReference Include="..\Modules\Cadastro\ControlePedidos.Cadastro.Infrastructure\ControlePedidos.Cadastro.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Checkout\CadastroPedidos.Checkout.Application\CadastroPedidos.Checkout.Application.csproj" />
+    <ProjectReference Include="..\Modules\Checkout\CadastroPedidos.Checkout.Infrastructure\CadastroPedidos.Checkout.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Pedido\CadastroPedidos.Pedido.Application\CadastroPedidos.Pedido.Application.csproj" />
     <ProjectReference Include="..\Modules\Pedido\ControlePedidos.Pedido.Infrastructure\ControlePedidos.Pedido.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Produto\CadastroPedidos.Produto.Api\CadastroPedidos.Produto.Api.csproj" />

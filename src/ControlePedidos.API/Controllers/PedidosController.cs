@@ -3,6 +3,8 @@ using CadastroPedidos.Pedido.Application.UseCases.AtualizarPedido;
 using CadastroPedidos.Pedido.Application.UseCases.CriarPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterPedido;
 using CadastroPedidos.Pedido.Application.UseCases.ObterTodosPedidos;
+using CadastroPedidos.Pedido.Application.UseCases.ProcessarPagamento;
+using ControlePedidos.API.DTO;
 using ControlePedidos.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,16 +17,19 @@ public class PedidosController : BaseController
     private readonly IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> _obterTodosPedidosUseCase;    
     private readonly IUseCase<CriarPedidoRequest, CriarPedidoResponse> _criarPedidoUseCase;
     private readonly IUseCase<AtualizarPedidoRequest> _atualizarPedidoUseCase;
+    private readonly IUseCase<ProcessarPagamentoPedidoRequest, ProcessarPagamentoPedidoResponse> _processarPagamentoPedidoCase;
 
     public PedidosController(IUseCase<ObterPedidoRequest, ObterPedidoResponse> obterPedidoUseCase,
                              IUseCase<ObterTodosPedidosRequest, ObterTodosPedidosResponse> obterTodosPedidosUseCase,
                              IUseCase<CriarPedidoRequest, CriarPedidoResponse> criarPedidoUseCase,
-                             IUseCase<AtualizarPedidoRequest> atualizarPedidoUseCase)
+                             IUseCase<AtualizarPedidoRequest> atualizarPedidoUseCase,
+                             IUseCase<ProcessarPagamentoPedidoRequest, ProcessarPagamentoPedidoResponse> processarPagamentoPedidoCase)
     {
         _obterPedidoUseCase = obterPedidoUseCase;
         _obterTodosPedidosUseCase = obterTodosPedidosUseCase;
         _criarPedidoUseCase = criarPedidoUseCase;
         _atualizarPedidoUseCase = atualizarPedidoUseCase;
+        _processarPagamentoPedidoCase = processarPagamentoPedidoCase;
     }
 
     // TODO: Criar objeto de retorno padrão
@@ -120,6 +125,29 @@ public class PedidosController : BaseController
         catch (Exception ex)
         {
             Console.WriteLine($"[{nameof(PedidosController)}[{AtualizarPedido}] - Unexpected Error - [{ex.Message}]");
+            return BadRequest(new { error = "Ocorreu um erro inesperado" });
+        }
+    }
+
+    [HttpGet("notificacoes/pagamento")]
+    public async Task<ActionResult<SituacaoPagamentoDto>> ProcessarPagamento([FromQuery] SituacaoPagamentoDto situacaoPagamento)
+    {
+        try
+        {
+            ProcessarPagamentoPedidoRequest request = new() { IdPedido = situacaoPagamento.IdPedido, Status = situacaoPagamento.Status };
+
+            ProcessarPagamentoPedidoResponse response = await _processarPagamentoPedidoCase.ExecuteAsync(request);
+
+            // Redirecionamento para a página que irá exibir a situação do pagamento
+            return Redirect($"https://controle-pedidos/pagamento?status={response.Status}");
+        }
+        catch (NotificationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[{nameof(PedidosController)}[{ObterTodosPedidos}] - Unexpected Error - [{ex.Message}]");
             return BadRequest(new { error = "Ocorreu um erro inesperado" });
         }
     }
