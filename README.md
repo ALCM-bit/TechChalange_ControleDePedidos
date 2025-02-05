@@ -12,7 +12,7 @@ Para este projeto foi desenvolvido um monolito dividido inicialmente em 4 módul
 - Banco de dados: MongoDB
 - Cloud: AWS
 
-## 2.1 Vídeo de apresentação do projeto
+## 2.1 Vídeo da apresentação do projeto
 ## [Link para o vídeo](https://youtu.be/BmOhPfFHHNM?si=_AlrYWsA-HPdZXII)
 
 ## 2.2 Event Storming
